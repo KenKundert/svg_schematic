@@ -233,11 +233,11 @@ needed.  Example:
 the points.  With `|-`, `-|`, `|-|`, and `-|-` the wires are constrained to 
 follow a Manhattan geometry (between each point there may be one, two, or three 
 line segments that are constrained to be either purely vertical or purely 
-horizontal.  With '|-' there are two segments, with the first being vertical.  
-With '-|', there are also two segments, but the first is horizontal. With '|-|', 
-and '-|-' there there are three segments with the middle segment being half way 
-between the two points. With '|-|', the segments are vertical, horizontal, and 
-vertical.  With '-|-', the segments are horizontal, vertical, and horizontal.
+horizontal.  With `|-` there are two segments, with the first being vertical.  
+With `-|`, there are also two segments, but the first is horizontal. With `|-|`, 
+and `-|-` there there are three segments with the middle segment being half way 
+between the two points. With `|-|`, the segments are vertical, horizontal, and 
+vertical.  With `-|-`, the segments are horizontal, vertical, and horizontal.
 
 *Wire* also supports the *line_width*  and *color* arguments.
 
