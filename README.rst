@@ -1,5 +1,9 @@
-Schematic
-=========
+SVG Schematic
+=============
+
+| Version: 0.0.0
+| Released: 2018-02-20
+|
 
 This package allows you to create simple SVG schematics. It was created with 
 desire to be able to include simple schematics into Latex Beamer presenations.  
@@ -12,6 +16,21 @@ capability to do this basic operation, and instead you are expected to scale the
 X or Y dimension by -1, but that would also flip the component into the negative 
 quadrant).  The other issue is that I could not draw schematics that contained 
 three terminal components using purely vertical or horizontal lines.
+
+
+Installation
+------------
+
+Requires Python3. Works best with Python3.6 or newer.
+
+To install, do the following::
+
+    git clone https://github.com/KenKundert/schematic.git
+    pip3 install --user schematic
+
+
+Introduction
+------------
 
 With *schematic* you simply place components at specific coordinates, and then 
 place wires to connect them together. For example:
@@ -49,6 +68,19 @@ It would create the following schematic:
 
 .. image:: rlc.png
 
+You can also use *schematic* with the Python *with* statement, which will 
+automatically close and save the schematic. Thus the second half the above 
+example
+
+.. code-block:: python
+
+    with Schematic(filename = "rlc.svg"):
+        Wire([(r_x, top), (l_x, top), (l_x, bot), (r_x, bot)])
+        Wire([(c_x, top), (c_x, bot)])
+        Resistor((r_x, mid), name='R', orientation='v')
+        Capacitor((c_x, mid), name='C', orientation='v')
+        Inductor((l_x, mid), name='L', orientation='v')
+
 There are a few things to note.
 
 #.  SVG coordinates are used, which inverts the y axis (smaller coordinates are 
@@ -59,16 +91,18 @@ There are a few things to note.
     designed to conceal any wires that run underneath the components. This 
     allows you to simply run a wire underneath the component rather than 
     explicitly wire to each terminal, which can simply the description of the 
-    schematics. The color of the concealers matches that of the background, so 
-    if you use no background, then you also lose the concealers.
+    schematics. For this to work, the wire must be specified before the 
+    component. Also, the color of the concealers matches that of the background, 
+    so if you use no background, then you also lose the concealers.
 #.  The unit size of a tile is 50. You have limited ability to specify the size 
     of some components, and specifying the size as 1 implies the tile will be 
     50x50.  Most components have a size of 2 and so sit within a 100x100 tile.
-#.  If you specify the size as an integer, the terminals will fall on multiples 
-    of 25.
+#.  You need not specify the size as an integer, but if you do, the terminals 
+    will fall on multiples of 25.
 #.  Wires and components stack in layers, with the first that is placed going on 
-    the lowest layer. Generally you want to give the wires first so they fall at 
-    the bottom of the stack. Most components will conceal a wire that it covers.  
+    the lowest layer. If you are using concealers to allow you to wire 
+    underneath components, you neet to give the wires first so they fall at the 
+    bottom of the stack.  Most components will conceal a wire that it covers.  
     This makes it easier to wire up the schematic. You need not connect to each 
     terminal individually.
 #.  It is generally better to specify the important feature location coordinates 
@@ -94,28 +128,45 @@ There are a few things to note.
     coordinates on the circle used to depict the source.
 
 
-You can also use *schematic* with the Python *with* statement, which will 
-automatically close and save the schematic. Thus the second half the above 
-example
+Placement Strategies
+~~~~~~~~~~~~~~~~~~~~
 
-.. code-block:: python
+There are two basic approaches to placing components. First, you may specify the 
+coordinate in absolute terms. For example::
 
     with Schematic(filename = "rlc.svg"):
-        Wire([(r_x, top), (l_x, top), (l_x, bot), (r_x, bot)])
-        Wire([(c_x, top), (c_x, bot)])
-        Resistor((r_x, mid), name='R', orientation='v')
-        Capacitor((c_x, mid), name='C', orientation='v')
-        Inductor((l_x, mid), name='L', orientation='v')
+        Wire([(-75, -50), (75, -50), (75, 50), (-75, 50)])
+        Wire([(0, -50), (0, 50)])
+        Resistor((-75, 0), name='R', orientation='v')
+        Capacitor((0, 0), name='C', orientation='v')
+        Inductor((75, 0), name='L', orientation='v')
 
+This turns out to be rather cumbersome if you need to move things around. In 
+that case you likely have to adjust a large number coordinates.  Since 
+schematics of any complexity are often adjusted repeatedly before they are 
+correct and aesthetically appealing, this approach can lead to a lot of tedious 
+work.
 
-Creating Schematic Coordinates
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A variation on this approach that is considerably better is to place the 
+coordinates in variables and then use the variables when specifying component 
+locations and wire vertices.  That approach was used in the first example.  It 
+can results in the up-front specification of a large number of coordinates.  
+A refinement is to just specify the primary coordinates up-front, and calculate 
+the rest as needed::
 
-In general you want to specify x and y coordinates in terms of previously 
-specified coordinates. In this way, if you move one the subsequent coordinates 
-adjust accordingly. Creating these coordinates is made easier by specifying 
-offsets and then converting them to coordinates with *offsets_to_coordinates*.  
-For example::
+    r_x, r_y = 0, 0
+    c_x, c_y = r_x + 75, r_y
+    l_x, l_y = c_x + 75, c_y
+
+    with Schematic(filename = "rlc.svg"):
+        Wire([(r_x, c_y-50), (l_x, c_y-50), (l_x, c_y+50), (r_x, c_y+50)])
+        Wire([(c_x, c_y-50), (c_x, c_y+50)])
+        Resistor((r_x, 0), name='R', orientation='v')
+        Capacitor((c_x, 0), name='C', orientation='v')
+        Inductor((l_x, 0), name='L', orientation='v')
+
+*Schematic* provides a way for you to specify these coordinates relatively 
+efficiently by using offsets::
 
     # create coordinates
     x_offsets = dict(
@@ -130,7 +181,9 @@ For example::
     )
     offsets_to_coordinates(locals(), x_offsets, y_offsets)
 
-This creates the following local variables::
+*offsets_to_coordinates* creates a collection of local variables whose names 
+derive from the keys used in the dictionary. This example creates the following 
+local variables::
     r_x = 0
     c_x = 75
     l_x = 150
@@ -138,9 +191,26 @@ This creates the following local variables::
     mid_y = 50
     bot_y = 100
 
+The *x_offsets* are handled as follows. The process starts at 0. The first 
+offset, *r*, is 0, meaning that *r_x* will be 0 units east of 0, which of course 
+is 0. Then *c_x* will be 75 units east of *r_x* and *l_x* is 75 units east of 
+*c_x*. *y_offsets* is processed in a similar way, except the direction of travel 
+is south. This function assumes that the dictionary is ordered, as such it 
+requires Python3.6 or greater. If you are not using such a recent version of 
+Python, the you should import *OrderedDict* from *collections* and use it to 
+build the dictionary.
 
-Shifting Coordinates
-~~~~~~~~~~~~~~~~~~~~
+The second basic approach to placing component is to place them relative to each 
+other. To do so, you would generally take advantage of the fact that components 
+have attributes that contains useful coordinate locations on the component. For 
+example::
+
+    r = Resistor((0, 0), name='R', orientation='v')
+
+Now, *r.c*, *r.n*, *r.ne*, *r.e*, *r.se*, *r.s*, *r.sw*, *r.w*, and *r.nw* 
+contain the coordinates of the center, north, northeast, east, southeast, south, 
+southwest, west, and northwest corners.  In addition, *r.t[0]* and *r.t[1]* hold 
+the coordinates of the positive and negative terminals.
 
 The *shift_x*, *shift_y*, and *shift* utility functions are provided to shift 
 the position of a coordinate pair.  Examples::
@@ -161,36 +231,86 @@ argument::
     with_x((x1,y1), (x2,y2)) --> (x2, y1)
     with_y((x1,y1), (x2,y2)) --> (x1, y2)
 
-
-Terminals
-~~~~~~~~~
-
-Most components have a terminals that contain the coordinates of their 
-terminals. You can use these to wire to the components. The *shift_x*, 
-*shift_y*, and *shift* utility functions are also provided. They can be used to 
-shift the position of a coordinate pair::
-
-    from schematic import (
-        Schematic, shift_x, shift_y, offsets_to_coordinates,
-        Resistor, Capacitor, Inductor, Wire
-    )
-
-    # create coordinates
-    x_offsets = dict(
-        r = 0,
-        c = 75,
-        l = 75,
-    )
-    offsets_to_coordinates(locals(), x_offsets)
+Now the RLC schematic can be rewritten as follows::
 
     with Schematic(filename = "rlc.svg"):
-        r = Resistor((r_x, 0), name='R', orientation='v')
-        c = Capacitor((c_x, 0), name='C', orientation='v')
-        l = Inductor((l_x, 0), name='L', orientation='v')
-        Wire([r.t[1], shift_y(r.t[1], 25), shift_y(l.t[1], 25), l.t[1]])
-        Wire([c.t[1], shift_y(c.t[1], 25)])
-        Wire([r.t[0], shift_y(r.t[0], -25), shift_y(l.t[0], -25), l.t[0]])
-        Wire([c.t[0], shift_y(c.t[0], -25)])
+        r = Resistor((0, 0), name='R', orientation='v')
+        c = Capacitor(shift_x(r.c, 75), name='C', orientation='v')
+        l = Inductor(shift_x(c.c, 75), name='L', orientation='v')
+        Wire([r.t[0], c.t[0], l.t[0]])
+        Wire([r.t[1], c.t[1], l.t[1]])
+
+You are free to mix these various styles of component placement as you desire.
+
+
+SVGwrite
+~~~~~~~~
+
+*Schematic* subclasses the Python `svgwrite 
+<https://pythonhosted.org/svgwrite>`_  *Drawing* class. So you can call any 
+*Drawing* method from a schematic. In this case you must keep the schematic 
+instance to access the methods::
+
+    with Schematic(filename = "rlc.svg") as schematic:
+        schematic.circle(
+            center=(0,0), r=100, fill='none', stroke_width=1, stroke='black'
+        )
+        schematic.text(
+            'Hello', insert=(0,0), font_family='sans', font_size=16, fill='black'
+        )
+
+One thing to note is that *Schematic* normally keeps track of the location and 
+extent of the schematic objects and sizes the drawing accordingly. It will be 
+unaware of anything added directly to the drawing though the *svgwrite* methods.
+
+*Schematic* offers an alternative to the *text* method of *svgwrite*. *add_text* 
+takes only the text, the placement, and the alignment and uses *Schematic* 
+defaults for everything else. The alignment consists of two letters. The first 
+letter specifies the vertical alignment and is either *u*, *l*, and *m" 
+signifying upper, lower and middle. The second specifies the horizontal 
+alignment, and is either *l*, *r*, or *m*, signifying left, right, or middle.  
+Thus, another way of adding text to the above drawing would be with::
+
+        schematic.add_text('Hello', (0,0), 'mm')
+
+
+Latex
+~~~~~
+
+To include these schematics into Latex documents, you need to run inkscape with 
+the --export-latex command line option to generate the files that you can 
+include in Latex. Here is a Makefile that you can use to keep all these files up 
+to date::
+
+    DRAWINGS = \
+        flash-adc \
+        pipeline-adc \
+        delta-sigma-adc
+
+    SVG_FILES=$(DRAWINGS:=.svg)
+    PDF_FILES=$(DRAWINGS:=.pdf)
+    PDFTEX_FILES=$(DRAWINGS:=.pdf_tex)
+
+    .PHONY: clean
+    .PRECIOUS: %.svg
+
+    %.svg: %.py
+            python3 $<
+
+    %.pdf: %.svg
+            inkscape -z -D --file=$< --export-pdf=$@ --export-latex
+
+    clean:
+            rm -rf $(PDF_FILES) $(PDFTEX_FILES) __pycache__
+
+To include the files into your Latex document, use::
+
+    \def\svgwidth{0.5\columnwidth}
+    \input{delta-sigma.pdf_tex}
+
+Finally, to convert your Latex file to PDF, use::
+
+    pdflatex --shell-escape converters.tex
 
 
 Schematic
@@ -243,6 +363,7 @@ vertical.  With `-|-`, the segments are horizontal, vertical, and horizontal.
 
 *Wire* provides the *b* and *e* attributes, that contain the coordinates of the 
 beginning and end of the wire.
+
 
 Components
 ----------
@@ -520,40 +641,3 @@ only the name is displayed. If 'arrow' is specified, an arrow is added.  If
 generally used with buses to indicate the bus width. Finally, 'dot' adds 
 a solder dot.
 
-Latex
------
-
-To include these schematics into Latex documents, you need to run inkscape with 
-the --export-latex command line option to generate the files that you can 
-include in Latex. Here is a Makefile that you can use to keep all these files up 
-to date::
-
-    DRAWINGS = \
-        flash-adc \
-        pipeline-adc \
-        delta-sigma-adc
-
-    SVG_FILES=$(DRAWINGS:=.svg)
-    PDF_FILES=$(DRAWINGS:=.pdf)
-    PDFTEX_FILES=$(DRAWINGS:=.pdf_tex)
-
-    .PHONY: clean
-    .PRECIOUS: %.svg
-
-    %.svg: %.py
-            python3 $<
-
-    %.pdf: %.svg
-            inkscape -z -D --file=$< --export-pdf=$@ --export-latex
-
-    clean:
-            rm -rf $(PDF_FILES) $(PDFTEX_FILES) __pycache__
-
-To include the files into your Latex document, use::
-
-    \def\svgwidth{0.5\columnwidth}
-    \input{delta-sigma.pdf_tex}
-
-Finally, to convert your Latex file to PDF, use::
-
-    pdflatex --shell-escape converters.tex

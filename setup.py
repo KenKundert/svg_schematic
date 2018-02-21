@@ -5,12 +5,12 @@ except ImportError:
 import sys
 
 setup(
-    name='schematic',
+    name='svg_schematic',
     version='0.0.0',
     description='svg schematics',
     author="Ken Kundert",
     license='GPLv3+',
     zip_safe=True,
-    py_modules='schematic'.split(),
+    py_modules='svg_schematic'.split(),
     install_requires='svgwrite'.split(),
 )

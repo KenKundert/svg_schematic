@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg baseProfile="full" height="100%" version="1.1" viewBox="-105.0,-75.0,1480.0,300.0" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs/>
+  <g id="bkgnd">
+    <rect fill="white" height="300.0" stroke="orange" stroke-width="1" width="1480.0" x="-105.0" y="-75.0"/>
+  </g>
+  <g id="symbol" transform="translate(0,0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="1"/>
+  </g>
+  <g id="text"/>
+  <g id="symbol" transform="translate(0,0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="end" x="-5" y="4.800000000000001">L-band Horn</text>
+  </g>
+  <g id="symbol" transform="translate(0,15)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="end" x="-5" y="19.8">fc=1420MHz</text>
+  </g>
+  <g id="symbol" transform="translate(0,30)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="end" x="-5" y="34.8">BW=15MHz</text>
+  </g>
+  <g id="symbol" transform="translate(75,0)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <polygon fill="white" points="50.0,0 -50.0,-50.0 -50.0,50.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="-45.0" x2="-31.0" y1="25.0" y2="25.0"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="-45.0" x2="-31.0" y1="-25.0" y2="-25.0"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="-38.0" x2="-38.0" y1="-18.0" y2="-32.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="62.5" y="4.800000000000001">RF Preamp1</text>
+  </g>
+  <g id="symbol" transform="translate(75,50.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="75" y="64.6">A&gt;=26dB</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="0,0 25.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="symbol" transform="translate(200.0,0)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <polygon fill="white" points="50.0,0 -50.0,-50.0 -50.0,50.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="-45.0" x2="-31.0" y1="25.0" y2="25.0"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="-45.0" x2="-31.0" y1="-25.0" y2="-25.0"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="-38.0" x2="-38.0" y1="-18.0" y2="-32.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="187.5" y="4.800000000000001">RF Preamp2</text>
+  </g>
+  <g id="symbol" transform="translate(200.0,50.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="200.0" y="64.6">A&gt;=26dB</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="125.0,0 150.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="symbol" transform="translate(325.0,0)">
+    <rect fill="none" height="75.0" stroke="none" width="100" x="-50.0" y="-37.5"/>
+    <rect fill="white" height="75.0" stroke="black" stroke-width="1" width="100" x="-50.0" y="-37.5"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="325.0" y="4.800000000000001">RF BPF</text>
+  </g>
+  <g id="symbol" transform="translate(325.0,37.5)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="325.0" y="52.1">fc=1380MHz</text>
+  </g>
+  <g id="symbol" transform="translate(325.0,52.5)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="325.0" y="67.1">BW=320MHz</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="250.0,0 275.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="symbol" transform="translate(450.0,0)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <polygon fill="white" points="50.0,0 -50.0,-50.0 -50.0,50.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="-45.0" x2="-31.0" y1="25.0" y2="25.0"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="-45.0" x2="-31.0" y1="-25.0" y2="-25.0"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="-38.0" x2="-38.0" y1="-18.0" y2="-32.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="437.5" y="4.800000000000001">RF Amp1</text>
+  </g>
+  <g id="symbol" transform="translate(450.0,50.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="450.0" y="64.6">A&lt;=20dB</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="375.0,0 400.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="symbol" transform="translate(575.0,0)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <polygon fill="white" points="50.0,0 -50.0,-50.0 -50.0,50.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="-45.0" x2="-31.0" y1="25.0" y2="25.0"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="-45.0" x2="-31.0" y1="-25.0" y2="-25.0"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="-38.0" x2="-38.0" y1="-18.0" y2="-32.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="562.5" y="4.800000000000001">RF Amp2</text>
+  </g>
+  <g id="symbol" transform="translate(575.0,50.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="575.0" y="64.6">A&lt;=20dB</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="500.0,0 525.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="symbol" transform="translate(675.0,0)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <circle cx="0" cy="0" fill="white" r="25.0" stroke="black" stroke-width="1"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="-8.875" x2="8.875" y1="-8.875" y2="8.875"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="8.875" x2="-8.875" y1="-8.875" y2="8.875"/>
+  </g>
+  <g id="text"/>
+  <g id="symbol" transform="translate(675.0,-25.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="675.0" y="-30.0">DSB</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="625.0,0 650.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="symbol" transform="translate(675.0,125.0)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <circle cx="0" cy="0" fill="white" r="25.0" stroke="black" stroke-width="1"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="0" x2="0" y1="-50.0" y2="-25.0"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="0" x2="0" y1="50.0" y2="25.0"/>
+    <path d="M -18.75 0 C -14.0625 -12.5 -4.6875 -12.5 0 0 4.6875 12.5 14.0625 12.5 18.75 0" fill="none" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="start" x="680.0" y="95.0">fo=1230MHz</text>
+    <text fill="black" font-family="sans" font-size="12" text-anchor="start" x="680.0" y="164.6">P=10dBm</text>
+  </g>
+  <g id="symbol" transform="translate(675.0,175.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <polyline fill="white" points="0,0 25.0,0 0,25.0 -25.0,0 0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="text"/>
+  <g id="wire">
+    <polyline fill="none" points="675.0,25.0 675.0,100.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="symbol" transform="translate(775.0,0)">
+    <rect fill="none" height="75.0" stroke="none" width="100" x="-50.0" y="-37.5"/>
+    <rect fill="white" height="75.0" stroke="black" stroke-width="1" width="100" x="-50.0" y="-37.5"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="775.0" y="4.800000000000001">IF BPF</text>
+  </g>
+  <g id="symbol" transform="translate(775.0,37.5)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="775.0" y="52.1">fc=190MHz</text>
+  </g>
+  <g id="symbol" transform="translate(775.0,52.5)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="775.0" y="67.1">BW=22MHz</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="700.0,0 725.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="symbol" transform="translate(900.0,0)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <polygon fill="white" points="50.0,0 -50.0,-50.0 -50.0,50.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="-45.0" x2="-31.0" y1="25.0" y2="25.0"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="-45.0" x2="-31.0" y1="-25.0" y2="-25.0"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="-38.0" x2="-38.0" y1="-18.0" y2="-32.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="887.5" y="4.800000000000001">IF Amp</text>
+  </g>
+  <g id="symbol" transform="translate(900.0,50.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="900.0" y="64.6">A=20dB</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="825.0,0 850.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="symbol" transform="translate(1000.0,0)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <circle cx="0" cy="0" fill="white" r="25.0" stroke="black" stroke-width="1"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="-8.875" x2="8.875" y1="-8.875" y2="8.875"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="8.875" x2="-8.875" y1="-8.875" y2="8.875"/>
+  </g>
+  <g id="text"/>
+  <g id="symbol" transform="translate(1000.0,-25.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="1000.0" y="-30.0">SSB</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="950.0,0 975.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="symbol" transform="translate(1000.0,125.0)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <circle cx="0" cy="0" fill="white" r="25.0" stroke="black" stroke-width="1"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="0" x2="0" y1="-50.0" y2="-25.0"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="0" x2="0" y1="50.0" y2="25.0"/>
+    <path d="M -18.75 0 C -14.0625 -12.5 -4.6875 -12.5 0 0 4.6875 12.5 14.0625 12.5 18.75 0" fill="none" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="start" x="1005.0" y="95.0">fo=190MHz</text>
+    <text fill="black" font-family="sans" font-size="12" text-anchor="start" x="1005.0" y="164.6">P=10dBm</text>
+  </g>
+  <g id="symbol" transform="translate(1000.0,175.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <polyline fill="white" points="0,0 25.0,0 0,25.0 -25.0,0 0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="text"/>
+  <g id="wire">
+    <polyline fill="none" points="1000.0,25.0 1000.0,100.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="symbol" transform="translate(1100.0,0)">
+    <rect fill="none" height="75.0" stroke="none" width="100" x="-50.0" y="-37.5"/>
+    <rect fill="white" height="75.0" stroke="black" stroke-width="1" width="100" x="-50.0" y="-37.5"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="1100.0" y="4.800000000000001">BB LPF</text>
+  </g>
+  <g id="symbol" transform="translate(1100.0,37.5)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="1100.0" y="52.1">BW=2MHz (var)</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="1025.0,0 1050.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="symbol" transform="translate(1225.0,0)">
+    <rect fill="none" height="75.0" stroke="none" width="100" x="-50.0" y="-37.5"/>
+    <rect fill="white" height="75.0" stroke="black" stroke-width="1" width="100" x="-50.0" y="-37.5"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="1225.0" y="4.800000000000001">ADC</text>
+  </g>
+  <g id="symbol" transform="translate(1225.0,37.5)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="1225.0" y="52.1">Fclk=var</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="1150.0,0 1175.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="symbol" transform="translate(1325.0,0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="start" x="1334.0" y="4.800000000000001">out</text>
+  </g>
+  <g id="symbol" transform="translate(1300.0,0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <line stroke="black" stroke-width="1" x1="-6.0" x2="6.0" y1="6.0" y2="-6.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="1300.0" y="20.6">8</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="1275.0,0 1325.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+</svg>

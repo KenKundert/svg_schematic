@@ -1,3 +1,33 @@
+# SVG Schematics by Ken Kundert
+# encoding: utf8
+
+
+# Description {{{1
+"""
+*SVG Schematic* is a Python library can be used to create schematics using SVG.
+"""
+__version__ = '0.0.0'
+__released__ = '2018-02-20'
+
+
+# License {{{1
+# Copyright (C) 2016-2018 Kenneth S. Kundert
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see [http://www.gnu.org/licenses/].
+
+
+# Imports {{{1
 from svgwrite import Drawing, cm, mm
 from math import sqrt
 
@@ -89,6 +119,10 @@ class Schematic(Drawing): # {{{1
         self.sch_dot_radius = kwargs.pop('dot_radius', Schematic.sch_DOT_RADIUS)
         self.sch_background = kwargs.pop('background', Schematic.sch_BACKGROUND)
         self.sch_outline = kwargs.pop('outline', Schematic.sch_OUTLINE)
+        self.sch_left_pad = kwargs.pop('left_pad', 0)
+        self.sch_right_pad = kwargs.pop('right_pad', 0)
+        self.sch_top_pad = kwargs.pop('top_pad', 0)
+        self.sch_bottom_pad = kwargs.pop('bottom_pad', 0)
         super().__init__(filename, *args, **kwargs)
 
         # add a group for the background, must do it now so it ends up at the
@@ -116,11 +150,13 @@ class Schematic(Drawing): # {{{1
     # close() {{{2
     def close(self, min_x=None, min_y=None, width=None, height=None):
         "Saves and closes schematic"
+        # the arguments are deprecated, use padding when creating schematic
+        # instead.
         if width is None:
-            min_x = self.sch_min_x
-            min_y = self.sch_min_y
-            width = self.sch_max_x - self.sch_min_x
-            height = self.sch_max_y - self.sch_min_y
+            min_x = self.sch_min_x - self.sch_left_pad
+            min_y = self.sch_min_y - self.sch_bottom_pad
+            width = self.sch_max_x + self.sch_right_pad - min_x
+            height = self.sch_max_y + self.sch_top_pad - min_y
         assert width > 0 and height > 0, "no components in schematic."
             # may also fail if components do not update bounds
 
