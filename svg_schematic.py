@@ -119,10 +119,11 @@ class Schematic(Drawing): # {{{1
         self.sch_dot_radius = kwargs.pop('dot_radius', Schematic.sch_DOT_RADIUS)
         self.sch_background = kwargs.pop('background', Schematic.sch_BACKGROUND)
         self.sch_outline = kwargs.pop('outline', Schematic.sch_OUTLINE)
-        self.sch_left_pad = kwargs.pop('left_pad', 0)
-        self.sch_right_pad = kwargs.pop('right_pad', 0)
-        self.sch_top_pad = kwargs.pop('top_pad', 0)
-        self.sch_bottom_pad = kwargs.pop('bottom_pad', 0)
+        pad = kwargs.pop('pad', 0)
+        self.sch_left_pad = kwargs.pop('left_pad', 0) + pad
+        self.sch_right_pad = kwargs.pop('right_pad', 0) + pad
+        self.sch_top_pad = kwargs.pop('top_pad', 0) + pad
+        self.sch_bottom_pad = kwargs.pop('bottom_pad', 0) + pad
         super().__init__(filename, *args, **kwargs)
 
         # add a group for the background, must do it now so it ends up at the
@@ -1283,17 +1284,18 @@ class Pin(Tile): # {{{1
             '|' = flip about vertical axis
         name (str): the pin name
         value (str): the pin value (unused for in and out pins)
-        size (num): the size of the tile (multiples of unit height, width)
+        w (num): the width of the tile (multiples of unit width)
+        l (num): the height of the tile (multiples of unit height)
         nudge (num): offset used when positioning text (if needed)
     '''
     DEFAULT_KIND = 'out'
 
     def __init__(
-        self, center, kind=None, orientation='v', name=None, value=None, size=1,
-        nudge=5
+        self, center, kind=None, orientation='v', name=None, value=None,
+        w=1, l=1, nudge=5
     ):
         # Initialization and parameters {{{2
-        super().__init__(center, size, size)
+        super().__init__(center, w, l)
         schematic = self.sch_schematic
         symbol = self.symbol
         r = schematic.sch_dot_radius
@@ -1353,7 +1355,8 @@ class Label(Tile): # {{{1
         value (str): ignored
         loc (str): label location
             choose from 'c', 'n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'
-        width (num): the width of the tile (multiples of unit width)
+        w (num): the width of the tile (multiples of unit width)
+        l (num): the length of the tile (multiples of unit width)
         nudge (num): offset used when positioning text (if needed)
     '''
 

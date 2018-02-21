@@ -1,26 +1,22 @@
 #!/usr/bin/env python3
 
-from schematic import (
-    Schematic, shift, shift_x, shift_y, with_x, with_y, offsets_to_coordinates,
-    Amp, Box, Ground, Label, Pin, Source, Wire
+from svg_schematic import (
+    Schematic, shift_x, shift_y, Amp, Box, Ground, Label, Pin, Source, Wire
 )
 
 with Schematic(
     filename = 'receiver.svg',
     font_size = 12,
     font_family = 'sans',
-    outline = 'orange',
-    left_pad = 80,
-    right_pad = 25,
-    top_pad = 25,
-    bottom_pad = 25
+    outline = 'none',
+    pad = 20,
 ) as schematic:
 
     # Place input from horn at 0,0. Describe horn with labels on the west side.
     rf_in = Pin((0,0), kind='in')
-    Label(rf_in.c, loc='w', name='L-band Horn')
-    Label(shift_y(rf_in.c, 15), loc='w', name='fc=1420MHz')
-    Label(shift_y(rf_in.c, 30), loc='w', name='BW=15MHz')
+    Label(rf_in.c, loc='w', name='L-band Horn', w=3)
+    Label(shift_y(rf_in.c, 15), loc='w', name='fc=1420MHz', w=3.5)
+    Label(shift_y(rf_in.c, 30), loc='w', name='BW=15MHz', w=3.5)
 
     # Place first preamp 75 units east of input. Amplifier is 100 units wide.
     # Place label south of preamp and connect wire from input to preamp.
@@ -97,6 +93,6 @@ with Schematic(
     Wire([bb_lpf.e, adc.w])
 
     # Place output east of analog-to-digital converter.
-    bb_out = Pin(shift_x(adc.e, 50), kind='out', name='out')
+    bb_out = Pin(shift_x(adc.e, 50), kind='out', name='out', w=1.5)
     Label(shift_x(adc.e, 25), kind='slash', loc='s', name='8')
     Wire([adc.e, bb_out.c])

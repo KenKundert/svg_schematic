@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<svg baseProfile="full" height="100%" version="1.1" viewBox="-105.0,-75.0,1480.0,300.0" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg baseProfile="full" height="100%" version="1.1" viewBox="-107.5,-70.0,1490.0,290.0" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs/>
   <g id="bkgnd">
-    <rect fill="white" height="300.0" stroke="orange" stroke-width="1" width="1480.0" x="-105.0" y="-75.0"/>
+    <rect fill="white" height="290.0" stroke="none" stroke-width="1" width="1490.0" x="-107.5" y="-70.0"/>
   </g>
   <g id="symbol" transform="translate(0,0)">
     <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
@@ -10,19 +10,19 @@
   </g>
   <g id="text"/>
   <g id="symbol" transform="translate(0,0)">
-    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <rect fill="none" height="50" stroke="none" width="150" x="-75.0" y="-25.0"/>
   </g>
   <g id="text">
     <text fill="black" font-family="sans" font-size="12" text-anchor="end" x="-5" y="4.800000000000001">L-band Horn</text>
   </g>
   <g id="symbol" transform="translate(0,15)">
-    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <rect fill="none" height="50" stroke="none" width="175.0" x="-87.5" y="-25.0"/>
   </g>
   <g id="text">
     <text fill="black" font-family="sans" font-size="12" text-anchor="end" x="-5" y="19.8">fc=1420MHz</text>
   </g>
   <g id="symbol" transform="translate(0,30)">
-    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <rect fill="none" height="50" stroke="none" width="175.0" x="-87.5" y="-25.0"/>
   </g>
   <g id="text">
     <text fill="black" font-family="sans" font-size="12" text-anchor="end" x="-5" y="34.8">BW=15MHz</text>
@@ -269,7 +269,7 @@
     <polyline fill="none" points="1150.0,0 1175.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
   </g>
   <g id="symbol" transform="translate(1325.0,0)">
-    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <rect fill="none" height="50" stroke="none" width="75.0" x="-37.5" y="-25.0"/>
     <circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="1"/>
   </g>
   <g id="text">

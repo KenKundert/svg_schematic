@@ -70,7 +70,7 @@ It would create the following schematic:
 
 You can also use *schematic* with the Python *with* statement, which will 
 automatically close and save the schematic. Thus the second half the above 
-example
+example becomes:
 
 .. code-block:: python
 
@@ -83,49 +83,50 @@ example
 
 There are a few things to note.
 
-#.  SVG coordinates are used, which inverts the y axis (smaller coordinates are 
-    above the larger coordinates).
+#.  SVG coordinates are used, which inverts the y axis (more southern 
+    coordinates are more positive the more northern coordinates).
 #.  Components are placed in invisible tiles. When you specify the position of 
     the component you are specifying the center of the tile.
-#.  Most components contain concealers, which are small rectangles that are 
-    designed to conceal any wires that run underneath the components. This 
-    allows you to simply run a wire underneath the component rather than 
-    explicitly wire to each terminal, which can simply the description of the 
-    schematics. For this to work, the wire must be specified before the 
-    component. Also, the color of the concealers matches that of the background, 
-    so if you use no background, then you also lose the concealers.
+#.  Wires and components stack in layers, with the first that is placed going on 
+    the lowest layer.  Most components contain concealers, which are small rectangles that are designed 
+    to conceal any wires that run underneath the components. This allows you to 
+    simply run a wire underneath the component rather than explicitly wire to 
+    each terminal, which can simply the description of the schematics. For this 
+    to work, the wire must be specified before the component as done in the 
+    above example. Also, the color of the concealers matches that of the 
+    background, so if you use no background, then you also lose the concealers.
 #.  The unit size of a tile is 50. You have limited ability to specify the size 
     of some components, and specifying the size as 1 implies the tile will be 
     50x50.  Most components have a size of 2 and so sit within a 100x100 tile.
-#.  You need not specify the size as an integer, but if you do, the terminals 
-    will fall on multiples of 25.
-#.  Wires and components stack in layers, with the first that is placed going on 
-    the lowest layer. If you are using concealers to allow you to wire 
-    underneath components, you neet to give the wires first so they fall at the 
-    bottom of the stack.  Most components will conceal a wire that it covers.  
-    This makes it easier to wire up the schematic. You need not connect to each 
-    terminal individually.
+#.  You need not specify the size as an integer.
 #.  It is generally better to specify the important feature location coordinates 
     in variables, and use the variable to control the location of the component, 
     rather than specifying the coordinates directly on the components and wires.  
     Further, it generally good to specify the coordinates in terms of the 
     previous coordinates. In this way, you can adjust the placement of many 
     features by changing one or two variable values.
-#.  With most components you can specify a name and a value.
 #.  You can flip and rotate the components using the *orientation* argument.
-    Specifying 'v' implies a vertical placement, and 'h' a horizontal placement.  
-    Specifying `|` implies the component should be flipped along a vertical axis 
-    (left to right) and specifying '-' implies the component should be flipped 
-    along a horizontal axis (up to down).
+    Specifying 'v' implies a vertical placement, and 'h' a horizontal placement 
+    (a component is converted from vertical to horizontal with a -90 degree 
+    rotation.  Specifying `|` implies the component should be flipped along 
+    a vertical axis (left to right) and specifying '-' implies the component 
+    should be flipped along a horizontal axis (up to down).
+#.  With most components you can specify a name, and with many components you 
+    can also specify a value.  The text orientation will always be horizontal 
+    regardless of the component orientation.
 #.  When the schematic is used with Latex, you can use Latex formatting in the 
     name and value. For example, you can specify: `name='$L_1$'`. You should use 
     raw strings if your string contains backslashes: `value=r'$10 \\mu H$'`.
 #.  Components provide the *t* attribute, which is a list of the locations of 
-    its terminals.
+    its terminals. Many component also provide individual attributes for each 
+    terminal. For example, the resistor, capacitor, and inductor components 
+    provide the *p* and *n* terminal attributes. The MOS component provides the 
+    *d*, *g*, and *s* terminal attributes. The diode component provides the *a* 
+    and *c* terminal attributes.
 #.  Components contain attributes for each of the 9 principal coordinates (c, n, 
     ne, e, se, s, sw, w, nw).  For most components, these are the principal 
     coordinates for the component's tile. However, the source places its 
-    coordinates on the circle used to depict the source.
+    principal coordinates on the circle used to depict the source.
 
 
 Placement Strategies
@@ -165,7 +166,7 @@ the rest as needed::
         Capacitor((c_x, 0), name='C', orientation='v')
         Inductor((l_x, 0), name='L', orientation='v')
 
-*Schematic* provides a way for you to specify these coordinates relatively 
+*Schematic* provides a way for you to generated these coordinates relatively 
 efficiently by using offsets::
 
     # create coordinates
@@ -211,8 +212,10 @@ Now, *r.c*, *r.n*, *r.ne*, *r.e*, *r.se*, *r.s*, *r.sw*, *r.w*, and *r.nw*
 contain the coordinates of the center, north, northeast, east, southeast, south, 
 southwest, west, and northwest corners.  In addition, *r.p* and *r.n* hold the 
 coordinates of the positive and negative terminals, as do *r.t[0]* and *r.t[1]*.
+Finally, wires provide the *b* and *e* attributes, which contain the coordinates 
+of their beginning and ending.
 
-The *shift_x*, *shift_y*, and *shift* utility functions are provided to shift 
+The *shift*, *shift_x*, and *shift_y* utility functions are provided to shift 
 the position of a coordinate pair.  Examples::
 
     shift((x,y), dx, dy) --> (x+dx, y+dy)
@@ -240,6 +243,10 @@ Now the RLC schematic can be rewritten as follows::
         Wire([r.p, c.p, l.p])
         Wire([r.n, c.n, l.n])
 
+In this case the only coordinate that was explicitly specified with that of *r* 
+which was placed at the origin. All other components and wires were placed 
+relative to the center of *r*.
+
 You are free to mix these various styles of component placement as you desire.
 
 
@@ -262,6 +269,9 @@ instance to access the methods::
 One thing to note is that *Schematic* normally keeps track of the location and 
 extent of the schematic objects and sizes the drawing accordingly. It will be 
 unaware of anything added directly to the drawing though the *svgwrite* methods.
+As a result, these objects may fall partially or completely outside the bounds 
+of the drawing. You can add padding when you first instantiate *Schematic* or 
+you can use the *svgwrite* *viewbox* method to extend the bounds.
 
 *Schematic* offers an alternative to the *text* method of *svgwrite*. *add_text* 
 takes only the text, the placement, and the alignment and uses *Schematic* 
@@ -277,10 +287,10 @@ Thus, another way of adding text to the above drawing would be with::
 Latex
 ~~~~~
 
-To include these schematics into Latex documents, you need to run inkscape with 
-the --export-latex command line option to generate the files that you can 
-include in Latex. Here is a Makefile that you can use to keep all these files up 
-to date::
+To include these schematics into Latex documents, you need to run `Inkscape 
+<https://inkscape.org>`_  with the --export-latex command line option to 
+generate the files that you can include in Latex. Here is a Makefile that you 
+can use to keep all these files up to date::
 
     DRAWINGS = \
         flash-adc \
@@ -327,37 +337,41 @@ Schematic
 
 When creating a schematic you may specify the following arguments: filename, 
 font_size, font_family (ex. 'serif' or 'sans-serif'), line_width, and 
-dot_radius. The dot radius is the radius of solder-dots and pins.
+dot_radius.  The dot radius is the radius of solder-dots and pins.
 
 You can also specify background and outline, both of which are colors. The 
 default background is 'white' and the default outline is 'none'. If you set 
 background to 'none' be aware that this makes the concealers transparent, 
 meaning that you cannot wire under components, instead you must wire to the 
-pins.
+pins.  It is common to start by setting outline to allow you to see the SVG 
+drawing area, and then later remove it when your schematic is complete.
+pad arguments are used to adjust the size of the SVG 
 
-The size of the SVG canvas will automatically be sized to fit tightly around the 
-specified schematic objects. However, you can override this behavior by 
-specifying the desired canvas position and size when closing the schematic. For 
-example:
-
-.. code-block:: python
-
-    schematic.close(x_min=0, y_min=0, width=800, height=400)
+The size of the SVG canvas is automatically sized to fit tightly around the 
+specified schematic objects. You might find that the text associated with input 
+and output pins has a tendency to extend beyond the canvas. This is because no 
+attempt is made to estimate the width of text. Instead, you can increase the 
+width of the pin's tile using its *w* parameter. In addition, you can also add 
+padding when creating the schematic. There are five padding arguments. The most 
+commonly used is *pad*, which simply adds the same padding to all four edges. In 
+addtion, you can control the individual edges using left_pad, right_pad, 
+top_pad, and bottom_pad. These simply add to pad to create the final padding for 
+each edge.
 
 
 Wire
 ----
 
 Draw a wire between two or more points given in sequence. Each point should be 
-specified as a x,y pair. Wires should be specified before components, which will 
-place them on the lowest level, allowing the component to obscure the wires when 
-needed.  Example:
+specified as a x,y pair. Wires are often specified before components, which 
+places them on the lowest level, allowing the component to obscure the wires 
+when needed.  Example:
 
 .. code-block:: python
 
     Wire([(x0,y0), (x1,y1), (x2,y2), (x3,y3)])
 
-*Wire* supports the *kind* argument, which may be either 'plain', `|-`, `-|`, 
+*Wire* supports the *kind* argument, which may be either `plain`, `|-`, `-|`, 
 `|-|`, or `-|-`.  With plain, any-angle line segments are added between each of 
 the points.  With `|-`, `-|`, `|-|`, and `-|-` the wires are constrained to 
 follow a Manhattan geometry (between each point there may be one, two, or three 
@@ -402,7 +416,9 @@ as long as you do not specify the schematic background as 'none'.
 Components have a *t* attribute that contains the coordinates of the terminals.  
 It is an array that tends to follow several conventions, the SPICE order and 
 outputs first. If there is a pair of terminals, the top or right would be given 
-first.
+first.  In addition, select components place their terminal locations into named 
+attributes.
+
 
 Resistor
 ~~~~~~~~
@@ -513,7 +529,7 @@ Gate
 
 Draw a gate. You must specify the location of the center as an x,y pair.  You 
 may also specify the kind, the orientation, the name, and the value.  Currently 
-the only supported kind of gate is 'inv', and inverter.
+the only supported kind of gate is 'inv', an inverter.
 
 .. code-block:: python
 
@@ -526,7 +542,7 @@ concealed by the gate.
 Source
 ~~~~~~
 
-Draw an source. You must specify the location of the center as an x,y pair.  You 
+Draw a source. You must specify the location of the center as an x,y pair.  You 
 may also specify the kind, the orientation, the name, and the value. The kind 
 can either be 'empty', 'vdc', 'idc', 'sine', 'sum', or 'mult'.
 
