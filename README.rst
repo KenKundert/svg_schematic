@@ -23,11 +23,15 @@ Installation
 
 Requires Python3. Works best with Python3.6 or newer.
 
-To install, do the following::
+To download the source and install, do the following::
 
-    git clone https://github.com/KenKundert/schematic.git
-    pip3 install --user schematic
+    git clone https://github.com/KenKundert/svg_schematic.git
+    cd svg_schematic
+    pip3 install --user .
 
+If you just wish to install without download the source code, do this::
+
+    pip3 install --user svg_schematic
 
 Introduction
 ------------
