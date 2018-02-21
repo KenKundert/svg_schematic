@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg baseProfile="full" height="100%" version="1.1" viewBox="-25.0,-50.0,675.0,400.0" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs/>
+  <g id="bkgnd">
+    <rect fill="white" height="400.0" stroke="none" stroke-width="1" width="675.0" x="-25.0" y="-50.0"/>
+  </g>
+  <g id="symbol" transform="translate(275,50.0)">
+    <rect fill="none" height="200" stroke="none" width="500" x="-250.0" y="-100.0"/>
+    <rect fill="lightgray" height="200" stroke="black" stroke-width="2" width="500" x="-250.0" y="-100.0"/>
+  </g>
+  <g id="text"/>
+  <g id="symbol" transform="translate(525.0,150.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="520.0" y="145.0">Stage 1</text>
+  </g>
+  <g id="symbol" transform="translate(0,0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="-9" y="7.2">in</text>
+  </g>
+  <g id="symbol" transform="translate(125,100)">
+    <rect fill="none" height="75.0" stroke="none" width="100" x="-50.0" y="-37.5"/>
+    <rect fill="white" height="75.0" stroke="black" stroke-width="2" width="100" x="-50.0" y="-37.5"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="125" y="95">2 bit</text>
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="125" y="119.4">Flash</text>
+  </g>
+  <g id="symbol" transform="translate(200,0)">
+    <rect fill="none" height="75.0" stroke="none" width="100" x="-50.0" y="-37.5"/>
+    <rect fill="white" height="75.0" stroke="black" stroke-width="2" width="100" x="-50.0" y="-37.5"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="200" y="7.2">SAH</text>
+  </g>
+  <g id="symbol" transform="translate(275,100)">
+    <rect fill="none" height="75.0" stroke="none" width="100" x="-50.0" y="-37.5"/>
+    <rect fill="white" height="75.0" stroke="black" stroke-width="2" width="100" x="-50.0" y="-37.5"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="275" y="95">2 bit</text>
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="275" y="119.4">DAC</text>
+  </g>
+  <g id="symbol" transform="translate(350,0) scale(-1,1) rotate(-90)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <circle cx="0" cy="0" fill="white" r="25.0" stroke="black" stroke-width="2"/>
+    <line fill="black" stroke="black" stroke-linecap="round" stroke-width="2" x1="-12.5" x2="12.5" y1="0" y2="0"/>
+    <line fill="black" stroke="black" stroke-linecap="round" stroke-width="2" x1="0" x2="0" y1="-12.5" y2="12.5"/>
+  </g>
+  <g id="text"/>
+  <g id="symbol" transform="translate(325.0,0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="320.0" y="-5">$+$</text>
+  </g>
+  <g id="symbol" transform="translate(350,25.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="355" y="44.4">$-$</text>
+  </g>
+  <g id="symbol" transform="translate(450,0)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <polygon fill="white" points="50.0,0 -50.0,-50.0 -50.0,50.0" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="437.5" y="7.2">$4 \times$</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="0,0 150.0,0" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="250.0,0 325.0,0" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="375.0,0 400.0,0" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="50.0,0 50.0,100 75.0,100" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="175.0,100 225.0,100" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="325.0,100 350,100 350,25" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="symbol" transform="translate(300,225)">
+    <rect fill="none" height="75.0" stroke="none" width="100" x="-50.0" y="-37.5"/>
+    <rect fill="white" height="75.0" stroke="black" stroke-width="2" width="100" x="-50.0" y="-37.5"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="300" y="232.2">Stage 2</text>
+  </g>
+  <g id="symbol" transform="translate(425,225)">
+    <rect fill="none" height="75.0" stroke="none" width="100" x="-50.0" y="-37.5"/>
+    <rect fill="white" height="75.0" stroke="black" stroke-width="2" width="100" x="-50.0" y="-37.5"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="425" y="232.2">Stage 3</text>
+  </g>
+  <g id="symbol" transform="translate(550,225)">
+    <rect fill="none" height="75.0" stroke="none" width="100" x="-50.0" y="-37.5"/>
+    <rect fill="white" height="75.0" stroke="black" stroke-width="2" width="100" x="-50.0" y="-37.5"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="550" y="220">4 bit</text>
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="550" y="244.4">Flash</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="350.0,225 375.0,225" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="475.0,225 500.0,225" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="500.0,0 550.0,0 550.0,175 225,175 225,225 250.0,225" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="200,100 200,300" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="symbol" transform="translate(375.0,325)">
+    <rect fill="none" height="50" stroke="none" width="400" x="-200.0" y="-25.0"/>
+    <rect fill="white" height="50" stroke="black" stroke-width="2" width="400" x="-200.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="375.0" y="332.2">Digital Error Correction</text>
+  </g>
+  <g id="symbol" transform="translate(625.0,325)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="634.0" y="332.2">out</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="575.0,325 625.0,325" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="300,262.5 300,300" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="425,262.5 425,300" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="550,262.5 550,300" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="symbol" transform="translate(200,275)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <line stroke="black" stroke-width="2" x1="-6.0" x2="6.0" y1="6.0" y2="-6.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="195" y="300.4">2</text>
+  </g>
+  <g id="symbol" transform="translate(300,275)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <line stroke="black" stroke-width="2" x1="-6.0" x2="6.0" y1="6.0" y2="-6.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="295" y="300.4">2</text>
+  </g>
+  <g id="symbol" transform="translate(425,275)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <line stroke="black" stroke-width="2" x1="-6.0" x2="6.0" y1="6.0" y2="-6.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="420" y="300.4">2</text>
+  </g>
+  <g id="symbol" transform="translate(550,275)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <line stroke="black" stroke-width="2" x1="-6.0" x2="6.0" y1="6.0" y2="-6.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="545" y="300.4">4</text>
+  </g>
+</svg>

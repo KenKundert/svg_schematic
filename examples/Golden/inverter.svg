@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg baseProfile="full" height="100%" version="1.1" viewBox="-25.0,0.0,250.0,325.0" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs/>
+  <g id="symbol" transform="translate(0,125)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="none" r="4" stroke="black" stroke-width="2"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="-9" y="132.2">$V_{\rm in}$</text>
+  </g>
+  <g id="symbol" transform="translate(100,75)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <rect fill="none" height="92" stroke="none" width="8" x="46.0" y="-46.0"/>
+    <rect fill="none" height="8" stroke="none" width="92" x="-46.0" y="-4"/>
+    <polyline fill="none" points="50.0,-50.0 50.0,-25.0 0,-25.0 0,25.0 50.0,25.0 50.0,50.0" stroke="black" stroke-linecap="round" stroke-width="2"/>
+    <line fill="none" stroke="black" stroke-linecap="square" stroke-width="4" x1="0" x2="0" y1="-37.5" y2="37.5"/>
+    <line fill="none" stroke="black" stroke-linecap="square" stroke-width="2" x1="-12.5" x2="-12.5" y1="-25.0" y2="25.0"/>
+    <line fill="none" stroke="black" stroke-linecap="round" stroke-width="2" x1="-50.0" x2="-12.5" y1="0" y2="0"/>
+    <polygon fill="black" points="40.0,-31.0 10.0,-25.0 40.0,-19.0" stroke="none"/>
+  </g>
+  <g id="text"/>
+  <g id="symbol" transform="translate(100,175)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <rect fill="none" height="92" stroke="none" width="8" x="46.0" y="-46.0"/>
+    <rect fill="none" height="8" stroke="none" width="92" x="-46.0" y="-4"/>
+    <polyline fill="none" points="50.0,-50.0 50.0,-25.0 0,-25.0 0,25.0 50.0,25.0 50.0,50.0" stroke="black" stroke-linecap="round" stroke-width="2"/>
+    <line fill="none" stroke="black" stroke-linecap="square" stroke-width="4" x1="0" x2="0" y1="-37.5" y2="37.5"/>
+    <line fill="none" stroke="black" stroke-linecap="square" stroke-width="2" x1="-12.5" x2="-12.5" y1="-25.0" y2="25.0"/>
+    <line fill="none" stroke="black" stroke-linecap="round" stroke-width="2" x1="-50.0" x2="-12.5" y1="0" y2="0"/>
+    <polygon fill="black" points="10.0,19.0 40.0,25.0 10.0,31.0" stroke="none"/>
+  </g>
+  <g id="text"/>
+  <g id="symbol" transform="translate(200,125)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="none" r="4" stroke="black" stroke-width="2"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="209" y="132.2">$V_{\rm out}$</text>
+  </g>
+  <g id="symbol" transform="translate(150.0,25.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="150.0" y="20.0">$V_{\rm dd}$</text>
+  </g>
+  <g id="symbol" transform="translate(150.0,225.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <polyline fill="none" points="0,0 25.0,0 0,25.0 -25.0,0 0,0" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="text"/>
+  <g id="wire">
+    <polyline fill="none" points="150.0,125.0 150.0,125.0" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="150,125 200,125" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="50,125 0,125" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="50.0,75 50.0,175" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="symbol" transform="translate(0,275)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="none" r="4" stroke="black" stroke-width="2"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="-9" y="282.2">$V_{\rm in}$</text>
+  </g>
+  <g id="symbol" transform="translate(100,275)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <polygon fill="none" points="19.5,0 -35.5,-35.0 -35.5,35.0" stroke="black" stroke-linecap="round" stroke-width="2"/>
+    <circle cx="27.5" cy="0" fill="none" r="8" stroke="black" stroke-width="2"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="2" x1="-50.0" x2="-35.5" y1="0" y2="0"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="2" x1="50.0" x2="35.5" y1="0" y2="0"/>
+  </g>
+  <g id="text"/>
+  <g id="symbol" transform="translate(200,275)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="none" r="4" stroke="black" stroke-width="2"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="209" y="282.2">$V_{\rm out}$</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="150.0,275 200,275" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="50.0,275 0,275" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+</svg>
