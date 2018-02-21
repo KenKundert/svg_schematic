@@ -209,8 +209,8 @@ example::
 
 Now, *r.c*, *r.n*, *r.ne*, *r.e*, *r.se*, *r.s*, *r.sw*, *r.w*, and *r.nw* 
 contain the coordinates of the center, north, northeast, east, southeast, south, 
-southwest, west, and northwest corners.  In addition, *r.t[0]* and *r.t[1]* hold 
-the coordinates of the positive and negative terminals.
+southwest, west, and northwest corners.  In addition, *r.p* and *r.n* hold the 
+coordinates of the positive and negative terminals, as do *r.t[0]* and *r.t[1]*.
 
 The *shift_x*, *shift_y*, and *shift* utility functions are provided to shift 
 the position of a coordinate pair.  Examples::
@@ -237,8 +237,8 @@ Now the RLC schematic can be rewritten as follows::
         r = Resistor((0, 0), name='R', orientation='v')
         c = Capacitor(shift_x(r.c, 75), name='C', orientation='v')
         l = Inductor(shift_x(c.c, 75), name='L', orientation='v')
-        Wire([r.t[0], c.t[0], l.t[0]])
-        Wire([r.t[1], c.t[1], l.t[1]])
+        Wire([r.p, c.p, l.p])
+        Wire([r.n, c.n, l.n])
 
 You are free to mix these various styles of component placement as you desire.
 
@@ -311,6 +311,15 @@ To include the files into your Latex document, use::
 Finally, to convert your Latex file to PDF, use::
 
     pdflatex --shell-escape converters.tex
+
+
+Other Image Formats
+~~~~~~~~~~~~~~~~~~~
+
+You can use Image Magick package to convert SVG files to other image formats.  
+For example::
+
+    convert receiver.svg receiver.png
 
 
 Schematic
