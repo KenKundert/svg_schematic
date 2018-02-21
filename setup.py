@@ -6,7 +6,7 @@ import sys
 
 setup(
     name='svg_schematic',
-    version='0.0.2',
+    version='0.1.0',
     description='svg schematics',
     author="Ken Kundert",
     license='GPLv3+',
