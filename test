@@ -1,0 +1,6 @@
+#!/usr/bin/env python3
+# Run module self tests
+
+from runtests import runTests
+
+runTests(['clones'], pythonVers='3')
