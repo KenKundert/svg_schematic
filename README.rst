@@ -190,6 +190,7 @@ efficiently by using offsets::
 *offsets_to_coordinates* creates a collection of local variables whose names 
 derive from the keys used in the dictionary. This example creates the following 
 local variables::
+
     r_x = 0
     c_x = 75
     l_x = 150
