@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<svg baseProfile="full" height="100%" version="1.1" viewBox="-25.0,-50.0,700.0,400.0" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg baseProfile="full" height="100%" version="1.1" viewBox="-27.0,-52.0,706.0,406.0" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs/>
   <g id="bkgnd">
-    <rect fill="white" height="400.0" stroke="none" stroke-width="1" width="700.0" x="-25.0" y="-50.0"/>
+    <rect fill="white" height="406.0" stroke="none" stroke-width="1" width="706.0" x="-27.0" y="-52.0"/>
   </g>
   <g id="symbol" transform="translate(275,50.0)">
     <rect fill="none" height="200" stroke="none" width="500" x="-250.0" y="-100.0"/>
