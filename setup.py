@@ -3,6 +3,7 @@ try:
 except ImportError:
     from distutils.core import setup
 import sys
+from textwrap import dedent
 
 with open('README.rst') as f:
     readme = f.read()
@@ -30,5 +31,5 @@ setup(
         Programming Language :: Python :: 3.6
         Topic :: Utilities
         Topic :: Scientific/Engineering
-    '''.strip().split('\n'),
+    '''.dedent().strip().split('\n'),
 )
