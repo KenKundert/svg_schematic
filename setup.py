@@ -22,7 +22,7 @@ setup(
     py_modules='svg_schematic'.split(),
     install_requires='svgwrite'.split(),
     keywords='svg schematic latex'.split(),
-    classifiers='''
+    classifiers=dedent('''
         Development Status :: 5 - Production/Stable
         Intended Audience :: Science/Research
         License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)
@@ -31,5 +31,5 @@ setup(
         Programming Language :: Python :: 3.6
         Topic :: Utilities
         Topic :: Scientific/Engineering
-    '''.dedent().strip().split('\n'),
+    ''').strip().split('\n'),
 )
