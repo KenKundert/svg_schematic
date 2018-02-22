@@ -27,11 +27,12 @@ To download the source and install, do the following::
 
     git clone https://github.com/KenKundert/svg_schematic.git
     cd svg_schematic
-    pip3 install --user .
+    pip3 install --user --upgrade .
 
 If you just wish to install without download the source code, do this::
 
-    pip3 install --user svg_schematic
+    pip3 install --user --upgrade svg_schematic
+
 
 Introduction
 ------------
