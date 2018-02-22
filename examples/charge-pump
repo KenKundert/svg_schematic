@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from schematic import (
+from svg_schematic import (
     Schematic, offsets_to_coordinates, shift_x, shift_y, shift,
     Capacitor, Diode, Ground, Pin, Wire
 )
@@ -29,9 +29,9 @@ with Schematic(filename = "charge-pump.svg", line_width=2, background='none'):
     )
     offsets_to_coordinates(locals(), x_offsets, y_offsets)
 
-    vin = Pin((i_x, d_y), kind='in', name=r'$V_{\rm in}$')
-    p1 = Pin((i_x, p1_y), kind='in', name=r'$\phi_1$')
-    p2 = Pin((i_x, p2_y), kind='in', name=r'$\phi_2$')
+    vin = Pin((i_x, d_y), kind='in', name=r'$V_{\rm in}$', w=2)
+    p1 = Pin((i_x, p1_y), kind='in', name=r'$\phi_1$', w=2)
+    p2 = Pin((i_x, p2_y), kind='in', name=r'$\phi_2$', w=2)
     d1 = Diode((d1_x, d_y), orientation='h')
     c1 = Capacitor((c1_x, c_y), orientation='v')
     d2 = Diode((d2_x, d_y), orientation='h')
@@ -42,7 +42,7 @@ with Schematic(filename = "charge-pump.svg", line_width=2, background='none'):
     c4 = Capacitor((c4_x, c_y), orientation='v')
     d5 = Diode((d5_x, d_y), orientation='h')
     c5 = Capacitor((c5_x, c_y), orientation='v')
-    vout = Pin((o_x, d_y), kind='out', name=r'$V_{\rm out}$')
+    vout = Pin((o_x, d_y), kind='out', name=r'$V_{\rm out}$', w=2)
     Ground(c5.t[1])
 
     Wire([vin.t[0], d1.t[0]])

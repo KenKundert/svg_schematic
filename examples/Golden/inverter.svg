@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<svg baseProfile="full" height="100%" version="1.1" viewBox="-25.0,0.0,250.0,325.0" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg baseProfile="full" height="100%" version="1.1" viewBox="-50.0,0.0,300.0,325.0" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs/>
   <g id="symbol" transform="translate(0,125)">
-    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <rect fill="none" height="50" stroke="none" width="100" x="-50.0" y="-25.0"/>
     <circle cx="0" cy="0" fill="none" r="4" stroke="black" stroke-width="2"/>
   </g>
   <g id="text">
@@ -31,7 +31,7 @@
   </g>
   <g id="text"/>
   <g id="symbol" transform="translate(200,125)">
-    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <rect fill="none" height="50" stroke="none" width="100" x="-50.0" y="-25.0"/>
     <circle cx="0" cy="0" fill="none" r="4" stroke="black" stroke-width="2"/>
   </g>
   <g id="text">
@@ -61,7 +61,7 @@
     <polyline fill="none" points="50.0,75 50.0,175" stroke="black" stroke-linecap="round" stroke-width="2"/>
   </g>
   <g id="symbol" transform="translate(0,275)">
-    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <rect fill="none" height="50" stroke="none" width="100" x="-50.0" y="-25.0"/>
     <circle cx="0" cy="0" fill="none" r="4" stroke="black" stroke-width="2"/>
   </g>
   <g id="text">
@@ -76,7 +76,7 @@
   </g>
   <g id="text"/>
   <g id="symbol" transform="translate(200,275)">
-    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <rect fill="none" height="50" stroke="none" width="100" x="-50.0" y="-25.0"/>
     <circle cx="0" cy="0" fill="none" r="4" stroke="black" stroke-width="2"/>
   </g>
   <g id="text">

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from schematic import (
+from svg_schematic import (
     Schematic, offsets_to_coordinates, shift_x, shift_y, shift,
     MOS, Ground, Gate, Label, Pin, Wire
 )
@@ -22,10 +22,10 @@ with Schematic(filename = 'inverter.svg', line_width=2, background='none'):
     )
     offsets_to_coordinates(locals(), x_offsets, y_offsets)
 
-    vin = Pin((vin_x, vin_y), kind='in', name=r'$V_{\rm in}$')
+    vin = Pin((vin_x, vin_y), kind='in', name=r'$V_{\rm in}$', w=2)
     mp = MOS((m_x, mp_y), kind='p')
     mn = MOS((m_x, mn_y), kind='n')
-    vout = Pin((vout_x, vin_y), kind='out', name=r'$V_{\rm out}$')
+    vout = Pin((vout_x, vin_y), kind='out', name=r'$V_{\rm out}$', w=2)
     Label(mp.t[2], loc='n', name=r'$V_{\rm dd}$')
     Ground(mn.t[2])
     Wire([mp.t[0], mn.t[0]])
@@ -33,9 +33,8 @@ with Schematic(filename = 'inverter.svg', line_width=2, background='none'):
     Wire([(m_x-50, vin_y), vin.t[0]])
     Wire([mp.t[1], mn.t[1]])
 
-    vin = Pin((vin_x, dig_y), kind='in', name=r'$V_{\rm in}$')
+    vin = Pin((vin_x, dig_y), kind='in', name=r'$V_{\rm in}$', w=2)
     inv = Gate((m_x, dig_y), kind='inv')
-    vout = Pin((vout_x, dig_y), kind='out', name=r'$V_{\rm out}$')
+    vout = Pin((vout_x, dig_y), kind='out', name=r'$V_{\rm out}$', w=2)
     Wire([inv.t[0], vout.t[0]])
     Wire([inv.t[1], vin.t[0]])
-

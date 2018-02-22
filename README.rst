@@ -279,16 +279,6 @@ As a result, these objects may fall partially or completely outside the bounds
 of the drawing. You can add padding when you first instantiate *Schematic* or 
 you can use the *svgwrite* *viewbox* method to extend the bounds.
 
-*Schematic* offers an alternative to the *text* method of *svgwrite*. *add_text* 
-takes only the text, the placement, and the alignment and uses *Schematic* 
-defaults for everything else. The alignment consists of two letters. The first 
-letter specifies the vertical alignment and is either *u*, *l*, and *m" 
-signifying upper, lower and middle. The second specifies the horizontal 
-alignment, and is either *l*, *r*, or *m*, signifying left, right, or middle.  
-Thus, another way of adding text to the above drawing would be with::
-
-        schematic.add_text('Hello', (0,0), 'mm')
-
 
 Latex
 ~~~~~

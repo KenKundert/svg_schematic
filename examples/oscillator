@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from schematic import (
+from svg_schematic import (
     Schematic, offsets_to_coordinates, shift, shift_y, shift_x, with_x, with_y,
     Capacitor, MOS, Ground, Inductor, Label, Source, Wire,
 )
@@ -39,4 +39,3 @@ with Schematic(filename = "oscillator.svg", background='none', line_width=2):
     Wire([mr.g, shift_y(mr.g, -25), shift(mr.g, -50, -75), shift_y(ml.d, -25)])
     Wire([ml.s, mr.s])
     Source((c_x, i_y), kind='idc', value=r'$I_{\rm ss}$')
-

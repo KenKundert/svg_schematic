@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from schematic import (
+from svg_schematic import (
     Schematic, offsets_to_coordinates, shift_x, shift_y, shift,
     Amp, Box, Ground, Label, Pin, Source, Wire
 )
@@ -59,7 +59,7 @@ with Schematic(filename = 'pipeline-adc.svg', line_width=2):
     Wire([(s1_x, l2_y), (s1_x, l5_y-25)])
 
     ec = Box(((s1_x + s4_x)/2, l5_y), name='Digital Error Correction', w=8, h=1)
-    out = Pin(shift_x(ec.t[0], 50), kind='out', name='out')
+    out = Pin(shift_x(ec.t[0], 50), kind='out', name='out', w=2)
     Wire([ec.t[0], out.t[0]])
     Wire([(s2_x, l4_y+37.5), (s2_x, l5_y-25)])
     Wire([(s3_x, l4_y+37.5), (s3_x, l5_y-25)])
