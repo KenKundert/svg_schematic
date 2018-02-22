@@ -1,7 +1,7 @@
 SVG Schematic
 =============
 
-| Version: 0.3.0
+| Version: 0.4.0
 | Released: 2018-02-21
 |
 
