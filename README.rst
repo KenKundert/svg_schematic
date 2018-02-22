@@ -636,21 +636,12 @@ concealed by the pin.
 Dot
 ~~~
 
-Draw a solder dot (a small filled circle). You must specify the location of the 
-center as an x,y pair.  You may also specify the kind, the orientation, the 
-name, the value, and the size.  The kind can either be 'in' or 'out'. With 'in' 
-pins, the labels go on the left, with 'out' pins they go on the right. By 
-default the size of the pin is 1, meaning that a unit sized tile is used. This 
-is significant if the label is at the edge of the schematic. If the labels 
-extend beyond the tile, they may extend beyond the computed viewbox for the 
-schematic. You can fix this by specifying a larger size.
+Draw a solder dot (a small filled circle). Dot is just an alias for Pin, except 
+that the default kind is 'dot'.
 
 .. code-block:: python
 
-    Pin((x,y), kind='out', name='Vout', size=2)
-
-You may pass a wire or wires directly under the pin and the wire will be 
-concealed by the pin.
+    Dot((x,y))
 
 
 Label
