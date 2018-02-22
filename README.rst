@@ -23,15 +23,23 @@ Installation
 
 Requires Python3. Works best with Python3.6 or newer.
 
+If you just wish to install without download the source code, do this::
+
+    pip3 install --user --upgrade svg_schematic
+
+The source code is hosted on `GitHub 
+<https://github.com/KenKundert/svg_schematic>`_. Please go there to ask 
+questions, post issue and pull requests.
+
 To download the source and install, do the following::
 
     git clone https://github.com/KenKundert/svg_schematic.git
     cd svg_schematic
     pip3 install --user --upgrade .
 
-If you just wish to install without download the source code, do this::
-
-    pip3 install --user --upgrade svg_schematic
+You can also find several `examples 
+<https://github.com/KenKundert/svg_schematic/tree/master/examples>`_ there as 
+well.
 
 
 Introduction
