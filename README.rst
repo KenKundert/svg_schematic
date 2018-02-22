@@ -264,8 +264,8 @@ relative to the center of *r*.
 You are free to mix these various styles of component placement as you desire.
 
 
-SVGwrite
-~~~~~~~~
+Arbitrary Drawing Features using SVGwrite
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *Schematic* subclasses the Python `svgwrite 
 <https://pythonhosted.org/svgwrite>`_  *Drawing* class. So you can call any 
