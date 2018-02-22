@@ -510,8 +510,8 @@ The *d*, *g* and *s* attributes contain the coordinates of the drain, gate and
 source terminals.
 
 
-AMP
-~~~
+Amplifier
+~~~~~~~~~
 
 Draw an amplifier. You must specify the location of the center as an x,y pair.  
 You may also specify the kind, the orientation, the name, and the value. The 
