@@ -149,6 +149,13 @@
   <g id="wire">
     <polyline fill="none" points="550,262.5 550,300" stroke="black" stroke-linecap="round" stroke-width="2"/>
   </g>
+  <g id="symbol" transform="translate(600.0,325)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <line stroke="black" stroke-width="2" x1="-6.0" x2="6.0" y1="6.0" y2="-6.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="600.0" y="350.4">10</text>
+  </g>
   <g id="symbol" transform="translate(200,275)">
     <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
     <line stroke="black" stroke-width="2" x1="-6.0" x2="6.0" y1="6.0" y2="-6.0"/>

@@ -64,6 +64,7 @@ with Schematic(filename = 'pipeline-adc.svg', line_width=2):
     Wire([(s2_x, l4_y+37.5), (s2_x, l5_y-25)])
     Wire([(s3_x, l4_y+37.5), (s3_x, l5_y-25)])
     Wire([(s4_x, l4_y+37.5), (s4_x, l5_y-25)])
+    Label(shift_x(ec.e, 25), kind='slash', loc='s', name='10')
 
     # Add bus width labels
     Label((s1_x, l5_y-50), kind='slash', loc='sw', name='2')
