@@ -11,7 +11,7 @@ __released__ = '2018-02-21'
 
 
 # License {{{1
-# Copyright (C) 2016-2018 Kenneth S. Kundert
+# Copyright (C) 2018 Kenneth S. Kundert
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,31 +29,29 @@ __released__ = '2018-02-21'
 
 # Imports {{{1
 from svgwrite import Drawing, cm, mm
-from math import sqrt
+from math import sqrt, atan2, pi
 
 
 # Utilities {{{1
 # shift() {{{2
 def shift(point, dx, dy):
-    # shifts a given point in both the x and y directions
+    """Shifts a given point in both the x and y directions."""
     return (point[0] + dx, point[1] + dy)
 
 # shift_x() {{{2
 def shift_x(point, dx):
-    # shifts a given point in the x direction
+    """Shifts a given point in the x direction."""
     return (point[0] + dx, point[1])
 
 # shift_y() {{{2
 def shift_y(point, dy):
-    # shifts a given point in the y direction
+    """Shifts a given point in the y direction."""
     return (point[0], point[1] + dy)
 
 # with_x() {{{2
-        # second argument is a number, use it
-        # second argument is a number, use it
 def with_x(p1, a2):
-    # returns the first argument (a coordinate pair) with the x value replaced with
-    # the second argument.
+    """Returns the first argument (a coordinate pair) with the x value replaced with
+    the second argument."""
     try:
         # second argument is a coordinate pair, use its x value
         return (a2[0], p1[1])
@@ -63,14 +61,19 @@ def with_x(p1, a2):
 
 # with_y() {{{2
 def with_y(p1, a2):
-    # returns the first argument (a coordinate pair) with the x value replaced with
-    # the second argument.
+    """Returns the first argument (a coordinate pair) with the x value replaced with
+    the second argument."""
     try:
         # second argument is a coordinate pair, use its y value
         return (p1[0], a2[1])
     except TypeError:
         # second argument is a number, use it
         return (p1[0], a2)
+
+# midpoint() {{{2
+def midpoint(p1, p2):
+    """Returns the point midway between two points."""
+    return ((p1[0] + p2[0])/2, (p1[1] + p2[1])/2)
 
 # offsets_to_coordinates() {{{2
 def offsets_to_coordinates(dest, x_offsets=None, y_offsets=None):
@@ -623,8 +626,11 @@ class Diode(Tile): # {{{1
         name (str): the diode name
         value (str): the diode value
         nudge (num): offset used when positioning text (if needed)
+        color (str): color of symbol
     '''
-    def __init__(self, center, orientation='h', name=None, value=None, nudge=5):
+    def __init__(self,
+        center, orientation='h', name=None, value=None, nudge=5, color='black'
+    ):
         # Initialization and parameters {{{2
         super().__init__(center)
         symbol = self.symbol
@@ -646,25 +652,25 @@ class Diode(Tile): # {{{1
         )
         symbol.add(concealer)
 
-        # Capacitor {{{2
+        # Diode {{{2
         top_lead = schematic.line(
             start=t0, end=(0, -dh/2),
-            fill='none', stroke_width=lw, stroke='black', stroke_linecap='round'
+            fill='none', stroke_width=lw, stroke=color, stroke_linecap='round'
         )
         symbol.add(top_lead)
         bottom_lead = schematic.line(
             start=(0, dh/2), end=t1,
-            fill='none', stroke_width=lw, stroke='black', stroke_linecap='round'
+            fill='none', stroke_width=lw, stroke=color, stroke_linecap='round'
         )
         symbol.add(bottom_lead)
         cathode = schematic.line(
             start=(-dw/2, dh/2), end=(dw/2, dh/2),
-            fill='none', stroke_width=lw, stroke='black', stroke_linecap='round'
+            fill='none', stroke_width=lw, stroke=color, stroke_linecap='round'
         )
         symbol.add(cathode)
         anode = schematic.polygon(
             [(0, dh/2), (-dw/2, -dh/2), (dw/2, -dh/2)],
-            fill='none', stroke_width=lw, stroke='black', stroke_linecap='round'
+            fill='none', stroke_width=lw, stroke=color, stroke_linecap='round'
         )
         symbol.add(anode)
 
@@ -693,11 +699,11 @@ class Diode(Tile): # {{{1
                 self.add_text(value, shift(center, nudge/2, dh/2+nudge), 'ul')
 
 
-class MOS(Tile): # {{{1
-    '''Add MOS to schematic.
+class BJT(Tile): # {{{1
+    '''Add BJT to schematic.
 
     Args:
-        kind (str): choose from 'n' or 'p'
+        kind (str): choose from 'npn' or 'pnp' (or just 'n' or 'p')
         center (pair): the x,y coordinates of the center of the tile
         orientation (str):
             'v' = vertical,
@@ -709,7 +715,142 @@ class MOS(Tile): # {{{1
         nudge (num): offset used when positioning text (if needed)
     '''
     def __init__(
-        self, center, kind='nmos', orientation='v', name=None, value=None,
+        self, center, kind='npn', orientation='v', name=None, value=None,
+        nudge=5
+    ):
+        # Initialization and parameters {{{2
+        super().__init__(center)
+        symbol = self.symbol
+        schematic = self.sch_schematic
+        assert self.size[0] == self.size[1]
+        h, w = self.size
+        lw = schematic.sch_line_width
+        dr = max(2*lw, schematic.sch_dot_radius)
+        arrow_height = 12
+        arrow_width = 30
+        c = (w/2, -h/2)
+        b = (-w/2, 0)
+        e = (w/2, h/2)
+
+        # Concealers {{{2
+        # These are use to hide wiring that pass under component.
+        ce_concealer = schematic.rect(
+            insert = (w/2-2*lw, -h/2+dr),
+            size = (4*lw, h-2*dr),
+            stroke = 'none',
+            fill = schematic.sch_background,
+        )
+        symbol.add(ce_concealer)
+        # b_concealer = schematic.rect(
+        #     insert = (-w/2+dr, -2*lw),
+        #     size = (w-2*dr, 4*lw),
+        #     stroke = 'none',
+        #     fill = schematic.sch_background,
+        # )
+        # symbol.add(b_concealer)
+
+        # Transistor {{{2
+        channel = schematic.polyline(
+            [   c,   # collector
+                (w/2, -3*h/8),
+                (0,   -h/4),
+                (0,    h/4),
+                (w/2,  3*h/8),
+                e,   # emitter
+            ],
+            fill='none', stroke_width=lw, stroke='black', stroke_linecap='round'
+        )
+        symbol.add(channel)
+        base = schematic.line(
+            start=(0, -3*h/8), end=(0,  3*h/8), fill ='none',
+            stroke_width=3*lw, stroke='black', stroke_linecap='square'
+        )
+        symbol.add(base)
+        base_lead = schematic.line(
+            start=b, end=(0, 0), fill='none',
+            stroke_width=lw, stroke='black', stroke_linecap='round'
+        )
+        symbol.add(base_lead)
+        arrow_x0 = w/4
+        rotate_arrow=180*atan2(1/8, 1/2)/pi
+        if kind[0] == 'p':
+            arrow_y0 = -h/4
+            arrow_left = arrow_x0+arrow_width/2
+            arrow_right = arrow_x0-arrow_width/2
+            c, e = e, c
+            rotate_arrow=-rotate_arrow
+        else:
+            arrow_y0 = h/4
+            arrow_left = arrow_x0-arrow_width/2
+            arrow_right = arrow_x0+arrow_width/2
+        arrow_top = arrow_y0-arrow_height/2
+        arrow_bottom = arrow_y0+arrow_height/2
+        arrow = schematic.polygon(
+            [   (arrow_left, arrow_top),
+                (arrow_right, arrow_y0),
+                (arrow_left, arrow_bottom)
+            ], fill='black', stroke='none'
+        )
+        arrow.rotate(rotate_arrow, center=(0, arrow_y0))
+        symbol.add(arrow)
+
+        # Orientation and translation {{{2
+        # The transformation operations are performed by SVG in reverse order.
+        symbol.translate(center)
+        if '|' in orientation:
+            symbol.scale(-1, 1)
+        if '-' in orientation:
+            symbol.scale(1, -1)
+        if 'h' in orientation:
+            symbol.rotate(-90)
+        self.t = self.map_pins([c, b, e], center, orientation, 'h')
+        self.c, self.b, self.e = self.t
+
+        # Text {{{2
+        if 'h' in orientation:
+            if '-' in orientation:
+                name_just, value_just = 'um', 'lm'
+                offset, nudge = h/2, nudge
+            else:
+                name_just, value_just = 'lm', 'um'
+                offset, nudge = -h/2, -nudge
+            if name:
+                self.add_text(name, shift(center, 0, nudge), name_just)
+            if value:
+                self.add_text(value, shift(center, 0, offset-nudge), value_just)
+        else:
+            if '|' in orientation:
+                xjust, xnudge = 'r', -nudge
+            else:
+                xjust, xnudge  = 'l', nudge
+            if name:
+                if value:
+                    just = 'l' + xjust
+                else:
+                    nudge = 0
+                    just = 'm' + xjust
+                self.add_text(name, shift(center, xnudge, -nudge), just)
+            if value:
+                self.add_text(value, shift(center, xnudge, nudge), 'u'+xjust)
+
+
+class MOS(Tile): # {{{1
+    '''Add MOS to schematic.
+
+    Args:
+        kind (str): choose from 'nmos' or 'pmos' (or just 'n' or 'p')
+        center (pair): the x,y coordinates of the center of the tile
+        orientation (str):
+            'v' = vertical,
+            'h' = horizontal (default),
+            '-' = flip about horizontal axis
+            '|' = flip about vertical axis
+        name (str): the fet name
+        value (str): the fet value
+        nudge (num): offset used when positioning text (if needed)
+    '''
+    def __init__(
+        self, center, kind='n', orientation='v', name=None, value=None,
         nudge=5
     ):
         # Initialization and parameters {{{2
@@ -735,13 +876,13 @@ class MOS(Tile): # {{{1
             fill = schematic.sch_background,
         )
         symbol.add(ds_concealer)
-        g_concealer = schematic.rect(
-            insert = (-w/2+dr, -2*lw),
-            size = (w-2*dr, 4*lw),
-            stroke = 'none',
-            fill = schematic.sch_background,
-        )
-        symbol.add(g_concealer)
+        # g_concealer = schematic.rect(
+        #     insert = (-w/2+dr, -2*lw),
+        #     size = (w-2*dr, 4*lw),
+        #     stroke = 'none',
+        #     fill = schematic.sch_background,
+        # )
+        # symbol.add(g_concealer)
 
         # FET {{{2
         channel = schematic.polyline(
@@ -771,7 +912,7 @@ class MOS(Tile): # {{{1
         )
         symbol.add(gate_lead)
         arrow_x0 = w/4
-        if 'p' in kind:
+        if kind[0] == 'p':
             arrow_y0 = -h/4
             arrow_left = arrow_x0+arrow_width/2
             arrow_right = arrow_x0-arrow_width/2
@@ -849,13 +990,13 @@ class Amp(Tile): # {{{1
         value (str): the amplifier value (currently unused)
     '''
     def __init__(
-        self, center, kind='oa', orientation='h', name=None, value=None
+        self, center, kind='oa', orientation='h', name=None, value=None, w=2, h=2
     ):
         # Initialization and parameters {{{2
-        super().__init__(center)
+        super().__init__(center, w, h)
         symbol = self.symbol
         schematic = self.sch_schematic
-        h, w = self.size
+        w, h = self.size
         lw = schematic.sch_line_width
         sign_size = 14
         nudge = 5
@@ -951,6 +1092,13 @@ class Amp(Tile): # {{{1
         if 'v' in orientation:
             symbol.rotate(-90)
         self.t = self.map_pins(terms, center, orientation, 'v')
+        if kind == 'da':
+            self.po, self.no, self.pi, self.ni = self.t
+        elif kind in 'oa comp'.split():
+            self.o, self.pi, self.ni = self.t
+        else:
+            self.o, self.i = self.t
+
 
         # Text {{{2
         if name:
@@ -1069,13 +1217,14 @@ class Ground(Tile): # {{{1
         w, h = self.size
         lw = schematic.sch_line_width
         terms =[(0, 0)]
+        scale = 0.4
 
         # Ground {{{2
         ground = schematic.polyline(
             [   ( 0,   0),
-                ( w/2, 0),
-                ( 0,   h/2),
-                (-w/2, 0),
+                ( scale*w, 0),
+                ( 0,   scale*h),
+                (-scale*w, 0),
                 ( 0,   0),
             ], fill=schematic.sch_background,
             stroke_width=lw, stroke='black', stroke_linecap='round'
@@ -1112,8 +1261,10 @@ class Source(Tile): # {{{1
 
     Args:
         center (pair): the x,y coordinates of the center of the tile
-        kind (str): choose from: 'empty', 'vdc', 'idc', 'sine', 'sum', 'mult'
-        orientation (str): choose from ...
+        kind (str): choose from:
+             'empty', 'vdc', 'idc', 'sine', 'sum', 'mult',
+            'cv' (controlled voltage) or 'ci' (controlled current)
+        orientation (str): choose from:
             'v' = vertical,
             'h' = horizontal (default),
             '-' = flip about horizontal axis,
@@ -1121,10 +1272,11 @@ class Source(Tile): # {{{1
         name (str): the source name
         value (str): the source value
         nudge (num): offset used when positioning text (if needed)
+        color (str): color of symbol
     '''
     def __init__(
         self, center, kind='empty', orientation='v', name=None, value=None,
-        nudge=5
+        color='black', nudge=5
     ):
         # Initialization and parameters {{{2
         super().__init__(center, 2, 2)
@@ -1133,55 +1285,70 @@ class Source(Tile): # {{{1
         assert self.size[0] == self.size[1]
         size = self.size[0]
         r = size/4
+        dr = 5*size/16  # the 'radius' of diamond without elongation
+        elong = size/16
         lw = schematic.sch_line_width
         sign_size = 14
-        t0 = (0, -size/2)
-        t1 = (0,  size/2)
 
         # Source {{{2
-        source = schematic.circle(
-            center=(0, 0), r=r, fill=schematic.sch_background,
-            stroke_width=lw, stroke='black'
-        )
+        if kind in ('cv', 'ci'):
+            source = schematic.polygon(
+                [   (0, -dr-elong),
+                    (dr-elong, 0),
+                    (0, dr+elong),
+                    (-dr+elong, 0),
+                ],
+                fill=schematic.sch_background,
+                stroke_width=lw, stroke=color, stroke_linecap='round'
+            )
+            t0 = (0, -dr-elong)
+            t1 = (0,  dr+elong)
+        else:
+            source = schematic.circle(
+                center=(0, 0), r=r, fill=schematic.sch_background,
+                stroke_width=lw, stroke=color
+            )
+            t0 = (0, -r)
+            t1 = (0,  r)
         symbol.add(source)
         if kind not in 'sum mult'.split():
             # do not add leads to summer and multiplier
             pos_lead = schematic.line(
                 start=t0,
-                end=(0, -r),
-                stroke_width=lw, stroke='black', stroke_linecap='round'
+                end=(0, -size/2),
+                stroke_width=lw, stroke=color, stroke_linecap='round'
             )
             symbol.add(pos_lead)
             pos_lead = schematic.line(
                 start=t1,
-                end=(0, r),
-                stroke_width=lw, stroke='black', stroke_linecap='round'
+                end=(0, size/2),
+                stroke_width=lw, stroke=color, stroke_linecap='round'
             )
             symbol.add(pos_lead)
         else:
             t0 = (0, -r)
             t1 = (0,  r)
 
-        if kind == 'vdc':
+        if kind in ('vdc', 'cv'):
             minus = schematic.line(
                 start=(-sign_size/2, r/2),
                 end=(sign_size/2, r/2),
-                stroke_width=lw, stroke='black', stroke_linecap='round'
+                stroke_width=lw, stroke=color, stroke_linecap='round'
             )
             symbol.add(minus)
             plus_ew = schematic.line(
                 start=(-sign_size/2, -r/2),
                 end=(sign_size/2, -r/2),
-                stroke_width=lw, stroke='black', stroke_linecap='round'
+                stroke_width=lw, stroke=color, stroke_linecap='round'
             )
             symbol.add(plus_ew)
             plus_ns = schematic.line(
                 start=(0, -r/2+sign_size/2),
                 end=(0, -r/2-sign_size/2),
-                stroke_width=lw, stroke='black', stroke_linecap='round'
+                stroke_width=lw, stroke=color, stroke_linecap='round'
             )
             symbol.add(plus_ns)
-        elif kind == 'idc':
+        elif kind in ('idc', 'ci'):
             arrow = schematic.polygon(
                 [   (0, -3*r/4),
                     (0, r/4),
@@ -1190,13 +1357,13 @@ class Source(Tile): # {{{1
                     (-nudge, r/4),
                     (0, r/4),
                 ],
-                fill='black',
-                stroke_width=lw, stroke='black', stroke_linecap='round'
+                fill=color,
+                stroke_width=lw, stroke=color, stroke_linecap='round'
             )
             symbol.add(arrow)
         elif kind == 'sine':
             sine = schematic.path(
-                fill='none', stroke_width=lw, stroke='black',
+                fill='none', stroke_width=lw, stroke=color,
                 stroke_linecap='round'
             )
             # use Bezier path to draw sine wave
@@ -1208,24 +1375,24 @@ class Source(Tile): # {{{1
             symbol.add(sine)
         elif kind == 'sum':
             line = schematic.line(  # vertical line
-                start=(-r/2, 0), end=(r/2, 0), fill='black',
-                stroke_width=lw, stroke='black', stroke_linecap='round'
+                start=(-r/2, 0), end=(r/2, 0),
+                stroke_width=lw, stroke=color, stroke_linecap='round'
             )
             symbol.add(line)
             line = schematic.line(  # horizontal line
-                start=(0, -r/2), end=(0, r/2), fill='black',
-                stroke_width=lw, stroke='black', stroke_linecap='round'
+                start=(0, -r/2), end=(0, r/2),
+                stroke_width=lw, stroke=color, stroke_linecap='round'
             )
             symbol.add(line)
         elif kind == 'mult':
             line = schematic.line(  # northwest-southeast line
                 start=(-0.71*r/2, -0.71*r/2), end=(0.71*r/2, 0.71*r/2),
-                stroke_width=lw, stroke='black', stroke_linecap='round'
+                stroke_width=lw, stroke=color, stroke_linecap='round'
             )
             symbol.add(line)
             line = schematic.line(  # northeast-southwest line
                 start=(0.71*r/2, -0.71*r/2), end=(-0.71*r/2, 0.71*r/2),
-                stroke_width=lw, stroke='black', stroke_linecap='round'
+                stroke_width=lw, stroke=color, stroke_linecap='round'
             )
             symbol.add(line)
 
@@ -1239,6 +1406,7 @@ class Source(Tile): # {{{1
         if 'h' in orientation:
             symbol.rotate(-90)
         self.t = self.map_pins([t0, t1], center, orientation, 'h')
+        self.p, self.n = self.t
 
         # Principal coordinates {{{2
         # override those set in Tile
@@ -1306,8 +1474,14 @@ class Pin(Tile): # {{{1
 
         # Pin {{{2
         if kind != 'none':
+            if kind == 'in':
+                cx = -r
+            elif kind == 'out':
+                cx = r
+            else:
+                cx = 0
             pin = schematic.circle(
-                center = (0, 0), r=r,
+                center = (cx, 0), r=r,
                 fill = 'black' if kind == 'dot' else schematic.sch_background,
                 stroke_width = lw,
                 stroke = 'black',
@@ -1317,17 +1491,21 @@ class Pin(Tile): # {{{1
         # Orientation and translation {{{2
         # The transformation operations are performed by SVG in reverse order.
         symbol.translate(center)
-        if '|' in orientation:
-            symbol.scale(-1, 1)
-        if '-' in orientation:
-            symbol.scale(1, -1)
-        if 'h' in orientation:
-            symbol.rotate(-90)
+        #if '|' in orientation:
+        #    symbol.scale(-1, 1)
+        #if '-' in orientation:
+        #    symbol.scale(1, -1)
+        #if 'h' in orientation:
+        #    symbol.rotate(-90)
         self.t = self.map_pins(terms, center, orientation, 'h')
 
         # Text {{{2
         x_nudge = r+nudge
-        if kind == 'dot':
+        if kind == 'out' and name:
+            self.add_text(name, shift(center, 2*r+nudge, 0), 'ml')
+        elif kind == 'in' and name:
+            self.add_text(name, shift(center, -(2*r+nudge), 0), 'mr')
+        else:
             if '|' in orientation:
                 x_nudge, just = -x_nudge, 'r'
             else:
@@ -1336,10 +1514,6 @@ class Pin(Tile): # {{{1
                 self.add_text(name, shift(center, x_nudge, -nudge), 'l' + just)
             if value:
                 self.add_text(value, shift(center, x_nudge, nudge), 'u' + just)
-        elif kind == 'out' and name:
-            self.add_text(name, shift(center, r+nudge, 0), 'ml')
-        elif kind == 'in' and name:
-            self.add_text(name, shift(center, -(r+nudge), 0), 'mr')
 
 class Dot(Pin): # {{{1
     DEFAULT_KIND = 'dot'
@@ -1512,14 +1686,13 @@ class Switch(Tile): # {{{1
             '|' = flip about vertical axis
         name (str): the pin name
         value (str): the pin value (unused for in and out pins)
-        w (num): the width of the box (multiples of unit width)
-        h (num): the height of the box (multiples of unit height)
+        dots (bool): whether the dots should be drawn
         nudge (num): offset used when positioning text (if needed)
     '''
 
     def __init__(
         self, center, kind='spst', orientation='h', name=None, value=None,
-        nudge=5
+        dots=True, nudge=5
     ):
         # Initialization and parameters {{{2
         super().__init__(center, 2, 2)
@@ -1547,11 +1720,12 @@ class Switch(Tile): # {{{1
             stroke_width=lw, stroke='black',
         )
         symbol.add(switch)
-        l_pole = schematic.circle(
-            (-gap/2, 0), r=r, fill='black',
-            stroke_width=lw, stroke='black',
-        )
-        symbol.add(l_pole)
+        if dots:
+            l_pole = schematic.circle(
+                (-gap/2, 0), r=r, fill='black',
+                stroke_width=lw, stroke='black',
+            )
+            symbol.add(l_pole)
         tl = (-w/2, 0)
         l_lead = schematic.line(
             start=tl, end=(-gap/2, 0),
@@ -1560,22 +1734,24 @@ class Switch(Tile): # {{{1
         symbol.add(l_lead)
         if kind == 'spdt':
             symbol.add(l_pole)
-            t_pole = schematic.circle(
-                (gap/2, -sep/2), r=r, fill='black',
-                stroke_width=lw, stroke='black',
-            )
-            symbol.add(t_pole)
+            if dots:
+                t_pole = schematic.circle(
+                    (gap/2, -sep/2), r=r, fill='black',
+                    stroke_width=lw, stroke='black',
+                )
+                symbol.add(t_pole)
             tt = (w/2, -sep/2)
             t_lead = schematic.line(
                 start=tt, end=(gap/2, -sep/2),
                 stroke_width=lw, stroke='black',
             )
             symbol.add(t_lead)
-            b_pole = schematic.circle(
-                (gap/2, sep/2), r=r, fill='black',
-                stroke_width=lw, stroke='black',
-            )
-            symbol.add(b_pole)
+            if dots:
+                b_pole = schematic.circle(
+                    (gap/2, sep/2), r=r, fill='black',
+                    stroke_width=lw, stroke='black',
+                )
+                symbol.add(b_pole)
             tb = (w/2, sep/2)
             b_lead = schematic.line(
                 start=tb, end=(gap/2, sep/2),
@@ -1584,11 +1760,12 @@ class Switch(Tile): # {{{1
             symbol.add(b_lead)
             terms=[tt, tb, tl]
         else:
-            r_pole = schematic.circle(
-                (gap/2, 0), r=r, fill='black',
-                stroke_width=lw, stroke='black',
-            )
-            symbol.add(r_pole)
+            if dots:
+                r_pole = schematic.circle(
+                    (gap/2, 0), r=r, fill='black',
+                    stroke_width=lw, stroke='black',
+                )
+                symbol.add(r_pole)
             tr = (w/2, 0)
             r_lead = schematic.line(
                 start=tr, end=(gap/2, 0),
@@ -1673,6 +1850,22 @@ if __name__ == '__main__':
             value = '10',
         ),
         TestCase(
+           component = BJT,
+            name = 'Qn{l}',
+            value = '10',
+            xoff = -50,
+            yoff = 0,
+            kwargs = dict(kind = 'npn'),
+        ),
+        TestCase(
+           component = BJT,
+            name = 'Qp{l}',
+            value = '10',
+            xoff = -50,
+            yoff = 0,
+            kwargs = dict(kind = 'pnp'),
+        ),
+        TestCase(
            component = MOS,
             name = 'Mn{l}',
             value = '10',
@@ -1738,20 +1931,37 @@ if __name__ == '__main__':
             kwargs = dict(kind = 'mult'),
         ),
         TestCase(
-            component = Pin,
-            name = 'Vx',
-            value = '0V',
-            kwargs = dict(kind = 'dot'),
+            component = Source,
+            name = 'V{l}',
+            value = '5V',
+            kwargs = dict(kind = 'cv'),
+        ),
+        TestCase(
+            component = Source,
+            name = 'V{l}',
+            value = '5μA',
+            kwargs = dict(kind = 'ci'),
         ),
         TestCase(
             component = Pin,
-            name = 'out',
-            kwargs = dict(kind = 'in'),
+            name = 'Vx',
+            value = '0V',
+            kwargs = dict(kind = 'none'),
         ),
         TestCase(
             component = Pin,
             name = 'in',
+            kwargs = dict(kind = 'in'),
+        ),
+        TestCase(
+            component = Pin,
+            name = 'out',
             kwargs = dict(kind = 'out'),
+        ),
+        TestCase(
+            component = Dot,
+            name = 'Vx',
+            value = '0V',
         ),
         TestCase(
             component = Label,
@@ -1896,14 +2106,24 @@ if __name__ == '__main__':
 
         X0 = 200 + 800*i
         Y0 = 200 + 400*j
-        wire = schematic.rect(
+        box = schematic.rect(
             insert = (X0-100, Y0-100),
             size = (200, 200),
             stroke_width = 1,
             stroke = 'magenta',
             fill = 'none'
         )
-        schematic.add(wire)
+        schematic.add(box)
+        hline = schematic.line(
+            start=(X0-125, Y0), end=(X0+125, Y0),
+            stroke_width = 1, stroke = 'magenta',
+        )
+        schematic.add(hline)
+        vline = schematic.line(
+            start=(X0, Y0-125), end=(X0, Y0+125),
+            stroke_width = 1, stroke = 'magenta',
+        )
+        schematic.add(vline)
 
         instantiate(case, -1, 0, 'v')
         instantiate(case, 0, -1, 'h')
@@ -1911,14 +2131,24 @@ if __name__ == '__main__':
         instantiate(case, 0, 1, 'h-')
 
         X0 = 600 + 800*i
-        wire = schematic.rect(
+        box = schematic.rect(
             insert = (X0-100, Y0-100),
             size = (200, 200),
             stroke_width = 1,
             stroke = 'magenta',
             fill = 'none'
         )
-        schematic.add(wire)
+        schematic.add(box)
+        hline = schematic.line(
+            start=(X0-125, Y0), end=(X0+125, Y0),
+            stroke_width = 1, stroke = 'magenta',
+        )
+        schematic.add(hline)
+        vline = schematic.line(
+            start=(X0, Y0-125), end=(X0, Y0+125),
+            stroke_width = 1, stroke = 'magenta',
+        )
+        schematic.add(vline)
 
         instantiate(case, -1, 0, 'v-')
         instantiate(case, 0, -1, 'h|')

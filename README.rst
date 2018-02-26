@@ -248,6 +248,10 @@ argument::
     with_x((x1,y1), (x2,y2)) --> (x2, y1)
     with_y((x1,y1), (x2,y2)) --> (x1, y2)
 
+Finally, *midpoint* returns the point midway between two points::
+
+    midpoint((x1,y1), (x2,y2) --> ((x1+x2)/2, (y1+y2)/2)
+
 Now the RLC schematic can be rewritten as follows::
 
     with Schematic(filename = "rlc.svg"):
@@ -492,6 +496,24 @@ The *a* and *c* attributes contain the coordinates of the anode and cathode
 terminals.
 
 
+BJT
+~~~
+
+Draw a bipolar transistor. You must specify the location of the center as an x,y 
+pair.  You may also specify the kind, the orientation, the name, and the value.  
+The kind can either be 'npn' or 'pnp'.
+
+.. code-block:: python
+
+    MOS((x,y), kind='n', orientation='v|', name=M2, value='10')
+
+You may pass a wire directly under the FET and the wire will be concealed by the 
+FET.
+
+The *d*, *g* and *s* attributes contain the coordinates of the drain, gate and 
+source terminals.
+
+
 MOS
 ~~~
 
@@ -520,12 +542,21 @@ label on the input pin, 'oa' is short for operational amplifier and has markings
 for the positive and negative inputs, and 'da' is short for differential 
 amplifier and has markings for positive and negative inputs and outputs.
 
+You can reshape the amplifier using *w* and *h* to specify the width and height.  
+The default values for each are 2, and you should not deviate too far from 2 or 
+you will end up with an ugly amplifier.
+
 .. code-block:: python
 
     Amp((x,y), kind='da', orientation='h-')
 
 You may pass a wire or wires directly under the amplifier and the wire will be 
 concealed by the amplifier.
+
+The 'da' amplifier provides the *po*, *no*, *pi*, and *ni* terminals as 
+attributes.  The 'oa' and 'comp' amplifiers provide the *o*, *pi*, and *ni* 
+terminals as attributes. And the 'se' amplifier provides the *o* and *i* 
+terminals as attributes.
 
 
 Gate
@@ -548,7 +579,8 @@ Source
 
 Draw a source. You must specify the location of the center as an x,y pair.  You 
 may also specify the kind, the orientation, the name, and the value. The kind 
-can either be 'empty', 'vdc', 'idc', 'sine', 'sum', or 'mult'.
+can either be 'empty', 'vdc', 'idc', 'sine', 'sum', 'mult', 'cv' (controlled 
+voltage) or 'ci' (controlled current).
 
 .. code-block:: python
 
@@ -559,14 +591,16 @@ concealed by the source.
 
 The component also includes the nine principal coordinates for the source: c, n, 
 ne, e, se, s, sw, w, and nw. Except for c, they are evenly distributed around 
-the circle.
+the circle.  The coordinate attributes for the pins are named 'p', and 'n'.
+
 
 Switch
 ~~~~~~
 
 Draw an switch. You must specify the location of the center as an x,y pair.  You 
 may also specify the kind, the orientation, the name, and the value. The kind 
-can either be 'spst' or 'spdt'.
+can either be 'spst' or 'spdt'.  The *dots* argument determines whether the 
+poles of the switch should be denoted with large dots.
 
 .. code-block:: python
 
