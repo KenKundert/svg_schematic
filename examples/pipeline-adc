@@ -25,15 +25,15 @@ with Schematic(filename = 'pipeline-adc.svg', line_width=2):
     offsets_to_coordinates(locals(), x_offsets, y_offsets)
 
     s1 = Box((dac_x, (l1_y + l2_y)/2), w=10, h=4, background='lightgray')
-    Label(s1.se, loc='nw', name='Stage 1')
+    Label(s1.SE, loc='nw', name='Stage 1')
 
     i = Pin((i_x, l1_y), kind='in', name='in')
     adc = Box((adc_x, l2_y), name='2 bit', value='Flash')
     sh = Box((sh_x, l1_y), name='SAH')
     dac = Box((dac_x, l2_y), name='2 bit', value='DAC')
     sum = Source((sum_x, l1_y), kind='sum', orientation='h|')
-    Label(sum.w, loc='nw', name='+')
-    Label(sum.s, loc='se', name='−')
+    Label(sum.W, loc='nw', name='+')
+    Label(sum.S, loc='se', name='−')
     amp = Amp((amp_x, l1_y), kind='se', name='4×')
     Wire([i.t[0], sh.t[1]])
     Wire([sh.t[0], sum.t[1]])
@@ -64,11 +64,11 @@ with Schematic(filename = 'pipeline-adc.svg', line_width=2):
     Wire([(s2_x, l4_y+37.5), (s2_x, l5_y-25)])
     Wire([(s3_x, l4_y+37.5), (s3_x, l5_y-25)])
     Wire([(s4_x, l4_y+37.5), (s4_x, l5_y-25)])
-    Label(shift_x(ec.e, 25), kind='slash', loc='s', name='10')
+    Label(shift_x(ec.E, 25), kind='slash', loc='s', name='10')
 
     # Add bus width labels
-    Label((s1_x, l5_y-50), kind='slash', loc='sw', name='2')
-    Label((s2_x, l5_y-50), kind='slash', loc='sw', name='2')
-    Label((s3_x, l5_y-50), kind='slash', loc='sw', name='2')
-    Label((s4_x, l5_y-50), kind='slash', loc='sw', name='4')
+    Label((s1_x, l5_y-45), kind='slash', loc='w', name='2', nudge=8)
+    Label((s2_x, l5_y-45), kind='slash', loc='w', name='2', nudge=8)
+    Label((s3_x, l5_y-45), kind='slash', loc='w', name='2', nudge=8)
+    Label((s4_x, l5_y-45), kind='slash', loc='w', name='4', nudge=8)
 

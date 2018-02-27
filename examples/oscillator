@@ -27,8 +27,8 @@ with Schematic(filename = "oscillator.svg", background='none', line_width=2):
     lr = Inductor((r_x, l_y), orientation='v|', name=r'$\frac{1}{2} L$')
     Wire([ll.p, lr.p])
     c = Capacitor((c_x, c_y), orientation='h', name='$C$')
-    Wire([c.p, with_x(c.c, l_x)])
-    Wire([c.n, with_x(c.c, r_x)])
+    Wire([c.p, with_x(c.C, l_x)])
+    Wire([c.n, with_x(c.C, r_x)])
 
     # gain stage
     ml = MOS(shift_x((l_x, m_y), 50), orientation='|')

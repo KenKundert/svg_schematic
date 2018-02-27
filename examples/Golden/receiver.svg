@@ -6,26 +6,27 @@
   </g>
   <g id="symbol" transform="translate(0,0)">
     <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
-    <circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="1"/>
+    <circle cx="-4" cy="0" fill="white" r="4" stroke="black" stroke-width="1"/>
   </g>
   <g id="text"/>
   <g id="symbol" transform="translate(0,0)">
     <rect fill="none" height="50" stroke="none" width="150" x="-75.0" y="-25.0"/>
+    <circle cx="-4" cy="0" fill="white" r="4" stroke="black" stroke-width="1"/>
   </g>
   <g id="text">
-    <text fill="black" font-family="sans" font-size="12" text-anchor="end" x="-5" y="4.800000000000001">L-band Horn</text>
+    <text fill="black" font-family="sans" font-size="12" text-anchor="end" x="-13" y="4.800000000000001">L-band Horn</text>
   </g>
   <g id="symbol" transform="translate(0,15)">
     <rect fill="none" height="50" stroke="none" width="175.0" x="-87.5" y="-25.0"/>
   </g>
   <g id="text">
-    <text fill="black" font-family="sans" font-size="12" text-anchor="end" x="-5" y="19.8">fc=1420MHz</text>
+    <text fill="black" font-family="sans" font-size="12" text-anchor="end" x="-14" y="19.8">fc=1420MHz</text>
   </g>
   <g id="symbol" transform="translate(0,30)">
     <rect fill="none" height="50" stroke="none" width="175.0" x="-87.5" y="-25.0"/>
   </g>
   <g id="text">
-    <text fill="black" font-family="sans" font-size="12" text-anchor="end" x="-5" y="34.8">BW=15MHz</text>
+    <text fill="black" font-family="sans" font-size="12" text-anchor="end" x="-14" y="34.8">BW=15MHz</text>
   </g>
   <g id="symbol" transform="translate(75,0)">
     <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
@@ -144,8 +145,8 @@
   <g id="symbol" transform="translate(675.0,125.0)">
     <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
     <circle cx="0" cy="0" fill="white" r="25.0" stroke="black" stroke-width="1"/>
-    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="0" x2="0" y1="-50.0" y2="-25.0"/>
-    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="0" x2="0" y1="50.0" y2="25.0"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="0" x2="0" y1="-25.0" y2="-50.0"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="0" x2="0" y1="25.0" y2="50.0"/>
     <path d="M -18.75 0 C -14.0625 -12.5 -4.6875 -12.5 0 0 4.6875 12.5 14.0625 12.5 18.75 0" fill="none" stroke="black" stroke-linecap="round" stroke-width="1"/>
   </g>
   <g id="text">
@@ -154,7 +155,7 @@
   </g>
   <g id="symbol" transform="translate(675.0,175.0)">
     <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
-    <polyline fill="white" points="0,0 25.0,0 0,25.0 -25.0,0 0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <polyline fill="white" points="0,0 20.0,0 0,20.0 -20.0,0 0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
   </g>
   <g id="text"/>
   <g id="wire">
@@ -220,8 +221,8 @@
   <g id="symbol" transform="translate(1000.0,125.0)">
     <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
     <circle cx="0" cy="0" fill="white" r="25.0" stroke="black" stroke-width="1"/>
-    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="0" x2="0" y1="-50.0" y2="-25.0"/>
-    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="0" x2="0" y1="50.0" y2="25.0"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="0" x2="0" y1="-25.0" y2="-50.0"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="0" x2="0" y1="25.0" y2="50.0"/>
     <path d="M -18.75 0 C -14.0625 -12.5 -4.6875 -12.5 0 0 4.6875 12.5 14.0625 12.5 18.75 0" fill="none" stroke="black" stroke-linecap="round" stroke-width="1"/>
   </g>
   <g id="text">
@@ -230,7 +231,7 @@
   </g>
   <g id="symbol" transform="translate(1000.0,175.0)">
     <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
-    <polyline fill="white" points="0,0 25.0,0 0,25.0 -25.0,0 0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <polyline fill="white" points="0,0 20.0,0 0,20.0 -20.0,0 0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
   </g>
   <g id="text"/>
   <g id="wire">
@@ -270,10 +271,10 @@
   </g>
   <g id="symbol" transform="translate(1325.0,0)">
     <rect fill="none" height="50" stroke="none" width="75.0" x="-37.5" y="-25.0"/>
-    <circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="1"/>
+    <circle cx="4" cy="0" fill="white" r="4" stroke="black" stroke-width="1"/>
   </g>
   <g id="text">
-    <text fill="black" font-family="sans" font-size="12" text-anchor="start" x="1334.0" y="4.800000000000001">out</text>
+    <text fill="black" font-family="sans" font-size="12" text-anchor="start" x="1338.0" y="4.800000000000001">out</text>
   </g>
   <g id="symbol" transform="translate(1300.0,0)">
     <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>

@@ -136,8 +136,8 @@ There are a few things to note.
     provide the *p* and *n* terminal attributes. The MOS component provides the 
     *d*, *g*, and *s* terminal attributes. The diode component provides the *a* 
     and *c* terminal attributes.
-#.  Components contain attributes for each of the 9 principal coordinates (c, n, 
-    ne, e, se, s, sw, w, nw).  For most components, these are the principal 
+#.  Components contain attributes for each of the 9 principal coordinates (C, N, 
+    NE, E, SE, S, SW, W, NW).  For most components, these are the principal 
     coordinates for the component's tile. However, the source places its 
     principal coordinates on the circle used to depict the source.
 
@@ -222,7 +222,7 @@ example::
 
     r = Resistor((0, 0), name='R', orientation='v')
 
-Now, *r.c*, *r.n*, *r.ne*, *r.e*, *r.se*, *r.s*, *r.sw*, *r.w*, and *r.nw* 
+Now, *r.C*, *r.N*, *r.NE*, *r.E*, *r.SE*, *r.S*, *r.SW*, *r.W*, and *r.NW* 
 contain the coordinates of the center, north, northeast, east, southeast, south, 
 southwest, west, and northwest corners.  In addition, *r.p* and *r.n* hold the 
 coordinates of the positive and negative terminals, as do *r.t[0]* and *r.t[1]*.
@@ -589,8 +589,8 @@ voltage) or 'ci' (controlled current).
 You may pass a wire or wires directly under the source and the wire will be 
 concealed by the source.
 
-The component also includes the nine principal coordinates for the source: c, n, 
-ne, e, se, s, sw, w, and nw. Except for c, they are evenly distributed around 
+The component also includes the nine principal coordinates for the source: C, N, 
+NE, E, SE, S, SW, W, and NW. Except for C, they are evenly distributed around 
 the circle.  The coordinate attributes for the pins are named 'p', and 'n'.
 
 
@@ -627,8 +627,8 @@ concealed by the box.
 
 *Box* also supports the *line_width* and *background* arguments.
 
-The component also includes the nine principal coordinates for the box: c, n, 
-ne, e, se, s, sw, w, and nw. Except for c, they are evenly distributed around 
+The component also includes the nine principal coordinates for the box: C, N, 
+NE, E, SE, S, SW, W, and NW. Except for c, they are evenly distributed around 
 the box.
 
 
@@ -681,8 +681,8 @@ Label
 
 Place a label. You must specify the location of the text anchor as an x,y pair.  
 You may also specify the location (loc), the name (the label), the width (w) and 
-the height (h).  The location can be 'c', 'n', 'ne', 'e', 'se', 's', 'sw', 'w', 
-and 'nw'. The default width and height is 1.
+the height (h).  The location can be 'C', 'N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 
+and 'NW'. The default width and height is 1.
 
 .. code-block:: python
 

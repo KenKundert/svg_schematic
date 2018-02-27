@@ -14,85 +14,85 @@ with Schematic(
 
     # Place input from horn at 0,0. Describe horn with labels on the west side.
     rf_in = Pin((0,0), kind='in')
-    Label(rf_in.c, loc='w', name='L-band Horn', w=3)
-    Label(shift_y(rf_in.c, 15), loc='w', name='fc=1420MHz', w=3.5)
-    Label(shift_y(rf_in.c, 30), loc='w', name='BW=15MHz', w=3.5)
+    Pin(rf_in.C, kind='in', name='L-band Horn', w=3)
+    Label(shift_y(rf_in.C, 15), loc='w', name='fc=1420MHz', w=3.5, nudge=14)
+    Label(shift_y(rf_in.C, 30), loc='w', name='BW=15MHz', w=3.5, nudge=14)
 
     # Place first preamp 75 units east of input. Amplifier is 100 units wide.
     # Place label south of preamp and connect wire from input to preamp.
-    rf_preamp1 = Amp(shift_x(rf_in.c, 75), name='RF Preamp1')
-    Label(rf_preamp1.s, loc='s', name='A>=26dB')
-    Wire([rf_in.c, rf_preamp1.w])
+    rf_preamp1 = Amp(shift_x(rf_in.C, 75), name='RF Preamp1')
+    Label(rf_preamp1.S, loc='s', name='A>=26dB')
+    Wire([rf_in.C, rf_preamp1.W])
 
     # Place second preamp 75 units east of first.
-    rf_preamp2 = Amp(shift_x(rf_preamp1.e, 75), name='RF Preamp2')
-    Label(rf_preamp2.s, loc='s', name='A>=26dB')
-    Wire([rf_preamp1.e, rf_preamp2.w])
+    rf_preamp2 = Amp(shift_x(rf_preamp1.E, 75), name='RF Preamp2')
+    Label(rf_preamp2.S, loc='s', name='A>=26dB')
+    Wire([rf_preamp1.E, rf_preamp2.W])
 
     # Place RF band-pass filter east of preamps.
-    rf_bpf = Box(shift_x(rf_preamp2.e, 75), name='RF BPF')
-    Label(rf_bpf.s, loc='s', name='fc=1380MHz')
-    Label(shift_y(rf_bpf.s, 15), loc='s', name='BW=320MHz')
-    Wire([rf_preamp2.e, rf_bpf.w])
+    rf_bpf = Box(shift_x(rf_preamp2.E, 75), name='RF BPF')
+    Label(rf_bpf.S, loc='s', name='fc=1380MHz')
+    Label(shift_y(rf_bpf.S, 15), loc='s', name='BW=320MHz')
+    Wire([rf_preamp2.E, rf_bpf.W])
 
     # Place first RF amplifier east of RF band-pass filter.
-    rf_amp1 = Amp(shift_x(rf_bpf.e, 75), name='RF Amp1')
-    Label(rf_amp1.s, loc='s', name='A<=20dB')
-    Wire([rf_bpf.e, rf_amp1.w])
+    rf_amp1 = Amp(shift_x(rf_bpf.E, 75), name='RF Amp1')
+    Label(rf_amp1.S, loc='s', name='A<=20dB')
+    Wire([rf_bpf.E, rf_amp1.W])
 
     # Place second RF amplifier east of first.
-    rf_amp2 = Amp(shift_x(rf_amp1.e, 75), name='RF Amp2')
-    Label(rf_amp2.s, loc='s', name='A<=20dB')
-    Wire([rf_amp1.e, rf_amp2.w])
+    rf_amp2 = Amp(shift_x(rf_amp1.E, 75), name='RF Amp2')
+    Label(rf_amp2.S, loc='s', name='A<=20dB')
+    Wire([rf_amp1.E, rf_amp2.W])
 
     # Place RF mixer east of amplifiers.
-    rf_mixer = Source(shift_x(rf_amp2.e, 50), kind='mult')
-    Label(rf_mixer.n, loc='n', name='DSB')
-    Wire([rf_amp2.e, rf_mixer.w])
+    rf_mixer = Source(shift_x(rf_amp2.E, 50), kind='mult')
+    Label(rf_mixer.N, loc='n', name='DSB')
+    Wire([rf_amp2.E, rf_mixer.W])
 
     # Place RF local oscillator south of RF mixer.
     rf_lo = Source(
-        shift_y(rf_mixer.s, 100), kind='sine',
+        shift_y(rf_mixer.S, 100), kind='sine',
         name='fo=1230MHz', value='P=10dBm'
     )
-    Ground(shift_y(rf_lo.s, 25))
-    Wire([rf_mixer.s, rf_lo.n])
+    Ground(shift_y(rf_lo.S, 25))
+    Wire([rf_mixer.S, rf_lo.N])
 
     # Place IF band-pass filter east of RF mixer.
-    if_bpf = Box(shift_x(rf_mixer.e, 75), name='IF BPF')
-    Label(if_bpf.s, loc='s', name='fc=190MHz')
-    Label(shift_y(if_bpf.s, 15), loc='s', name='BW=22MHz')
-    Wire([rf_mixer.e, if_bpf.w])
+    if_bpf = Box(shift_x(rf_mixer.E, 75), name='IF BPF')
+    Label(if_bpf.S, loc='s', name='fc=190MHz')
+    Label(shift_y(if_bpf.S, 15), loc='s', name='BW=22MHz')
+    Wire([rf_mixer.E, if_bpf.W])
 
     # Place IF amplifier east of IF band-pass filter.
-    if_amp = Amp(shift_x(if_bpf.e, 75), name='IF Amp')
-    Label(if_amp.s, loc='s', name='A=20dB')
-    Wire([if_bpf.e, if_amp.w])
+    if_amp = Amp(shift_x(if_bpf.E, 75), name='IF Amp')
+    Label(if_amp.S, loc='s', name='A=20dB')
+    Wire([if_bpf.E, if_amp.W])
 
     # Place IF mixer east of IF amplifier.
-    if_mixer = Source(shift_x(if_amp.e, 50), kind='mult')
-    Label(if_mixer.n, loc='n', name='SSB')
-    Wire([if_amp.e, if_mixer.w])
+    if_mixer = Source(shift_x(if_amp.E, 50), kind='mult')
+    Label(if_mixer.N, loc='n', name='SSB')
+    Wire([if_amp.E, if_mixer.W])
 
     # Place IF local oscillator south of IF mixer.
     if_lo = Source(
-        shift_y(if_mixer.s, 100), kind='sine',
+        shift_y(if_mixer.S, 100), kind='sine',
         name='fo=190MHz', value='P=10dBm'
     )
-    Ground(shift_y(if_lo.s, 25))
-    Wire([if_mixer.s, if_lo.n])
+    Ground(shift_y(if_lo.S, 25))
+    Wire([if_mixer.S, if_lo.N])
 
     # Place baseband low-pass filter east of IF mixer.
-    bb_lpf = Box(shift_x(if_mixer.e, 75), name='BB LPF')
-    Label(bb_lpf.s, loc='s', name='BW=2MHz (var)')
-    Wire([if_mixer.e, bb_lpf.w])
+    bb_lpf = Box(shift_x(if_mixer.E, 75), name='BB LPF')
+    Label(bb_lpf.S, loc='s', name='BW=2MHz (var)')
+    Wire([if_mixer.E, bb_lpf.W])
 
     # Place analog-to-digital converter east of baseband amplifier.
-    adc = Box(shift_x(bb_lpf.e, 75), name='ADC')
-    Label(adc.s, loc='s', name='Fclk=var')
-    Wire([bb_lpf.e, adc.w])
+    adc = Box(shift_x(bb_lpf.E, 75), name='ADC')
+    Label(adc.S, loc='s', name='Fclk=var')
+    Wire([bb_lpf.E, adc.W])
 
     # Place output east of analog-to-digital converter.
-    bb_out = Pin(shift_x(adc.e, 50), kind='out', name='out', w=1.5)
-    Label(shift_x(adc.e, 25), kind='slash', loc='s', name='8')
-    Wire([adc.e, bb_out.c])
+    bb_out = Pin(shift_x(adc.E, 50), kind='out', name='out', w=1.5)
+    Label(shift_x(adc.E, 25), kind='slash', loc='s', name='8')
+    Wire([adc.E, bb_out.C])

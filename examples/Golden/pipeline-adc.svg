@@ -17,10 +17,10 @@
   </g>
   <g id="symbol" transform="translate(0,0)">
     <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
-    <circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"/>
+    <circle cx="-4" cy="0" fill="white" r="4" stroke="black" stroke-width="2"/>
   </g>
   <g id="text">
-    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="-9" y="7.2">in</text>
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="-13" y="7.2">in</text>
   </g>
   <g id="symbol" transform="translate(125,100)">
     <rect fill="none" height="75.0" stroke="none" width="100" x="-50.0" y="-37.5"/>
@@ -48,8 +48,8 @@
   <g id="symbol" transform="translate(350,0) scale(-1,1) rotate(-90)">
     <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
     <circle cx="0" cy="0" fill="white" r="25.0" stroke="black" stroke-width="2"/>
-    <line fill="black" stroke="black" stroke-linecap="round" stroke-width="2" x1="-12.5" x2="12.5" y1="0" y2="0"/>
-    <line fill="black" stroke="black" stroke-linecap="round" stroke-width="2" x1="0" x2="0" y1="-12.5" y2="12.5"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="2" x1="-12.5" x2="12.5" y1="0" y2="0"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="2" x1="0" x2="0" y1="-12.5" y2="12.5"/>
   </g>
   <g id="text"/>
   <g id="symbol" transform="translate(325.0,0)">
@@ -132,10 +132,10 @@
   </g>
   <g id="symbol" transform="translate(625.0,325)">
     <rect fill="none" height="50" stroke="none" width="100" x="-50.0" y="-25.0"/>
-    <circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"/>
+    <circle cx="4" cy="0" fill="white" r="4" stroke="black" stroke-width="2"/>
   </g>
   <g id="text">
-    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="634.0" y="332.2">out</text>
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="638.0" y="332.2">out</text>
   </g>
   <g id="wire">
     <polyline fill="none" points="575.0,325 625.0,325" stroke="black" stroke-linecap="round" stroke-width="2"/>
@@ -156,32 +156,32 @@
   <g id="text">
     <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="600.0" y="350.4">10</text>
   </g>
-  <g id="symbol" transform="translate(200,275)">
+  <g id="symbol" transform="translate(200,280)">
     <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
     <line stroke="black" stroke-width="2" x1="-6.0" x2="6.0" y1="6.0" y2="-6.0"/>
   </g>
   <g id="text">
-    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="195" y="300.4">2</text>
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="192" y="287.2">2</text>
   </g>
-  <g id="symbol" transform="translate(300,275)">
+  <g id="symbol" transform="translate(300,280)">
     <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
     <line stroke="black" stroke-width="2" x1="-6.0" x2="6.0" y1="6.0" y2="-6.0"/>
   </g>
   <g id="text">
-    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="295" y="300.4">2</text>
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="292" y="287.2">2</text>
   </g>
-  <g id="symbol" transform="translate(425,275)">
+  <g id="symbol" transform="translate(425,280)">
     <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
     <line stroke="black" stroke-width="2" x1="-6.0" x2="6.0" y1="6.0" y2="-6.0"/>
   </g>
   <g id="text">
-    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="420" y="300.4">2</text>
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="417" y="287.2">2</text>
   </g>
-  <g id="symbol" transform="translate(550,275)">
+  <g id="symbol" transform="translate(550,280)">
     <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
     <line stroke="black" stroke-width="2" x1="-6.0" x2="6.0" y1="6.0" y2="-6.0"/>
   </g>
   <g id="text">
-    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="545" y="300.4">4</text>
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="542" y="287.2">4</text>
   </g>
 </svg>

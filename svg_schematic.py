@@ -28,7 +28,7 @@ __released__ = '2018-02-26'
 
 
 # Imports {{{1
-from svgwrite import Drawing, cm, mm
+from svgwrite import Drawing
 from math import sqrt, atan2, pi
 
 
@@ -293,15 +293,15 @@ class Tile(Schematic): # {{{1
 
         # Principal coordinates {{{2
         self.add_coordinates(center, dict(
-            c = (0, 0),
-            n = (0, -h/2),
-            nw = (-w/2, -h/2),
-            w = (-w/2, 0),
-            sw = (-w/2, h/2),
-            s = (0, h/2),
-            se = (w/2, h/2),
-            e = (w/2, 0),
-            ne = (w/2, -h/2),
+            C = (0, 0),
+            N = (0, -h/2),
+            NW = (-w/2, -h/2),
+            W = (-w/2, 0),
+            SW = (-w/2, h/2),
+            S = (0, h/2),
+            SE = (w/2, h/2),
+            E = (w/2, 0),
+            NE = (w/2, -h/2),
         ))
 
     # add_text() {{{2
@@ -327,11 +327,11 @@ class Tile(Schematic): # {{{1
         # add the text
         text = schematic.text(
             text,
-            insert=position,
-            font_family=schematic.sch_font_family,
+            insert = position,
+            font_family = schematic.sch_font_family,
             font_size = schematic.sch_font_size,
-            fill='black',
-            **kwargs,
+            fill = 'black',
+            **kwargs
         )
         self.text.add(text)
 
@@ -1289,6 +1289,9 @@ class Source(Tile): # {{{1
         elong = size/16
         lw = schematic.sch_line_width
         sign_size = 14
+        arrow_width = 5
+        t0 = (0, -size/2)
+        t1 = (0, size/2)
 
         # Source {{{2
         if kind in ('cv', 'ci'):
@@ -1301,26 +1304,26 @@ class Source(Tile): # {{{1
                 fill=schematic.sch_background,
                 stroke_width=lw, stroke=color, stroke_linecap='round'
             )
-            t0 = (0, -dr-elong)
-            t1 = (0,  dr+elong)
+            src_t = (0, -dr-elong)
+            src_b = (0,  dr+elong)
         else:
             source = schematic.circle(
                 center=(0, 0), r=r, fill=schematic.sch_background,
                 stroke_width=lw, stroke=color
             )
-            t0 = (0, -r)
-            t1 = (0,  r)
+            src_t = (0, -r)
+            src_b = (0,  r)
         symbol.add(source)
         if kind not in 'sum mult'.split():
             # do not add leads to summer and multiplier
             pos_lead = schematic.line(
-                start=t0,
+                start=src_t,
                 end=(0, -size/2),
                 stroke_width=lw, stroke=color, stroke_linecap='round'
             )
             symbol.add(pos_lead)
             pos_lead = schematic.line(
-                start=t1,
+                start=src_b,
                 end=(0, size/2),
                 stroke_width=lw, stroke=color, stroke_linecap='round'
             )
@@ -1352,9 +1355,9 @@ class Source(Tile): # {{{1
             arrow = schematic.polygon(
                 [   (0, -3*r/4),
                     (0, r/4),
-                    (nudge, r/4),
+                    (arrow_width, r/4),
                     (0, 3*r/4),
-                    (-nudge, r/4),
+                    (-arrow_width, r/4),
                     (0, r/4),
                 ],
                 fill=color,
@@ -1411,15 +1414,15 @@ class Source(Tile): # {{{1
         # Principal coordinates {{{2
         # override those set in Tile
         self.add_coordinates(center, dict(
-            c = (0, 0),
-            n = (0, -r),
-            nw = (-0.707*r, -0.707*r),
-            w = (-r, 0),
-            sw = (-0.707*r, 0.707*r),
-            s = (0, r),
-            se = (0.707*r, 0.707*r),
-            e = (r, 0),
-            ne = (0.707*r, -0.707*r),
+            C = (0, 0),
+            N = (0, -r),
+            NW = (-0.707*r, -0.707*r),
+            W = (-r, 0),
+            SW = (-0.707*r, 0.707*r),
+            S = (0, r),
+            SE = (0.707*r, 0.707*r),
+            E = (r, 0),
+            NE = (0.707*r, -0.707*r),
         ))
 
         # Text {{{2
@@ -1531,12 +1534,13 @@ class Label(Tile): # {{{1
             choose from 'c', 'n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'
         w (num): the width of the tile (multiples of unit width)
         l (num): the length of the tile (multiples of unit width)
+        color (str): color of the marker
         nudge (num): offset used when positioning text (if needed)
     '''
 
     def __init__(
         self, center, kind='plain', loc='c', orientation='h', name=None, value=None, w=1, l=1,
-        nudge=5
+        color='black', nudge=5
     ):
         # Initialization and parameters {{{2
         super().__init__(center, w, l)
@@ -1557,7 +1561,7 @@ class Label(Tile): # {{{1
                 [   (arrow_width/2, 0),
                     (-arrow_width/2, arrow_height/2),
                     (-arrow_width/2, -arrow_height/2),
-                ], fill='black', stroke='none'
+                ], fill=color, stroke='none'
             )
             symbol.add(arrow)
             y_nudge += arrow_height/2
@@ -1566,16 +1570,16 @@ class Label(Tile): # {{{1
                 start = (-slash_len/2, slash_len/2),
                 end = (slash_len/2, -slash_len/2),
                 stroke_width = lw,
-                stroke = 'black',
+                stroke = color,
             )
             symbol.add(slash)
             y_nudge += slash_len/2
         elif kind == 'dot':
             symbol = schematic.circle(
                 center = (0, 0), r=r,
-                fill = 'black' if kind == 'dot' else schematic.sch_background,
+                fill = color if kind == 'dot' else schematic.sch_background,
                 stroke_width = lw,
-                stroke = 'black',
+                stroke = color,
             )
             symbol.add(symbol)
             y_nudge += r
@@ -1593,6 +1597,7 @@ class Label(Tile): # {{{1
 
         # Text {{{2
         if name:
+            loc = loc.lower()
             dx = dy = 0
             v_just = h_just = 'm'
             if 'n' in loc:
@@ -1663,6 +1668,7 @@ class Box(Tile): # {{{1
         if 'v' in orientation:
             symbol.rotate(-90)
         self.t = self.map_pins(terms, center, orientation, 'v')
+        self.o, self.i = self.t
 
         # Text {{{2
         if value:
@@ -1692,7 +1698,7 @@ class Switch(Tile): # {{{1
 
     def __init__(
         self, center, kind='spst', orientation='h', name=None, value=None,
-        dots=True, nudge=5
+        dots=False, nudge=5
     ):
         # Initialization and parameters {{{2
         super().__init__(center, 2, 2)
@@ -1733,7 +1739,6 @@ class Switch(Tile): # {{{1
         )
         symbol.add(l_lead)
         if kind == 'spdt':
-            symbol.add(l_pole)
             if dots:
                 t_pole = schematic.circle(
                     (gap/2, -sep/2), r=r, fill='black',
