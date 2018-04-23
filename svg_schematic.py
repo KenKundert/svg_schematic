@@ -1180,6 +1180,7 @@ class Gate(Tile): # {{{1
         if 'v' in orientation:
             symbol.rotate(-90)
         self.t = self.map_pins(terms, center, orientation, 'v')
+        self.o, self.i = self.t
 
         # Text {{{2
         if name:
@@ -1457,13 +1458,14 @@ class Pin(Tile): # {{{1
         value (str): the pin value (unused for in and out pins)
         w (num): the width of the tile (multiples of unit width)
         l (num): the height of the tile (multiples of unit height)
+        color (str): color of symbol
         nudge (num): offset used when positioning text (if needed)
     '''
     DEFAULT_KIND = 'out'
 
     def __init__(
         self, center, kind=None, orientation='v', name=None, value=None,
-        w=1, l=1, nudge=5
+        w=1, l=1, color='black', nudge=5
     ):
         # Initialization and parameters {{{2
         super().__init__(center, w, l)
@@ -1485,9 +1487,9 @@ class Pin(Tile): # {{{1
                 cx = 0
             pin = schematic.circle(
                 center = (cx, 0), r=r,
-                fill = 'black' if kind == 'dot' else schematic.sch_background,
+                fill = color if kind == 'dot' else schematic.sch_background,
                 stroke_width = lw,
-                stroke = 'black',
+                stroke = color,
             )
             symbol.add(pin)
 

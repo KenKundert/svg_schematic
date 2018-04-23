@@ -14,7 +14,7 @@ PNG_FILES=$(DRAWINGS:=.png)
 default: $(PNG_FILES)
 
 clean:
-	rm -rf $(PNG_FILES)
+	@rm -rf $(PNG_FILES)
 
 %.png: %.svg
 	convert $< $@

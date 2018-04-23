@@ -21,6 +21,7 @@ setup(
     zip_safe=True,
     py_modules='svg_schematic'.split(),
     install_requires='svgwrite'.split(),
+    python_requires='>=3.6',
     keywords='svg schematic latex'.split(),
     classifiers=dedent('''
         Development Status :: 5 - Production/Stable
