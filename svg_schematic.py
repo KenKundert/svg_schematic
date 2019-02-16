@@ -1567,6 +1567,15 @@ class Label(Tile): # {{{1
             )
             symbol.add(arrow)
             y_nudge += arrow_height/2
+        elif kind == 'arrow|':
+            arrow = schematic.polygon(
+                [   (0, 0),
+                    (-arrow_width, arrow_height/2),
+                    (-arrow_width, -arrow_height/2),
+                ], fill=color, stroke='none'
+            )
+            symbol.add(arrow)
+            y_nudge += arrow_height/2
         elif kind == 'slash':
             slash = schematic.line(
                 start = (-slash_len/2, slash_len/2),
@@ -2036,6 +2045,46 @@ if __name__ == '__main__':
             name = 'U',
             value = 'value',
             kwargs = dict(kind = 'inv'),
+        ),
+        TestCase(
+            component = Label,
+            name = 'x',
+            kwargs = dict(kind = 'arrow', orientation='v'),
+        ),
+        TestCase(
+            component = Label,
+            name = 'x',
+            kwargs = dict(kind = 'arrow', orientation='v-'),
+        ),
+        TestCase(
+            component = Label,
+            name = 'x',
+            kwargs = dict(kind = 'arrow', orientation='h'),
+        ),
+        TestCase(
+            component = Label,
+            name = 'x',
+            kwargs = dict(kind = 'arrow', orientation='h|'),
+        ),
+        TestCase(
+            component = Label,
+            name = 'x',
+            kwargs = dict(kind = 'arrow|', orientation='v'),
+        ),
+        TestCase(
+            component = Label,
+            name = 'x',
+            kwargs = dict(kind = 'arrow|', orientation='v-'),
+        ),
+        TestCase(
+            component = Label,
+            name = 'x',
+            kwargs = dict(kind = 'arrow|', orientation='h'),
+        ),
+        TestCase(
+            component = Label,
+            name = 'x',
+            kwargs = dict(kind = 'arrow|', orientation='h|'),
         ),
     ]
     value_is_orientation = True

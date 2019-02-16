@@ -2,7 +2,7 @@
 
 from svg_schematic import (
     Schematic, offsets_to_coordinates, shift_x, shift_y, shift,
-    Capacitor, Diode, Ground, Pin, Wire
+    Capacitor, Diode, Ground, Pin, Wire, Dot
 )
 
 with Schematic(filename = "charge-pump.svg", line_width=2, background='none'):
@@ -58,5 +58,6 @@ with Schematic(filename = "charge-pump.svg", line_width=2, background='none'):
     Wire([(c5_x, d_y), c5.t[0]])
     Wire([(c1_x, p1_y), c1.t[1]])
     Wire([(c2_x, p2_y), c2.t[1]])
+    Dot((c2_x, p1_y), color='white')     # wire cross over
     Wire([p1.t[0], (c3_x, p1_y), c3.t[1]])
     Wire([p2.t[0], (c4_x, p2_y), c4.t[1]])

@@ -681,17 +681,19 @@ Label
 
 Place a label. You must specify the location of the text anchor as an x,y pair.  
 You may also specify the location (loc), the name (the label), the width (w) and 
-the height (h).  The location can be 'C', 'N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 
-and 'NW'. The default width and height is 1.
+the height (h).  The location controls the placement of the text and can be 'C', 
+'N', 'NE', 'E', 'SE', 'S', 'SW', 'W', and 'NW'. The default width and height of 
+the tile that contains the label is 1.
 
 .. code-block:: python
 
     Label((x,y), name='$z^{-1}$', w=1, h=1)
 
 You can also specify the kind and orientation arguments. The kind may be 
-'plain', 'arrow', 'slash' or 'dot'. If 'plain' is specified, no symbol is added, 
-only the name is displayed. If 'arrow' is specified, an arrow is added.  If 
-'slash' is specified, a small slash is added through the center.  It is 
-generally used with buses to indicate the bus width. Finally, 'dot' adds 
-a solder dot.
+'plain', 'arrow', 'arrow|', 'slash' or 'dot'. If 'plain' is specified, no symbol 
+is added, only the name is displayed. If 'arrow' is specified, an arrow is added 
+and the centered on the specified location. If 'arrow|' is specified, the arrow 
+terminates on the specified location.  If 'slash' is specified, a small slash is 
+added through the center.  It is generally used with buses to indicate the bus 
+width.  Finally, 'dot' adds a solder dot.
 
