@@ -1,8 +1,8 @@
 SVG Schematic
 =============
 
-| Version: 0.5.1
-| Released: 2018-04-23
+| Version: 0.5.2
+| Released: 2019-02-15
 |
 
 This package allows you to create simple SVG schematics. It was created with 
