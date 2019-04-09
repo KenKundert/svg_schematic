@@ -159,8 +159,8 @@ class Schematic(Drawing): # {{{1
         if width is None:
             min_x = self.sch_min_x - self.sch_left_pad - self.sch_line_width
             min_y = self.sch_min_y - self.sch_bottom_pad - self.sch_line_width
-            width = self.sch_max_x + self.sch_right_pad - min_x + 2*self.sch_line_width
-            height = self.sch_max_y + self.sch_top_pad - min_y + 2*self.sch_line_width
+            width = self.sch_max_x + self.sch_right_pad + self.sch_right_pad - min_x + 2*self.sch_line_width
+            height = self.sch_max_y + self.sch_top_pad + self.sch_bottom_pad - min_y + 2*self.sch_line_width
         assert width > 0 and height > 0, "no components in schematic."
             # may also fail if components do not update bounds
 

@@ -50,7 +50,7 @@ place wires to connect them together. For example:
 
 .. code-block:: python
 
-    from schematic import Schematic, Resistor, Capacitor, Inductor, Wire
+    from svg_schematic import Schematic, Resistor, Capacitor, Inductor, Wire
 
     # x coordinates
     r_x = 0
