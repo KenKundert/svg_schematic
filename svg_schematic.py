@@ -75,6 +75,16 @@ def midpoint(p1, p2):
     """Returns the point midway between two points."""
     return ((p1[0] + p2[0])/2, (p1[1] + p2[1])/2)
 
+# midpoint_x() {{{2
+def midpoint_x(p1, p2):
+    """Returns the point midway between two points."""
+    return ((p1[0] + p2[0])/2, p1[1])
+
+# midpoint_y() {{{2
+def midpoint_y(p1, p2):
+    """Returns the point midway between two points."""
+    return (p1[0], (p1[1] + p2[1])/2)
+
 # offsets_to_coordinates() {{{2
 def offsets_to_coordinates(dest, x_offsets=None, y_offsets=None):
     x = y = 0
@@ -210,7 +220,9 @@ class Wire(Schematic): # {{{1
         line_width (num): the line width
         color (str): you can change the color to help with debugging
     '''
-    def __init__(self, points, kind='plain', line_width=None, color='black'):
+    def __init__(
+        self, points, kind='plain', line_width=None, color='black', **extra
+    ):
         schematic = self.sch_schematic
         assert schematic, 'no active schematic'
         lw = schematic.sch_line_width if line_width is None else line_width
@@ -249,7 +261,7 @@ class Wire(Schematic): # {{{1
         wire = schematic.g(id='wire')
         line = schematic.polyline(
             points, fill='none',
-            stroke_width=lw, stroke=color, stroke_linecap='round'
+            stroke_width=lw, stroke=color, stroke_linecap='round', **extra
         )
         wire.add(line)
         schematic.add(wire)
@@ -704,6 +716,7 @@ class BJT(Tile): # {{{1
 
     Args:
         kind (str): choose from 'npn' or 'pnp' (or just 'n' or 'p')
+            if kind is '' the arrow is not shown.
         center (pair): the x,y coordinates of the center of the tile
         orientation (str):
             'v' = vertical,
@@ -771,28 +784,29 @@ class BJT(Tile): # {{{1
             stroke_width=lw, stroke='black', stroke_linecap='round'
         )
         symbol.add(base_lead)
-        arrow_x0 = w/4
-        rotate_arrow=180*atan2(1/8, 1/2)/pi
-        if kind[0] == 'p':
-            arrow_y0 = -h/4
-            arrow_left = arrow_x0+arrow_width/2
-            arrow_right = arrow_x0-arrow_width/2
-            c, e = e, c
-            rotate_arrow=-rotate_arrow
-        else:
-            arrow_y0 = h/4
-            arrow_left = arrow_x0-arrow_width/2
-            arrow_right = arrow_x0+arrow_width/2
-        arrow_top = arrow_y0-arrow_height/2
-        arrow_bottom = arrow_y0+arrow_height/2
-        arrow = schematic.polygon(
-            [   (arrow_left, arrow_top),
-                (arrow_right, arrow_y0),
-                (arrow_left, arrow_bottom)
-            ], fill='black', stroke='none'
-        )
-        arrow.rotate(rotate_arrow, center=(0, arrow_y0))
-        symbol.add(arrow)
+        if kind:
+            arrow_x0 = w/4
+            rotate_arrow=180*atan2(1/8, 1/2)/pi
+            if kind[0] == 'p':
+                arrow_y0 = -h/4
+                arrow_left = arrow_x0+arrow_width/2
+                arrow_right = arrow_x0-arrow_width/2
+                c, e = e, c
+                rotate_arrow=-rotate_arrow
+            else:
+                arrow_y0 = h/4
+                arrow_left = arrow_x0-arrow_width/2
+                arrow_right = arrow_x0+arrow_width/2
+            arrow_top = arrow_y0-arrow_height/2
+            arrow_bottom = arrow_y0+arrow_height/2
+            arrow = schematic.polygon(
+                [   (arrow_left, arrow_top),
+                    (arrow_right, arrow_y0),
+                    (arrow_left, arrow_bottom)
+                ], fill='black', stroke='none'
+            )
+            arrow.rotate(rotate_arrow, center=(0, arrow_y0))
+            symbol.add(arrow)
 
         # Orientation and translation {{{2
         # The transformation operations are performed by SVG in reverse order.
@@ -839,6 +853,7 @@ class MOS(Tile): # {{{1
 
     Args:
         kind (str): choose from 'nmos' or 'pmos' (or just 'n' or 'p')
+            if kind is '' the arrow is not shown.
         center (pair): the x,y coordinates of the center of the tile
         orientation (str):
             'v' = vertical,
@@ -911,25 +926,26 @@ class MOS(Tile): # {{{1
             stroke_width=lw, stroke='black', stroke_linecap='round'
         )
         symbol.add(gate_lead)
-        arrow_x0 = w/4
-        if kind[0] == 'p':
-            arrow_y0 = -h/4
-            arrow_left = arrow_x0+arrow_width/2
-            arrow_right = arrow_x0-arrow_width/2
-            d, s = s, d
-        else:
-            arrow_y0 = h/4
-            arrow_left = arrow_x0-arrow_width/2
-            arrow_right = arrow_x0+arrow_width/2
-        arrow_top = arrow_y0-arrow_height/2
-        arrow_bottom = arrow_y0+arrow_height/2
-        arrow = schematic.polygon(
-            [   (arrow_left, arrow_top),
-                (arrow_right, arrow_y0),
-                (arrow_left, arrow_bottom)
-            ], fill='black', stroke='none'
-        )
-        symbol.add(arrow)
+        if kind:
+            arrow_x0 = w/4
+            if kind[0] == 'p':
+                arrow_y0 = -h/4
+                arrow_left = arrow_x0+arrow_width/2
+                arrow_right = arrow_x0-arrow_width/2
+                d, s = s, d
+            else:
+                arrow_y0 = h/4
+                arrow_left = arrow_x0-arrow_width/2
+                arrow_right = arrow_x0+arrow_width/2
+            arrow_top = arrow_y0-arrow_height/2
+            arrow_bottom = arrow_y0+arrow_height/2
+            arrow = schematic.polygon(
+                [   (arrow_left, arrow_top),
+                    (arrow_right, arrow_y0),
+                    (arrow_left, arrow_bottom)
+                ], fill='black', stroke='none'
+            )
+            symbol.add(arrow)
 
         # Orientation and translation {{{2
         # The transformation operations are performed by SVG in reverse order.
@@ -1377,6 +1393,66 @@ class Source(Tile): # {{{1
                 (3*r/16, r/2), (9*r/16, r/2), (12*r/16, 0), # negative half cycle
             ])
             symbol.add(sine)
+        elif kind == 'noise':
+            randwave = [
+                (-1, -0.76),
+                (-0.96, -0.29),
+                (-0.92, 0.19),
+                (-0.88, 0.62),
+                (-0.84, -0.8),
+                (-0.8, -0.71),
+                (-0.76, 0.35),
+                (-0.72, 0.54),
+                (-0.68, 0.87),
+                (-0.64, 0.02),
+                (-0.6, -0.42),
+                (-0.56, 0.59),
+                (-0.52, 0.08),
+                (-0.48, -0.87),
+                (-0.44, 0.34),
+                (-0.4, 0),
+                (-0.36, -0.55),
+                (-0.32, 0.77),
+                (-0.28, -0.41),
+                (-0.24, 0.66),
+                (-0.2, -0.42),
+                (-0.16, -0.1),
+                (-0.12, 0.25),
+                (-0.08, -0.95),
+                (-0.04, 0.52),
+                (0, 0.9),
+                (0.04, 0.98),
+                (0.08, -0.79),
+                (0.12, 0.43),
+                (0.16, -0.4),
+                (0.2, -0.92),
+                (0.24, 0.82),
+                (0.28, -0.42),
+                (0.32, 0.1),
+                (0.36, 0.52),
+                (0.4, 0.85),
+                (0.44, -0.97),
+                (0.48, 0.48),
+                (0.52, 0.18),
+                (0.56, 0.94),
+                (0.6, 0.91),
+                (0.64, 0.19),
+                (0.68, -0.26),
+                (0.72, -0.47),
+                (0.76, 1),
+                (0.8, 0.7),
+                (0.84, -0.67),
+                (0.88, 0.1),
+                (0.92, -0.84),
+                (0.96, 0.78),
+                (1, -0.95),
+            ]
+            noise = schematic.polyline(
+                [(3*r*x/4, r*y/2) for x, y in randwave ],
+                fill='none',
+                stroke_width=lw, stroke=color, stroke_linecap='round'
+            )
+            symbol.add(noise)
         elif kind == 'sum':
             line = schematic.line(  # vertical line
                 start=(-r/2, 0), end=(r/2, 0),
@@ -1399,6 +1475,8 @@ class Source(Tile): # {{{1
                 stroke_width=lw, stroke=color, stroke_linecap='round'
             )
             symbol.add(line)
+        elif kind != 'empty':
+            raise NotImplementedError(kind)
 
         # Orientation and translation {{{2
         # The transformation operations are performed by SVG in reverse order.
@@ -1648,7 +1726,7 @@ class Box(Tile): # {{{1
 
     def __init__(
         self, center, orientation='h', name=None, value=None, w=2, h=1.5,
-        nudge=5, line_width=None, background=None
+        nudge=5, line_width=None, background=None, **extra
     ):
         # Initialization and parameters {{{2
         super().__init__(center, w, h)
@@ -1666,6 +1744,7 @@ class Box(Tile): # {{{1
             fill = fill,
             stroke_width = lw,
             stroke = 'black',
+            **extra
         )
         symbol.add(box)
 

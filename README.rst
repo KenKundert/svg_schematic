@@ -248,9 +248,11 @@ argument::
     with_x((x1,y1), (x2,y2)) --> (x2, y1)
     with_y((x1,y1), (x2,y2)) --> (x1, y2)
 
-Finally, *midpoint* returns the point midway between two points::
+Finally, the *midpoint* functions return the point midway between two points::
 
     midpoint((x1,y1), (x2,y2) --> ((x1+x2)/2, (y1+y2)/2)
+    midpoint_x((x1,y1), (x2,y2) --> ((x1+x2)/2, y1)
+    midpoint_y((x1,y1), (x2,y2) --> (x1, (y1+y2)/2)
 
 Now the RLC schematic can be rewritten as follows::
 
@@ -390,7 +392,14 @@ and `-|-` there there are three segments with the middle segment being half way
 between the two points. With `|-|`, the segments are vertical, horizontal, and 
 vertical.  With `-|-`, the segments are horizontal, vertical, and horizontal.
 
-*Wire* also supports the *line_width*  and *color* arguments.
+*Wire* supports the *line_width*  and *color* arguments.
+
+*Box* also support arbitrary *svgwrite* drawing parameters. This can be useful 
+to draw the box with dashed lines:
+
+.. code-block:: python
+
+    Wire([(x0,y0), (x1,y1)], stroke_dasharray="4 2")
 
 *Wire* provides the *b* and *e* attributes, that contain the coordinates of the 
 beginning and end of the wire.
@@ -625,7 +634,14 @@ The default width is 2 and the default height is 1.5.
 You may pass a wire or wires directly under the box and the wire will be 
 concealed by the box.
 
-*Box* also supports the *line_width* and *background* arguments.
+*Box* supports the *line_width* and *background* arguments.
+
+*Box* also support arbitrary *svgwrite* drawing parameters. This can be useful 
+to draw the box with dashed lines:
+
+.. code-block:: python
+
+    Box((x,y), w=1, h=1, stroke_dasharray="4 2")
 
 The component also includes the nine principal coordinates for the box: C, N, 
 NE, E, SE, S, SW, W, and NW. Except for c, they are evenly distributed around 
@@ -638,7 +654,7 @@ Ground
 Draw a ground. You must specify the location of the center as an x,y pair.  The 
 center of the tile corresponds to the top of the ground symbol. You may also 
 specify the kind, the orientation, the name, and the value, but the value is 
-currently unused.
+currently unused.  The coordinates of the connection point for ground is C.
 
 .. code-block:: python
 
