@@ -10,7 +10,7 @@ with open('README.rst') as f:
 
 setup(
     name='svg_schematic',
-    version='0.5.3',
+    version='0.6.0',
     description='svg schematics',
     long_description=readme,
     url='https://github.com/kenkundert/svg_schematic',
