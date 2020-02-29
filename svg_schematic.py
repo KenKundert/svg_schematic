@@ -6,8 +6,8 @@
 """
 *SVG Schematic* is a Python library can be used to create schematics using SVG.
 """
-__version__ = '0.5.3'
-__released__ = '2019-04-08'
+__version__ = '0.6.0'
+__released__ = '2019-09-03'
 
 
 # License {{{1
@@ -1448,7 +1448,7 @@ class Source(Tile): # {{{1
                 (1, -0.95),
             ]
             noise = schematic.polyline(
-                [(3*r*x/4, r*y/2) for x, y in randwave ],
+                [(3*r*x/4, r*y/3) for x, y in randwave ],
                 fill='none',
                 stroke_width=lw, stroke=color, stroke_linecap='round'
             )

@@ -1,8 +1,8 @@
 SVG Schematic
 =============
 
-| Version: 0.5.3
-| Released: 2019-04-08
+| Version: 0.6.0
+| Released: 2019-09-03
 |
 
 This package allows you to create simple SVG schematics. It was created with 
@@ -514,12 +514,12 @@ The kind can either be 'npn' or 'pnp'.
 
 .. code-block:: python
 
-    MOS((x,y), kind='n', orientation='v|', name=M2, value='10')
+    BJT((x,y), kind='npn', orientation='v|', name='Q2', value='10')
 
-You may pass a wire directly under the FET and the wire will be concealed by the 
-FET.
+You may pass a wire directly under the transistor and the wire will be concealed 
+by the transistor.
 
-The *d*, *g* and *s* attributes contain the coordinates of the drain, gate and 
+The *c*, *b* and *e* attributes contain the coordinates of the drain, gate and 
 source terminals.
 
 
@@ -532,7 +532,7 @@ can either be 'n' or 'p'.
 
 .. code-block:: python
 
-    MOS((x,y), kind='n', orientation='v|', name=M2, value='10')
+    MOS((x,y), kind='n', orientation='v|', name='M2', value='10')
 
 You may pass a wire directly under the FET and the wire will be concealed by the 
 FET.
