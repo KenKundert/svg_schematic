@@ -71,6 +71,7 @@ example:
 When run, it produces the following schematic:
 
 .. image:: images/rlc.svg
+    :width: 25 %
 
 
 Component Placement
@@ -315,6 +316,7 @@ a terminal.  For example:
     Wire([r.n, c.n, l.n], kind='-|-')
 
 .. image:: images/rlc.svg
+    :width: 25 %
 
 Notice that the center of ``r`` is placed at (0,0), then the center of ``c`` is 
 place 75 units to the right of ``r``, then the center of ``l`` is placed 75 
@@ -1039,7 +1041,7 @@ Here is an example of a typical schematic.
     except OSError as e:
         error(os_error(e))
 
-.. image:: noninverting.svg
+.. image:: examples/noninverting.svg
 
 
 Passive Low Pass Filter
