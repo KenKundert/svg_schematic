@@ -5,7 +5,7 @@
     <rect fill="white" height="253" stroke="none" stroke-width="1" width="153.0" x="-76.0" y="-26"/>
   </g>
   <g id="wire">
-    <polyline fill="none" points="0,-25 0,225" stroke="blue" stroke-linecap="round" stroke-width="1"/>
+    <polyline fill="none" points="0,-25 0,225" stroke="cyan" stroke-linecap="round" stroke-width="1"/>
   </g>
   <g id="symbol" transform="translate(0,0)">
     <rect fill="none" height="50" stroke="none" width="150" x="-75.0" y="-25.0"/>
