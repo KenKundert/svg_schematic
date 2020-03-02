@@ -20,7 +20,7 @@ setup(
     license='GPLv3+',
     zip_safe=True,
     py_modules='svg_schematic'.split(),
-    install_requires='svgwrite'.split(),
+    install_requires='svgwrite inform'.split(),
     python_requires='>=3.6',
     keywords='svg schematic latex'.split(),
     classifiers=dedent('''

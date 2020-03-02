@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="100%" version="1.1" viewBox="-76.0,-51.0,303.0,103.0" width="100%">
+  <defs/>
+  <g id="bkgnd">
+    <rect fill="white" height="103.0" stroke="none" stroke-width="1" width="303.0" x="-76.0" y="-51.0"/>
+  </g>
+  <g id="symbol" transform="translate(0,0)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <rect fill="white" height="54.0" stroke="none" width="50.0" x="-25.0" y="-27.0"/>
+    <line stroke="black" stroke-width="1" x1="-25.0" x2="25.0" y1="0" y2="-25.0"/>
+    <line stroke="black" stroke-width="1" x1="-50.0" x2="-25.0" y1="0" y2="0"/>
+    <line stroke="black" stroke-width="1" x1="50.0" x2="25.0" y1="0" y2="0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="0" y="19.4">φ₁</text>
+  </g>
+  <g id="symbol" transform="translate(-50.0,0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="blue" r="4" stroke="blue" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="-59.0" y="7.2">i</text>
+  </g>
+  <g id="symbol" transform="translate(50.0,-25.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="blue" r="4" stroke="blue" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="59.0" y="-17.8">ot</text>
+  </g>
+  <g id="symbol" transform="translate(50.0,0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="blue" r="4" stroke="blue" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="59.0" y="7.2">o</text>
+  </g>
+  <g id="symbol" transform="translate(50.0,25.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="blue" r="4" stroke="blue" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="59.0" y="32.2">ob</text>
+  </g>
+  <g id="symbol" transform="translate(150,0)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <rect fill="white" height="54.0" stroke="none" width="50.0" x="-25.0" y="-27.0"/>
+    <line stroke="black" stroke-width="1" x1="-25.0" x2="25.0" y1="0" y2="-25.0"/>
+    <line stroke="black" stroke-width="1" x1="-50.0" x2="-25.0" y1="0" y2="0"/>
+    <line stroke="black" stroke-width="1" x1="50.0" x2="25.0" y1="-25.0" y2="-25.0"/>
+    <line stroke="black" stroke-width="1" x1="50.0" x2="25.0" y1="25.0" y2="25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="150" y="19.4">φ₂</text>
+  </g>
+  <g id="symbol" transform="translate(100.0,0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="blue" r="4" stroke="blue" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="91.0" y="7.2">i</text>
+  </g>
+  <g id="symbol" transform="translate(200.0,-25.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="blue" r="4" stroke="blue" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="209.0" y="-17.8">ot</text>
+  </g>
+  <g id="symbol" transform="translate(200.0,0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="blue" r="4" stroke="blue" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="209.0" y="7.2">o</text>
+  </g>
+  <g id="symbol" transform="translate(200.0,25.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="blue" r="4" stroke="blue" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="209.0" y="32.2">ob</text>
+  </g>
+</svg>

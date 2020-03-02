@@ -6,7 +6,7 @@ SVG Schematic
 |
 
 This package allows you to create simple SVG schematics. It was created with 
-desire to be able to include simple schematics into Latex Beamer presenations.  
+desire to be able to include simple schematics into Latex Beamer presentations.  
 Latex has a similar package called `Circuitikz 
 <`http://texdoc.net/texmf-dist/doc/latex/circuitikz/circuitikzmanual.pdf>`_, and 
 while it is powerful and flexible and creates beautiful schematics, I found it 
@@ -23,7 +23,7 @@ Installation
 
 Requires Python3. Works best with Python3.6 or newer.
 
-If you just wish to install without download the source code, do this::
+If you just wish to install without downloading the source code, do this::
 
     pip3 install --user --upgrade svg_schematic
 
@@ -41,98 +41,213 @@ You can also find several `examples
 <https://github.com/KenKundert/svg_schematic/tree/master/examples>`_ there as 
 well.
 
+The current version is not compatible with *svg_schematic* version 0.6.
+
 
 Introduction
 ------------
 
-With *schematic* you simply place components at specific coordinates, and then 
-place wires to connect them together. For example:
+With *svg_schematic* you simply pick one symbol and place it at the origin and 
+then place the other symbols relative to the ones previously placed.  For 
+example:
 
 .. code-block:: python
 
     from svg_schematic import Schematic, Resistor, Capacitor, Inductor, Wire
+    from inform import Error, error, os_error
 
-    # x coordinates
-    r_x = 0
-    c_x = r_x + 75
-    l_x = c_x + 75
+    try:
+        with Schematic(filename='rlc.svg'):
+            r = Resistor(name='R', orient='v')
+            c = Capacitor(C=r.C, xoff=75, name='C', orient='v')
+            l = Inductor(C=c.C, xoff=75, name='L', orient='v')
+            Wire([r.p, l.p])
+            Wire([r.n, l.n])
+    except Error as e:
+        e.report()
+    except OSError as e:
+        error(os_error(e))
 
-    # y coordinates
-    top = 0
-    mid = 50
-    bot = 100
+When run, it produces the following schematic:
 
-    # open schematic
-    schematic = Schematic(filename = "rlc.svg")
+.. image:: images/rlc.svg
 
-    # add wires (these should be first)
-    Wire([(r_x, top), (l_x, top), (l_x, bot), (r_x, bot)])
-    Wire([(c_x, top), (c_x, bot)])
 
-    # add components
-    Resistor((r_x, mid), name='R', orientation='v')
-    Capacitor((c_x, mid), name='C', orientation='v')
-    Inductor((l_x, mid), name='L', orientation='v')
+Component Placement
+~~~~~~~~~~~~~~~~~~~
 
-    # close schematic and write the SVG file
-    schematic.close()
+In this example the resistor is placed without a location, and so its center is 
+placed at the origin, (0, 0).  You can then access the location of the center of 
+the resistor using ``r.C``, which is a XY-pair. That is passed to the capacitor 
+using `C=r.C` with an extra parameter of ``xoff=75``, meaning the center of the 
+capacitor is horizontally offset by 75 units from center of the resistor.  To 
+give you a sense of how far 75 units is, the length of the resistor is 100 
+units.  Positive horizontal offsets shift the location to the right, positive 
+vertical offsets shift the location down.  Finally, the inductor is placed 75 
+units to the right of the capacitor.
 
-It would create the following schematic:
+When specifying offsets, you can specify the x-offset using ``xoff``, the 
+y-offset using ``yoff``, and you can specify both with ``off`` as a tuple. For 
+example, ``off=(50,25)`` is equivalent to ``xoff=50, yoff=25``.
 
-.. image:: rlc.png
+Wires are added using an list of points, where each point is an XY-pair. In the 
+simplest case, a line is run between each of the point specified.  Thus, the 
+first wire runs from ``r.p`` to ``l.p``, where ``r`` is the resistor and ``r.p`` 
+is the location of the ``p`` terminal of the resistor.  ``l.p`` is the location 
+of the positive terminal of the inductor.  The second wire connects the negative 
+pins.
 
-You can also use *schematic* with the Python *with* statement, which will 
-automatically close and save the schematic. Thus the second half the above 
-example becomes:
+
+Principle Coordinates
+~~~~~~~~~~~~~~~~~~~~~
+
+Each component is embedded in a tile, and each tile has 9 principle coordinate 
+named C, N, NE, E, SE, S, SW, W, and NW which are short for center, north, 
+northwest, eash, southeast, south, southwest, west and northwest.
+
+.. image:: images/tile1.svg
+
+When placing a component, you can give the location of any of the principle 
+coordinates. And once placed, you can access the location of any of the 
+principle coordinates. Thus, you can stack one component on top of another 
+using:
 
 .. code-block:: python
 
-    with Schematic(filename = "rlc.svg"):
-        Wire([(r_x, top), (l_x, top), (l_x, bot), (r_x, bot)])
-        Wire([(c_x, top), (c_x, bot)])
-        Resistor((r_x, mid), name='R', orientation='v')
-        Capacitor((c_x, mid), name='C', orientation='v')
-        Inductor((l_x, mid), name='L', orientation='v')
+    c1 = Capacitor(name='C1')
+    c2 = Capacitor(name='C2', N=c1.S)
+
+This places the north principle coordinate of ``c2`` at the south principle 
+coordinate of ``c1``, which effectively stacks ``c1`` directly over ``c2``.
+
+
+Pins as Coordinates
+~~~~~~~~~~~~~~~~~~~
+
+You can also specify and access the component pins. For example, with the 
+resistor there are two terminals ``p`` and ``n``.
+
+.. image:: images/tile2.svg
+
+The above example could also be given as:
+
+.. code-block:: python
+
+    c1 = Capacitor(name='C1')
+    c2 = Capacitor(name='C2', p=c1.n)
+
+This places the ``p`` terminal of ``C2`` at the ``n`` terminal of ``C1``, so it 
+is another way to stack ``C1`` over ``C2``.
+
+
+Orientation
+~~~~~~~~~~~
+
+
+You can flip and rotate the components using the ``orient`` argument.
+Specifying ``v`` implies a vertical orientation, and ``h`` a horizontal 
+orientation (a component is converted from vertical to horizontal with a -90 
+degree rotation.  Adding ``|`` implies the component should be flipped along 
+a vertical axis (left to right) and adding ``-`` implies the component should be 
+flipped along a horizontal axis (up to down).
+
+.. image:: images/orient.svg
+
+
+Name and Value
+~~~~~~~~~~~~~~
+
+With most components you can specify a name, and with many components you can 
+also specify a value.  The text orientation will always be horizontal regardless 
+of the component orientation.  You can also specify ``nudge`` as a small number 
+to adjust the location of the resulting text.  For example:
+
+.. code-block:: python
+
+    from svg_schematic import (
+        Schematic, Capacitor, Ground, Inductor, Resistor, Pin, Source, Wire
+    )
+    from inform import Error, error, os_error
+
+    try:
+        with Schematic(
+            filename = 'names.svg',
+            background = 'none',
+        ):
+            vin = Source(name='Vin', value='1 V', kind='sine')
+            Ground(C=vin.n)
+            rs = Resistor(name='Rs', value='50 Ω', n=vin.p, xoff=25)
+            Wire([vin.p, rs.n])
+            c1 = Capacitor(name='C1', value='864 pF', p=rs.p, xoff=25)
+            Ground(C=c1.n)
+            l2 = Inductor(name='L2', value='5.12 μH', n=c1.p, xoff=25)
+            Wire([rs.p, l2.n])
+            c3 = Capacitor(name='C3', value='2.83 nF', p=l2.p, xoff=25)
+            Ground(C=c3.n)
+            l4 = Inductor(name='L4', value='8.78 μH', n=c3.p, xoff=25)
+            Wire([l2.p, l4.n])
+            c5 = Capacitor(name='C5', value='7.28 nF', p=l4.p, xoff=25)
+            Ground(C=c5.n)
+            rl = Resistor(name='Rl', value='50 Ω', p=c5.p, xoff=100, orient='v')
+            Ground(C=rl.n)
+            out = Pin(name='out', C=rl.p, xoff=50, w=2)
+            Wire([l4.p, out.t])
+    except Error as e:
+        e.report()
+    except OSError as e:
+        error(os_error(e))
+
+.. image:: images/mfed.svg
+
+
+Kind
+~~~~
+
+Many components allow you to specify ``kind``, which allow you to choose 
+a variant of the component symbol. They include
+
+======  ========================================================
+Symbol  Kinds
+======  ========================================================
+BJT     ``n``, ``p``
+MOS     ``n``, ``p``
+Amp     ``se``, ``oa``, ``da``, ``comp``
+Gate    ``inv``
+Pin     ``dot``, ``in``, ``out``, ``none``
+Label   ``plain``, ``arrow``, ``slash``, ``dot``
+Source  ``empty``, ``vdc``, ``idc``, ``sine``, ``sum``, ``mult``
+Switch  ``spst``, ``spdt``
+Wire    ``plain``, ``|-``, ``-|``, ``|-|``, ``-|-``
+======  ========================================================
+
+These are explained further later when the individual symbols are discussed.
+
+
+Miscellany
+~~~~~~~~~~
 
 There are a few things to note.
 
 #.  SVG coordinates are used, which inverts the y axis (more southern 
-    coordinates are more positive the more northern coordinates).
-#.  Components are placed in invisible tiles. When you specify the position of 
-    the component you are specifying the center of the tile.
+    coordinates are more positive than the more northern coordinates).
 #.  Wires and components stack in layers, with the first that is placed going on 
-    the lowest layer.  Most components contain concealers, which are small rectangles that are designed 
-    to conceal any wires that run underneath the components. This allows you to 
-    simply run a wire underneath the component rather than explicitly wire to 
-    each terminal, which can simply the description of the schematics. For this 
-    to work, the wire must be specified before the component as done in the 
-    above example. Also, the color of the concealers matches that of the 
+    the lowest layer.  Most components contain concealers, which are small 
+    rectangles that are designed to conceal any wires that run underneath the 
+    components. This allows you to simply run a wire underneath the component 
+    rather than explicitly wire to each terminal, which can simply the 
+    description of the schematics. For this to work, the wire must be specified 
+    before the component. Also, the color of the concealers matches that of the 
     background, so if you use no background, then you also lose the concealers.
-#.  The unit size of a tile is 50. You have limited ability to specify the size 
-    of some components, and specifying the size as 1 implies the tile will be 
-    50x50.  Most components have a size of 2 and so sit within a 100x100 tile.
-#.  You need not specify the size as an integer.
-#.  It is generally better to specify the important feature location coordinates 
-    in variables, and use the variable to control the location of the component, 
-    rather than specifying the coordinates directly on the components and wires.  
-    Further, it generally good to specify the coordinates in terms of the 
-    previous coordinates. In this way, you can adjust the placement of many 
-    features by changing one or two variable values.
-#.  You can flip and rotate the components using the *orientation* argument.
-    Specifying 'v' implies a vertical placement, and 'h' a horizontal placement 
-    (a component is converted from vertical to horizontal with a -90 degree 
-    rotation.  Specifying `|` implies the component should be flipped along 
-    a vertical axis (left to right) and specifying '-' implies the component 
-    should be flipped along a horizontal axis (up to down).
-#.  With most components you can specify a name, and with many components you 
-    can also specify a value.  The text orientation will always be horizontal 
-    regardless of the component orientation.
+#.  Components are placed in invisible tiles.  The unit size of a tile is 50.  
+    You have limited ability to specify the width and height of some components, 
+    and specifying the size as ``w=1, h=1`` implies the tile will be 50x50.  
+    Most components have a size of 2×2 and so sit within a 100x100 tile.  You 
+    need not specify the size as an integer.
 #.  When the schematic is used with Latex, you can use Latex formatting in the 
     name and value. For example, you can specify: `name='$L_1$'`. You should use 
     raw strings if your string contains backslashes: `value=r'$10 \\mu H$'`.
-#.  Components provide the *t* attribute, which is a list of the locations of 
-    its terminals. Many component also provide individual attributes for each 
-    terminal. For example, the resistor, capacitor, and inductor components 
+#.  Components provide provide individual attributes for the location of each 
+    terminal.  For example, the resistor, capacitor, and inductor components 
     provide the *p* and *n* terminal attributes. The MOS component provides the 
     *d*, *g*, and *s* terminal attributes. The diode component provides the *a* 
     and *c* terminal attributes.
@@ -146,139 +261,131 @@ Placement Strategies
 ~~~~~~~~~~~~~~~~~~~~
 
 There are two basic approaches to placing components. First, you may specify the 
-coordinate in absolute terms. For example::
+coordinate in absolute terms. For example:
+
+.. code-block:: python
 
     with Schematic(filename = "rlc.svg"):
         Wire([(-75, -50), (75, -50), (75, 50), (-75, 50)])
         Wire([(0, -50), (0, 50)])
-        Resistor((-75, 0), name='R', orientation='v')
-        Capacitor((0, 0), name='C', orientation='v')
-        Inductor((75, 0), name='L', orientation='v')
+        Resistor(C=(-75, 0), name='R', orient='v')
+        Capacitor(C=(0, 0), name='C', orient='v')
+        Inductor((C=75, 0), name='L', orient='v|')
 
-This turns out to be rather cumbersome if you need to move things around. In 
-that case you likely have to adjust a large number coordinates.  Since 
-schematics of any complexity are often adjusted repeatedly before they are 
-correct and aesthetically appealing, this approach can lead to a lot of tedious 
-work.
 
-A variation on this approach that is considerably better is to place the 
-coordinates in variables and then use the variables when specifying component 
-locations and wire vertices.  That approach was used in the first example.  It 
-can results in the up-front specification of a large number of coordinates.  
-A refinement is to just specify the primary coordinates up-front, and calculate 
-the rest as needed::
+Notice that a wire is specified as a list of point, where each point is a tuple 
+that contains an XY pair.  The wire just connects the points with line segments.  
+The location of the components is given by giving the location of a feature on 
+the component. In this case it is the center (``C``) of the component that is 
+specified. Again the location is an XY-pair.
 
-    r_x, r_y = 0, 0
-    c_x, c_y = r_x + 75, r_y
-    l_x, l_y = c_x + 75, c_y
-
-    with Schematic(filename = "rlc.svg"):
-        Wire([(r_x, c_y-50), (l_x, c_y-50), (l_x, c_y+50), (r_x, c_y+50)])
-        Wire([(c_x, c_y-50), (c_x, c_y+50)])
-        Resistor((r_x, 0), name='R', orientation='v')
-        Capacitor((c_x, 0), name='C', orientation='v')
-        Inductor((l_x, 0), name='L', orientation='v')
-
-*Schematic* provides a way for you to generated these coordinates relatively 
-efficiently by using offsets::
-
-    # create coordinates
-    x_offsets = dict(
-        r = 0,
-        c = 75,
-        l = 75,
-    )
-    y_offsets = dict(
-        top = 0,
-        mid = 50,
-        bot = 50,
-    )
-    offsets_to_coordinates(locals(), x_offsets, y_offsets)
-
-*offsets_to_coordinates* creates a collection of local variables whose names 
-derive from the keys used in the dictionary. This example creates the following 
-local variables::
-
-    r_x = 0
-    c_x = 75
-    l_x = 150
-    top_y = 0
-    mid_y = 50
-    bot_y = 100
-
-The *x_offsets* are handled as follows. The process starts at 0. The first 
-offset, *r*, is 0, meaning that *r_x* will be 0 units east of 0, which of course 
-is 0. Then *c_x* will be 75 units east of *r_x* and *l_x* is 75 units east of 
-*c_x*. *y_offsets* is processed in a similar way, except the direction of travel 
-is south. This function assumes that the dictionary is ordered, as such it 
-requires Python3.6 or greater. If you are not using such a recent version of 
-Python, the you should import *OrderedDict* from *collections* and use it to 
-build the dictionary.
+This approach turns out to be rather cumbersome as it requires a lot of planning 
+is a lot of work if you need to move things around.  In that case you likely 
+have to adjust a large number coordinates.  Since schematics of any complexity 
+are often adjusted repeatedly before they are correct and aesthetically 
+appealing, this approach can lead to a lot of tedious work.
 
 The second basic approach to placing component is to place them relative to each 
-other. To do so, you would generally take advantage of the fact that components 
-have attributes that contains useful coordinate locations on the component. For 
-example::
+other. This approach is the one that is always used in practice. To do so, you 
+would generally take advantage of the fact that components have attributes that 
+contains useful coordinate locations on the component. For example:
 
-    r = Resistor((0, 0), name='R', orientation='v')
+.. code-block:: python
+
+    r = Resistor(C=(0, 0), name='R', orient='v')
 
 Now, *r.C*, *r.N*, *r.NE*, *r.E*, *r.SE*, *r.S*, *r.SW*, *r.W*, and *r.NW* 
 contain the coordinates of the center, north, northeast, east, southeast, south, 
 southwest, west, and northwest corners.  In addition, *r.p* and *r.n* hold the 
-coordinates of the positive and negative terminals, as do *r.t[0]* and *r.t[1]*.
-Finally, wires provide the *b* and *e* attributes, which contain the coordinates 
-of their beginning and ending.
+coordinates of the positive and negative terminals.  Finally, wires provide the 
+*b* and *e* attributes, which contain the coordinates of their beginning and 
+ending.
+
+Once you place the first component, you then specify the location of the 
+remaining components relative to one that has already been placed. To do so, you 
+would give the location of one of the principle coordinates or the location of 
+a terminal.  For example:
+
+.. code-block:: python
+
+    r = Resistor(C=(0, 0), name='R', orient='v')
+    c = Capacitor(C=r.C, xoff=75, name='C', orient='v')
+    l = Inductor((C=c.C, xoff=75, name='L', orient='v|')
+    Wire([r.p, c.p, l.p], kind='-|-')
+    Wire([r.n, c.n, l.n], kind='-|-')
+
+.. image:: images/rlc.svg
+
+Notice that the center of ``r`` is placed at (0,0), then the center of ``c`` is 
+place 75 units to the right of ``r``, then the center of ``l`` is placed 75 
+units to the right of ``c``.  If ``c`` has to be moved for some reason then 
+``l`` will move with it.  For example, only changing the line that instantiates 
+the capacitor produces the following results:
+
+.. code-block:: python
+
+    c = Capacitor(C=r.C, off=(100, 25), name='C', orient='v')
+
+.. image:: images/rlc2.svg
 
 The *shift*, *shift_x*, and *shift_y* utility functions are provided to shift 
 the position of a coordinate pair.  Examples::
 
+.. code-block:: python
+
     shift((x,y), dx, dy) --> (x+dx, y+dy)
     shift_x((x,y), dx) --> (x+dx, y)
     shift_y((x,y), dy) --> (x, y+dy)
+
+To see how these might be useful, consider offsetting the wires so they sit 
+a little further away from the components:
+
+.. code-block:: python
+
+    r = Resistor(C=(0, 0), name='R', orient='v')
+    c = Capacitor(C=r.C, xoff=75, name='C', orient='v')
+    l = Inductor((C=c.C, xoff=75, name='L', orient='v|')
+    Wire([r.p, shift_y(r.p, -12.5), shift_y(c.p, -12.5), c.p])
+    Wire([c.p, shift_y(c.p, -12.5), shift_y(l.p, -12.5), l.p])
+    Wire([r.n, shift_y(r.n, 12.5), shift_y(c.n, 12.5), c.n])
+    Wire([c.n, shift_y(c.n, 12.5), shift_y(l.n, 12.5), l.n])
+
+.. image:: images/rlc3.svg
 
 You can also use *with_x* and *with_y* to replace the *x* or *y* portion of 
 a coordinate pair. They take two arguments, the first is returned with the 
 appropriate coordinate component replaced by the second. The second argument may 
 be a simple number or it may be a coordinate pair, in which case the appropriate 
 coordinate component is used to replace the corresponding component in the first 
-argument::
+argument:
+
+.. code-block:: python
 
     with_x((x1,y1), x2) --> (x2, y1)
     with_y((x1,y1), y2) --> (x1, y2)
     with_x((x1,y1), (x2,y2)) --> (x2, y1)
     with_y((x1,y1), (x2,y2)) --> (x1, y2)
 
-Finally, the *midpoint* functions return the point midway between two points::
+Finally, the *midpoint* functions return the point midway between two points:
+
+.. code-block:: python
 
     midpoint((x1,y1), (x2,y2) --> ((x1+x2)/2, (y1+y2)/2)
     midpoint_x((x1,y1), (x2,y2) --> ((x1+x2)/2, y1)
     midpoint_y((x1,y1), (x2,y2) --> (x1, (y1+y2)/2)
 
-Now the RLC schematic can be rewritten as follows::
-
-    with Schematic(filename = "rlc.svg"):
-        r = Resistor((0, 0), name='R', orientation='v')
-        c = Capacitor(shift_x(r.c, 75), name='C', orientation='v')
-        l = Inductor(shift_x(c.c, 75), name='L', orientation='v')
-        Wire([r.p, c.p, l.p])
-        Wire([r.n, c.n, l.n])
-
-In this case the only coordinate that was explicitly specified with that of *r* 
-which was placed at the origin. All other components and wires were placed 
-relative to the center of *r*.
-
-You are free to mix these various styles of component placement as you desire.
-
 
 Arbitrary Drawing Features using SVGwrite
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*Schematic* subclasses the Python `svgwrite 
+*SVG_Schematic* subclasses the Python `svgwrite 
 <https://pythonhosted.org/svgwrite>`_  *Drawing* class. So you can call any 
 *Drawing* method from a schematic. In this case you must keep the schematic 
-instance to access the methods::
+instance to access the methods:
 
-    with Schematic(filename = "rlc.svg") as schematic:
+.. code-block:: python
+
+    with Schematic(filename = "hello.svg") as schematic:
         schematic.circle(
             center=(0,0), r=100, fill='none', stroke_width=1, stroke='black'
         )
@@ -361,19 +468,19 @@ The size of the SVG canvas is automatically sized to fit tightly around the
 specified schematic objects. You might find that the text associated with input 
 and output pins has a tendency to extend beyond the canvas. This is because no 
 attempt is made to estimate the width of text. Instead, you can increase the 
-width of the pin's tile using its *w* parameter. In addition, you can also add 
+width of the pin's tile using its ``w`` parameter. In addition, you can also add 
 padding when creating the schematic. There are five padding arguments. The most 
-commonly used is *pad*, which simply adds the same padding to all four edges. In 
-addtion, you can control the individual edges using left_pad, right_pad, 
-top_pad, and bottom_pad. These simply add to pad to create the final padding for 
-each edge.
+commonly used is ``pad``, which simply adds the same padding to all four edges.  
+In addtion, you can control the individual edges using ``left_pad``, 
+``right_pad``, ``top_pad``, and ``bottom_pad``. These simply add to ``pad`` to 
+create the final padding for each edge.
 
 
 Wire
 ----
 
-Draw a wire between two or more points given in sequence. Each point should be 
-specified as a x,y pair. Wires are often specified before components, which 
+Draws a wire between two or more points given in sequence. Each point should be 
+specified as a XY pair. Wires are often specified before components, which 
 places them on the lowest level, allowing the component to obscure the wires 
 when needed.  Example:
 
@@ -392,17 +499,22 @@ and `-|-` there there are three segments with the middle segment being half way
 between the two points. With `|-|`, the segments are vertical, horizontal, and 
 vertical.  With `-|-`, the segments are horizontal, vertical, and horizontal.
 
-*Wire* supports the *line_width*  and *color* arguments.
+For example, if two resistors that are offset both horizontally and vertically 
+are connected by a wire, the results depend on ``kind`` as follows:
 
-*Box* also support arbitrary *svgwrite* drawing parameters. This can be useful 
-to draw the box with dashed lines:
+.. image :: images/wires.svg
+
+*Wire* supports the ``line_width``  and ``color`` arguments.
+
+*Wire* also support arbitrary *svgwrite* drawing parameters. This can be useful 
+to draw the wire with dashed lines:
 
 .. code-block:: python
 
     Wire([(x0,y0), (x1,y1)], stroke_dasharray="4 2")
 
-*Wire* provides the *b* and *e* attributes, that contain the coordinates of the 
-beginning and end of the wire.
+*Wire* provides the ``b`` and ``e`` attributes, that contain the coordinates of 
+the beginning and end of the wire.
 
 
 Components
@@ -411,15 +523,17 @@ Components
 This section documents the available components. Components include an invisible 
 tile in which the component should fit. The tile extent is used when determining 
 the size of the overall schematic.  Each component requires that you specify 
-location by giving the coordinates of the center point of its tile. You can also 
-generally specify the *orientation*, the *name*, the *value*, and a *nudge*.
+location by giving the location of its principle coordinates or a pin. You can 
+also generally specify the orientation, the name, the value, and a text offset 
+using ``orient``, ``name``, ``value``, and ``nudge``.
 
-The *orientation* generally consists of either 'v' or 'h', indicating that 
-a vertical or horizontal orientation is desired, but may include '|' and '-', 
-indicating that the component should be flipped around either the vertical or 
-horizontal axis. The *name* and *value* are strings that are added to the 
-component as labels, though not all components will display the *value*. The 
-*nudge* is a number that adjusts the placement of labels to avoid wires.
+The ``orient`` is specified as a string that generally consists of either 'v' or 
+'h', indicating that a vertical or horizontal orientation is desired, but may 
+include '|' and '-', indicating that the component should be flipped about 
+either the vertical or horizontal axis. The *name* and *value* are strings that 
+are added to the component as labels, though not all components display the 
+*value*.  The *nudge* is a number that adjusts the placement of labels to avoid 
+wires.
 
 In addition, some components support other arguments, such as *kind* or *loc*.
 
@@ -427,14 +541,11 @@ You may pass wires directly under most components.  The component will conceal
 the wire in those places where it should not be shown. This makes it simpler to 
 wire up a schematic as you don't need separate wires between a string of 
 components that all fall in a line. Rather, you would just specify the wire 
-first, and then it will run underneath the components.  This trick works as lone 
-as long as you do not specify the schematic background as 'none'.
+first, and then it will run underneath the components.  This trick works as long 
+as you do not specify the schematic background as 'none'.
 
-Components have a *t* attribute that contains the coordinates of the terminals.  
-It is an array that tends to follow several conventions, the SPICE order and 
-outputs first. If there is a pair of terminals, the top or right would be given 
-first.  In addition, select components place their terminal locations into named 
-attributes.
+Components generally place the location of their principle coordinates and the 
+location of all their pins into named attributes.
 
 
 Resistor
@@ -444,176 +555,283 @@ Draw a resistor.
 
 .. code-block:: python
 
-    Resistor((x,y), orientation='v', name=R1, value='50Ω')
+    Resistor(name='Rs', value='50Ω')
+
+.. image:: images/resistor.svg
+
+Resistors take the following arguments: ``orient``, ``name``, ``value``, 
+``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
+``p``, ``n``, ``off``, ``xoff`` & ``yoff``.
+
+The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
+contain the locations of the principle coordinates. The ``p`` and ``n`` 
+attributes contain the locations of the positive and negative terminals.
 
 You may pass a wire directly under the resistor and the wire will be concealed 
 by the resistor.
-
-The *p* and *n* attributes contain the coordinates of the positive and negative 
-terminals.
 
 
 Capacitor
 ~~~~~~~~~
 
-Draw a capacitor. You must specify the location of the center as an x,y pair.  
-You may also specify the orientation, the name, and the value.
+Draws a capacitor.
 
 .. code-block:: python
 
-    Capacitor((x,y), orientation='h', name=C1, value='1.2pF')
+    Capacitor(name='C1', value='1.2pF')
+
+.. image:: images/capacitor.svg
+
+Capacitors take the following arguments: ``orient``, ``name``, ``value``, 
+``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
+``p``, ``n``, ``off``, ``xoff`` & ``yoff``.
+
+The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
+contain the locations of the principle coordinates. The ``p`` and ``n`` 
+attributes contain the locations of the positive and negative terminals.
 
 You may pass a wire directly under the capacitor and the wire will be concealed 
 by the capacitor.  The capacitor is polarized with reference end being terminal 
-1.
-
-The *p* and *n* attributes contain the coordinates of the positive and negative 
-terminals.
+``n``.
 
 
 Inductor
 ~~~~~~~~
 
-Draw an inductor. You must specify the location of the center as an x,y pair.  
-You may also specify the orientation, the name, the value, and the nudge.
+Draws an inductor.
 
 .. code-block:: python
 
-    Inductor((x,y), orientation='h', name=L1, value='1μH')
+    Inductor(name='L1', value='1μH')
+
+.. image:: images/inductor.svg
+
+Inductors take the following arguments: ``orient``, ``name``, ``value``, 
+``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
+``p``, ``n``, ``off``, ``xoff`` & ``yoff``.
+
+The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
+contain the locations of the principle coordinates. The ``p`` and ``n`` 
+attributes contain the locations of the positive and negative terminals.
 
 You may pass a wire directly under the inductor and the wire will be concealed 
 by the inductor.
-
-The *p* and *n* attributes contain the coordinates of the positive and negative 
-terminals.
 
 
 Diode
 ~~~~~
 
-Draw a diode. You must specify the location of the center as an x,y pair.  You 
-You may also specify the orientation, the name, the value, and the nudge.
+Draws a diode.
 
 .. code-block:: python
 
-    Inductor((x,y), orientation='h', name=L1, value='1μH')
+    Diode(name='D1')
 
-You may pass a wire directly under the inductor and the wire will be concealed 
-by the inductor. The anode is terminal 0 and the cathode is terminal 1.
+.. image:: images/diode.svg
 
-The *a* and *c* attributes contain the coordinates of the anode and cathode 
-terminals.
+Diodes take the following arguments: ``orient``, ``name``, ``value``, ``nudge``, 
+``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, ``p``, ``n``, 
+``off``, ``xoff`` & ``yoff``.
+
+The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
+contain the locations of the principle coordinates.  The ``a`` and ``c`` 
+attributes contain the coordinates of the anode and cathode terminals.
+
+You may pass a wire directly under the diode and the wire will be concealed by 
+the diode.
+
 
 
 BJT
 ~~~
 
-Draw a bipolar transistor. You must specify the location of the center as an x,y 
-pair.  You may also specify the kind, the orientation, the name, and the value.  
-The kind can either be 'npn' or 'pnp'.
+Draws a bipolar transistor. Two kinds of BJT are available, *npn* and *pnp*.
 
 .. code-block:: python
 
-    BJT((x,y), kind='npn', orientation='v|', name='Q2', value='10')
+    MOS(kind='n', name='Qn')
+    MOS(kind='p', name='Qp')
+
+.. image:: images/bjt.svg
+
+MOSFETs take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
+``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
+``p``, ``n``, ``off``, ``xoff`` & ``yoff``.  ``kind`` may be ``npn`` or ``pnp``, 
+or simply ``n`` or ``p``.
+
+The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
+contain the locations of the principle coordinates.
+The ``c``, ``b`` and ``e`` attributes contain the coordinates of the collector, 
+base and emitter terminals.
 
 You may pass a wire directly under the transistor and the wire will be concealed 
 by the transistor.
 
-The *c*, *b* and *e* attributes contain the coordinates of the drain, gate and 
-source terminals.
 
 
 MOS
 ~~~
 
-Draw a MOSFET. You must specify the location of the center as an x,y pair.  You 
-may also specify the kind, the orientation, the name, and the value. The kind 
-can either be 'n' or 'p'.
+Draws a MOSFET.  Three kinds of FET are available, *nmos*, *pmos*, and 
+non-polarized.
 
 .. code-block:: python
 
-    MOS((x,y), kind='n', orientation='v|', name='M2', value='10')
+    MOS(kind='n', name='Mn')
+    MOS(kind='p', name='Mp')
+    MOS(kind='', name='M')
 
-You may pass a wire directly under the FET and the wire will be concealed by the 
-FET.
+.. image:: images/mos.svg
 
-The *d*, *g* and *s* attributes contain the coordinates of the drain, gate and 
-source terminals.
+MOSFETs take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
+``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
+``p``, ``n``, ``off``, ``xoff`` & ``yoff``.
+``kind`` may be ``nmos`` or ``pmos``, or simply ``n`` or ``p``.  If an empty 
+string is specified, the terminal locations are those of an *nmos*, but the 
+arrow is not drawn.
+
+The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
+contain the locations of the principle coordinates.
+The ``d``, ``g`` and ``s`` attributes contain the coordinates of the drain, gate 
+and source terminals.
+
+You may pass a wire directly under the transistor and the wire will be concealed 
+by the transistor.
 
 
 Amplifier
 ~~~~~~~~~
 
-Draw an amplifier. You must specify the location of the center as an x,y pair.  
-You may also specify the kind, the orientation, the name, and the value. The 
-kind can either be 'se', 'oa' or 'de': 'se' is short for single-ended and has no 
-label on the input pin, 'oa' is short for operational amplifier and has markings 
-for the positive and negative inputs, and 'da' is short for differential 
-amplifier and has markings for positive and negative inputs and outputs.
-
-You can reshape the amplifier using *w* and *h* to specify the width and height.  
-The default values for each are 2, and you should not deviate too far from 2 or 
-you will end up with an ugly amplifier.
+Draws an amplifier.
+Four kinds of amplifier are available, *single-ended*, *opamp*, *differential 
+amplifier* and *comparator*.
 
 .. code-block:: python
 
-    Amp((x,y), kind='da', orientation='h-')
+    Amp(kind='se', name='As')
+    Amp(kind='oa', name='Ao')
+    Amp(kind='da', name='Ad')
+    Amp(kind='comp', name='Ac')
+
+.. image:: images/amp.svg
+
+Amplifiers take the following arguments: ``kind``, ``orient``, ``name``, 
+``value``, ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, 
+``NW``, ``p``, ``n``, ``off``, ``xoff`` & ``yoff``.
+``kind`` may be ``se``, ``oa``, ``da`` or ``comp``.
+
+The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
+contain the locations of the principle coordinates.
+The ``pi``, ``i``, ``ni``
+``po``, ``o``, and ``no`` attributes contain the coordinates of the positive 
+input, the input, the negative input, the positive output, the output, and the 
+negative output terminals.  All 6 pin attributes are always available, even if 
+they do not seem appropriate for the kind of amplifier drawn.
+
+You can reshape the amplifier using ``w`` and ``h`` to specify the width and 
+height.  The default values for each are 2, and you should not deviate too far 
+from 2 or you will end up with an ugly amplifier.
 
 You may pass a wire or wires directly under the amplifier and the wire will be 
 concealed by the amplifier.
-
-The 'da' amplifier provides the *po*, *no*, *pi*, and *ni* terminals as 
-attributes.  The 'oa' and 'comp' amplifiers provide the *o*, *pi*, and *ni* 
-terminals as attributes. And the 'se' amplifier provides the *o* and *i* 
-terminals as attributes.
 
 
 Gate
 ~~~~
 
-Draw a gate. You must specify the location of the center as an x,y pair.  You 
-may also specify the kind, the orientation, the name, and the value.  Currently 
-the only supported kind of gate is 'inv', an inverter.
+Draws a gate.  Currently the only supported kind of gate is ``inv``, an 
+inverter.
 
 .. code-block:: python
 
-    Gate((x,y), kind='inv')
+    Gate(kind='inv', name='U')
 
-You may pass a wire or wires directly under the amplifier and the wire will be 
+.. image:: images/gate.svg
+
+Gates take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
+``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
+``p``, ``n``, ``off``, ``xoff`` & ``yoff``.
+``kind`` may be ``inv``.
+
+The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
+contain the locations of the principle coordinates.
+The ``i`` and ``o`` attributes contain the coordinates of the input and the 
+output.
+
+You may pass a wire or wires directly under the gate and the wire will be 
 concealed by the gate.
 
 
 Source
 ~~~~~~
 
-Draw a source. You must specify the location of the center as an x,y pair.  You 
-may also specify the kind, the orientation, the name, and the value. The kind 
-can either be 'empty', 'vdc', 'idc', 'sine', 'sum', 'mult', 'cv' (controlled 
-voltage) or 'ci' (controlled current).
+Draws a source.
+Eight kinds of source are available, *empty*, *vdc*, *idc*, *sine*, *sum* 
+(summer), *mult* (multiplier), *cv* (controlled voltage) and *ci* (controlled 
+current).
 
 .. code-block:: python
 
-    Source((x,y), kind='sine', name='Vin')
+    Source(kind='empty', name='Ve')
+    Source(kind='vdc', name='Vd')
+    Source(kind='idc', name='Id')
+    Source(kind='sine', name='Vs')
+    Source(kind='sum', name='S')
+    Source(kind='mult', name='M')
+    Source(kind='cv', name='Vc')
+    Source(kind='ci', name='Ic')
+
+.. image:: images/source.svg
+
+Sources take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
+``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
+``p``, ``n``, ``off``, ``xoff`` & ``yoff``.
+``kind`` may be ``empty``, ``vdc``, ``idc``, ``sine``, ``sum``, ``mult``, ``cv`` 
+or ``ci``.
+
+The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
+contain the locations of the principle coordinates, but unlike all other 
+components, these are evenly distributed about the circle that envelopes the 
+source.
+The ``p`` and ``n`` attributes contain the coordinates of the positive and
+negative pins.
+The pin attributes are always available, even if they do not seem appropriate 
+for the kind of source drawn.
 
 You may pass a wire or wires directly under the source and the wire will be 
 concealed by the source.
-
-The component also includes the nine principal coordinates for the source: C, N, 
-NE, E, SE, S, SW, W, and NW. Except for C, they are evenly distributed around 
-the circle.  The coordinate attributes for the pins are named 'p', and 'n'.
 
 
 Switch
 ~~~~~~
 
-Draw an switch. You must specify the location of the center as an x,y pair.  You 
-may also specify the kind, the orientation, the name, and the value. The kind 
-can either be 'spst' or 'spdt'.  The *dots* argument determines whether the 
-poles of the switch should be denoted with large dots.
+Draws a switch.
+Two kinds of switch are available, *spst* (single-pole, single-throw) and *spdt* 
+(single-pole, double-throw).
+
+
 
 .. code-block:: python
 
-    Switch((x,y), kind='spst', name='φ₁')
+    Switch(kind='spst', name='φ₁')
+    Switch(kind='spdt', name='φ₂')
+
+.. image:: images/switch.svg
+
+Switches take the following arguments: ``kind``, ``orient``, ``name``, 
+``value``, ``dots``, ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, 
+``SW``, ``W``, ``NW``, ``i``, ``o``, ``ot``, ``ob``, ``off``, ``xoff`` 
+& ``yoff``.
+``kind`` may be ``spst`` or ``spdt``.
+The *dots* argument determines whether the poles of the switch should be denoted 
+with large dots.
+
+The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
+contain the locations of the principle coordinates.
+The ``i`` ``ot``, ``o`` and ``ob`` attributes contain the coordinates of the 
+input, the top output, the output, and the bottom output pins.
+The pin attributes are always available, even if they do not seem appropriate 
+for the kind of switch drawn.
 
 You may pass a wire or wires directly under the switch and the wire will be 
 concealed by the switch.
@@ -622,88 +840,141 @@ concealed by the switch.
 Box
 ~~~
 
-Draw a box. You must specify the location of the center as an x,y pair.  You may 
-also specify the orientation, the name, the value, the width (w), the height 
-(h), and background, an override for the color used of the interior of the box.  
-The default width is 2 and the default height is 1.5.
+Draws a box.
 
 .. code-block:: python
 
-    Box((x,y), name='$z^{-1}$', w=1, h=1)
+    Box(name='4 bit', value='Flash')
+    Box(name='𝘻⁻¹', w=1, h=1)
 
-You may pass a wire or wires directly under the box and the wire will be 
-concealed by the box.
+.. image:: images/box.svg
 
-*Box* supports the *line_width* and *background* arguments.
+Boxes take the following arguments: ``orient``, ``name``, ``value``, ``nudge``, 
+``line_width``, ``background``, ``w``, ``h``, ``C``, ``N``, ``NE``, ``E``, 
+``SE``, ``S``, ``SW``, ``W``, ``NW``, ``i``, ``o``, ``off``, ``xoff`` 
+& ``yoff``.  In addition, you may specify *SVGwrite* arguments, as shown below.
+
+The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
+contain the locations of the principle coordinates.
+The ``i`` and ``o`` attributes contain the coordinates of the input and output 
+pins.
 
 *Box* also support arbitrary *svgwrite* drawing parameters. This can be useful 
 to draw the box with dashed lines:
 
 .. code-block:: python
 
-    Box((x,y), w=1, h=1, stroke_dasharray="4 2")
-
-The component also includes the nine principal coordinates for the box: C, N, 
-NE, E, SE, S, SW, W, and NW. Except for c, they are evenly distributed around 
-the box.
+    Box(w=1, h=1, stroke_dasharray="4 2")
 
 
 Ground
 ~~~~~~
 
-Draw a ground. You must specify the location of the center as an x,y pair.  The 
-center of the tile corresponds to the top of the ground symbol. You may also 
-specify the kind, the orientation, the name, and the value, but the value is 
-currently unused.  The coordinates of the connection point for ground is C.
+Draws a ground.
+
 
 .. code-block:: python
 
-    Ground((x,y))
+    Ground()
+
+.. image:: images/ground.svg
+
+Ground take the following arguments: ``orient``, ``name``, ``value``,
+``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
+``t``, ``off``, ``xoff`` & ``yoff``.  Currently ``value`` is ignored.
+
+The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
+contain the locations of the principle coordinates.
+The ``t`` attribute contains the coordinates of the ground's terminal.
 
 
 Pin
 ~~~
 
-Draw a pin (a small hollow circle). You must specify the location of the center 
-as an x,y pair.  You may also specify the kind, the orientation, the name, the 
-value, and the size.  The kind can either be 'in', 'out', 'dot', or 'none'.  
-With 'in' pins, the labels go on the left, with 'out' pins they go on the right.
-By default the size of the pin is 1, meaning that a unit sized tile is used.  
-This is significant if the label is at the edge of the schematic. If the labels 
-extend beyond the tile, they may extend beyond the computed viewbox for the 
-schematic.  You can fix this by specifying a larger size.
+Draws a pin.  Four kinds of pin are available, *none*, *dot*, *in*, and *out*.
 
 .. code-block:: python
 
-    Pin((x,y), kind='out', name='Vout', size=2)
+    Pin(kind='none', name='none', value='none value')
+    Pin(kind='dot', name='dot', C=p.C, yoff=50, value='dot value')
+    Pin(kind='in', name='in', C=p.C, yoff=50)
+    Pin(kind='out', name='out', C=p.C, yoff=50)
 
-You may pass a wire or wires directly under the pin and the wire will be 
-concealed by the pin.
+.. image:: images/pin.svg
+
+Here the pins are drawn with wires to give better context.  The horizontal 
+location of the pins is indicated with the vertical blue line.
+
+Pins take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
+``nudge``, ``w``, ``h``, ``color``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, 
+``SW``, ``W``, ``NW``, ``t``, ``off``, ``xoff`` & ``yoff``.  Currently ``value`` 
+is ignored.
+
+The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
+contain the locations of the principle coordinates.
+The ``t`` attribute contains the coordinates of the pin.
+
+Pins of kind ``none`` do not draw a symbol. Rather they are used to place labels 
+at a particular point. ``dot`` pins place a small filled circle that is usually 
+used to represent a solder dot (though you can change the color to the 
+background color, generally 'white', and place it between two crossing wires to 
+create a visual gap in the lower wire).  Pins of type ``in`` and ``out`` are 
+render with a hollow circle that is offset slightly a wire terminates on one 
+side. These two pin types ignore the ``value`` argument.
+
+By default the width and height of the pin are 1, meaning that a unit sized tile 
+(50×50) is used.  This is significant if the label is at the edge of the 
+schematic.  If the labels extend beyond the tile, they may extend beyond the 
+computed viewbox for the schematic.  You can fix this by specifying a larger 
+width or height.
 
 
 Dot
 ~~~
 
-Draw a solder dot (a small filled circle). Dot is just an alias for Pin, except 
-that the default kind is 'dot'.
+Draw a solder dot (a small filled circle) or a wire gap (a small filled circle 
+with the color of the background that is placed between two crossing wires).  
+Dot is just an alias for Pin, except that the default kind is 'dot'.
 
 .. code-block:: python
 
-    Dot((x,y))
+    Dot()
 
 
 Label
 ~~~~~
 
-Place a label. You must specify the location of the text anchor as an x,y pair.  
-You may also specify the location (loc), the name (the label), the width (w) and 
-the height (h).  The location controls the placement of the text and can be 'C', 
-'N', 'NE', 'E', 'SE', 'S', 'SW', 'W', and 'NW'. The default width and height of 
-the tile that contains the label is 1.
+Place a label.  Five kinds of label are available, ``plain``, ``arrow``, 
+``arrow|``, ``slash``, and ``dot``.
 
 .. code-block:: python
 
-    Label((x,y), name='$z^{-1}$', w=1, h=1)
+    Label(kind='plain', name='plain', loc='se')
+    Label(kind='arrow', name='arrow', loc='se')
+    Label(kind='arrow|', name='arrow|', loc='se')
+    Label(kind='slash', name='slash', loc='se')
+    Label(kind='dot', name='dot', loc='se')
+
+.. image:: images/label.svg
+
+Here the labels are drawn with wires to give better context.  The horizontal 
+location of the labels is indicated with the vertical blue line.
+
+Pins take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
+``loc``, ``w``, ``h``, ``color``, ``nudge``, ``C``, ``N``, ``NE``, ``E``, 
+``SE``, ``S``, ``SW``, ``W``, ``NW``, ``t``, ``off``, ``xoff`` & ``yoff``.  
+Currently ``value`` is ignored.
+
+The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
+contain the locations of the principle coordinates.
+The ``t`` attribute contains the coordinates of the label.
+
+By default the width and height of the label are 1, meaning that a unit sized 
+tile (50×50) is used.  This is significant if the label is at the edge of the 
+schematic.  If the labels extend beyond the tile, they may extend beyond the 
+computed viewbox for the schematic.  You can fix this by specifying a larger 
+width or height.
+
 
 You can also specify the kind and orientation arguments. The kind may be 
 'plain', 'arrow', 'arrow|', 'slash' or 'dot'. If 'plain' is specified, no symbol 
@@ -713,3 +984,131 @@ terminates on the specified location.  If 'slash' is specified, a small slash is
 added through the center.  It is generally used with buses to indicate the bus 
 width.  Finally, 'dot' adds a solder dot.
 
+
+Exceptions
+~~~~~~~~~~
+
+In the rare cases where *SVG_Schematic* it raises an `Inform Error 
+<https://inform.readthedocs.io/en/latest/user.html#exceptions>`_.  
+*SVG_Schematic* is a wrapper around `svgwrite 
+<https://svgwrite.readthedocs.io/en/stable/index.html>`_.  It is not clear what 
+exceptions it will raise, but at a minimum it would raise *OSError* it is is 
+unable to open or close the SVG file.  Thus you should catch these two 
+exceptions. See `noninverting amplifier`_ to see how this is done.
+
+
+Examples
+--------
+
+.. _noninverting amplifier:
+
+Non Inverting Amplifier
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Here is an example of a typical schematic.
+
+.. code-block:: python
+
+    from svg_schematic import (
+        Schematic, Amp, Dot, Ground, Label, Pin, Resistor, Source, Wire
+    )
+    from inform import Error, error, os_error
+
+    try:
+        with Schematic(filename = "noninverting.svg"):
+
+            vin = Source(kind='sine')
+            Label(C=vin.p, name='Vin', loc='n')
+            Ground(C=vin.n)
+            amp = Amp(pi=vin.p, xoff=100, kind='oa')
+            Label(C=amp.ni, xoff=-25, name='Ve', loc='n')
+            Wire([vin.p, amp.pi])
+            out = Pin(C=amp.o, xoff=50, name='out', w=2)
+            Wire([amp.o, out.C])
+            oj = Dot(C=amp.o, xoff=25)
+            r1 = Resistor(p=amp.ni, off=(-25, 50), name='R1', orient='v')
+            Wire([r1.N, amp.ni], kind='|-')
+            r2 = Resistor(C=amp.C, yoff=75, name='R2')
+            Wire([r1.p, r2.W], kind='|-')
+            Wire([oj.C, r2.E], kind='|-')
+            fj = Dot(C=r2.W, xoff=-25)
+            Ground(C=r1.n)
+
+    except Error as e:
+        e.report()
+    except OSError as e:
+        error(os_error(e))
+
+.. image:: noninverting.svg
+
+
+Passive Low Pass Filter
+~~~~~~~~~~~~~~~~~~~~~~~
+
+This example uses `QuantiPhy 
+<https://quantiphy.readthedocs.io/en/latest/index.html>`_ to compute the values 
+for the components in a low pass filter and then constructs the schematic using 
+those values.
+
+.. code-block:: python
+
+    """
+    Draw a 5th Order Low Pass Passive Filer with Maximally Flat Envelope Delay
+
+    Use the following parameters:
+        Fo = 1MHz   -- 3dB corner frequency
+        Rref = 50Ω  -- termination impedance
+
+    Design equations:
+        Omega0 = 2*π*Fo
+        Lscale = Rref/Omega0
+        Cscale = 1/(Rref*Omega0)
+
+        Rs = 1.0000 * Rref   "Ω"
+        C1 = 0.2715 * Cscale "F"
+        L2 = 0.6541 * Lscale "H"
+        C3 = 0.8892 * Cscale "F"
+        L4 = 1.1034 * Lscale "H"
+        C5 = 2.2873 * Cscale "F"
+    """
+
+    from svg_schematic import (
+        Schematic, Capacitor, Ground, Inductor, Resistor, Pin, Source, Wire
+    )
+    from inform import Error, error, os_error
+    from quantiphy import Quantity
+    from math import pi
+
+    Quantity.set_prefs(map_sf=Quantity.map_sf_to_greek, prec=2)
+    globals().update(
+        Quantity.extract(__doc__, predefined={'π': pi})
+    )
+
+    try:
+        with Schematic(filename = 'mfed.svg', background = 'none'):
+
+            vin = Source(name='Vin', value='1 V', kind='sine')
+            Ground(C=vin.n)
+            rs = Resistor(name='Rs', value=Rref, n=vin.p, xoff=25)
+            Wire([vin.p, rs.n])
+            c1 = Capacitor(name='C1', value=C1, p=rs.p, xoff=25)
+            Ground(C=c1.n)
+            l2 = Inductor(name='L2', value=L2, n=c1.p, xoff=25)
+            Wire([rs.p, l2.n])
+            c3 = Capacitor(name='C3', value=C3, p=l2.p, xoff=25)
+            Ground(C=c3.n)
+            l4 = Inductor(name='L4', value=L4, n=c3.p, xoff=25)
+            Wire([l2.p, l4.n])
+            c5 = Capacitor(name='C5', value=C5, p=l4.p, xoff=25)
+            Ground(C=c5.n)
+            rl = Resistor(name='Rl', value=Rref, p=c5.p, xoff=100, orient='v')
+            Ground(C=rl.n)
+            out = Pin(name='out', C=rl.p, xoff=50, w=2)
+            Wire([l4.p, out.t])
+
+    except Error as e:
+        e.report()
+    except OSError as e:
+        error(os_error(e))
+
+.. image:: images/mfed.svg

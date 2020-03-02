@@ -30,6 +30,7 @@ __released__ = '2019-09-03'
 # Imports {{{1
 from svgwrite import Drawing
 from math import sqrt, atan2, pi
+from inform import Error, plural
 
 
 # Utilities {{{1
@@ -87,6 +88,7 @@ def midpoint_y(p1, p2):
 
 # offsets_to_coordinates() {{{2
 def offsets_to_coordinates(dest, x_offsets=None, y_offsets=None):
+    # deprecated
     x = y = 0
     if x_offsets:
         for k, v in x_offsets.items():
@@ -270,16 +272,25 @@ class Wire(Schematic): # {{{1
 class Tile(Schematic): # {{{1
     UNIT_WIDTH = 50
     UNIT_HEIGHT = 50
+    COORDINATE_OFFSETS = dict(
+        C = (0, 0),
+        N = (0, -1/2),
+        NW = (-1/2, -1/2),
+        W = (-1/2, 0),
+        SW = (-1/2, 1/2),
+        S = (0, 1/2),
+        SE = (1/2, 1/2),
+        E = (1/2, 0),
+        NE = (1/2, -1/2),
+    )
 
     # constructor {{{2
-    def __init__(self, center, w=2, h=2):
+    def __init__(self):
         schematic = self.sch_schematic
         assert schematic, 'no active schematic'
         lw = schematic.sch_line_width
-        w = w*Tile.UNIT_WIDTH
-        h = h*Tile.UNIT_HEIGHT
-        size = self.size = (w, h)
-        x0, y0 = center
+        w, h = size = self.size
+        x0, y0 = self.center
         self._update_bounds(x0 - w/2, y0 - h/2, x0 + w/2, y0 + h/2)
 
         # Create bounding box
@@ -298,23 +309,10 @@ class Tile(Schematic): # {{{1
         symbol.add(bounding_box)
         schematic.add(symbol)
 
-        # Text goes in its own layer so it is always on top and so that won't
-        # get rotated so text will always be right side up.
+        # Text goes in its own layer so it is always on top, and so that won't
+        # get rotated such that it always remains right side up.
         text = self.text = schematic.g(id='text')
         schematic.add(text)
-
-        # Principal coordinates {{{2
-        self.add_coordinates(center, dict(
-            C = (0, 0),
-            N = (0, -h/2),
-            NW = (-w/2, -h/2),
-            W = (-w/2, 0),
-            SW = (-w/2, h/2),
-            S = (0, h/2),
-            SE = (w/2, h/2),
-            E = (w/2, 0),
-            NE = (w/2, -h/2),
-        ))
 
     # add_text() {{{2
     def add_text(self, text, position, alignment):
@@ -338,7 +336,7 @@ class Tile(Schematic): # {{{1
 
         # add the text
         text = schematic.text(
-            text,
+            str(text),
             insert = position,
             font_family = schematic.sch_font_family,
             font_size = schematic.sch_font_size,
@@ -347,34 +345,92 @@ class Tile(Schematic): # {{{1
         )
         self.text.add(text)
 
-    # map_pins() {{{2
-    def map_pins(self, pins, center, orientation='', rotate=''):
-        transformed = []
-        for pin in pins:
-            x = pin[0]
-            y = pin[1]
-            if rotate in orientation:
-                x, y = y, -x
-            if '|' in orientation:
-                x = -x
-            if '-' in orientation:
-                y = -y
-            transformed.append((x + center[0], y + center[1]))
-        return transformed
+    # set_coordinates() {{{2
+    # finds the center and sets principle components as attributes
+    def set_coordinates(
+        self, kwargs, pins=None, orient='', rotate='', h=2, w=2, extra=False
+    ):
+        w = w*Tile.UNIT_WIDTH
+        h = h*Tile.UNIT_HEIGHT
+        self.size = (w, h)
 
-    # add_coordinates() {{{2
-    def add_coordinates(self, center, coordinates):
-        # translate the components and then add them as attributes to self.
+        # scale the pins to w & h
+        # self.pins is used internally, center and orientation are normalized
+        self.pins = {k: (w*v[0], h*v[1]) for k, v in pins.items()}
+
+        # rotate and flip pins about normalized center
+        pins = {}
+        for name, loc in self.pins.items():
+            x, y = loc
+            if rotate and rotate in orient:
+                x, y = y, -x
+            if '|' in orient:
+                x = -x
+            if '-' in orient:
+                y = -y
+            pins[name] = x, y
+
+        # scale the principle coordinates (C, N, NE, E, SE, ...)
+        offsets = {k: (w*v[0], h*v[1]) for k, v in self.COORDINATE_OFFSETS.items()}
+
+        # combine pins with principle components
+        offsets.update(pins)
+
+        # identify the location names in kwargs and compute the center
+        location_names = offsets.keys() & kwargs.keys()
+        if location_names:
+            loc_name = location_names.pop()
+            if location_names:
+                raise Error(
+                    'too many location specifiers:',
+                    ', '.join(specified_names),
+                    culprit=self.class_name()
+                )
+            # compute the center
+            offset = offsets[loc_name]
+            loc = kwargs.pop(loc_name)
+            x0, y0 = loc[0] - offset[0], loc[1] - offset[1]
+        else:
+            #raise Error('location not specified.', culprit=self.class_name())
+            x0, y0 = 0,0
+
+        # get offsets specified in kwargs
+        if 'off' in kwargs:
+            xoff, yoff = kwargs.pop('off')
+        else:
+            xoff = kwargs.pop('xoff', 0)
+            yoff = kwargs.pop('yoff', 0)
+        x0 += xoff
+        y0 += yoff
+        self.center = (x0, y0)
+
+        # translate pins and principle components and add as attributes
         self.__dict__.update({
-            k:(v[0]+center[0], v[1]+center[1]) for k, v in coordinates.items()
+            k:(v[0]+x0, v[1]+y0) for k, v in offsets.items()
         })
+
+        # return unused kwargs if requested
+        if extra:
+            return kwargs
+
+        # otherwise complain about any unused kwargs
+        if kwargs:
+            raise Error(
+                'unknown {}:'.format(plural(kwargs).format('argument')),
+                ', '.join(kwargs.keys()),
+                culprit=self.class_name()
+            )
+
+    # name() {{{2
+    def class_name(self):
+        return self.__class__.__name__
+
 
 class Resistor(Tile): # {{{1
     '''Add resistor to schematic.
 
     Args:
-        center (pair): the x,y coordinates of the center of the tile
-        orientation (str):
+        orient (str):
             'v' = vertical,
             'h' = horizontal (default),
             '-' = flip about horizontal axis
@@ -382,20 +438,26 @@ class Resistor(Tile): # {{{1
         name (str): the resistor name
         value (str): the resistor value
         nudge (num): offset used when positioning text (if needed)
+        C, N, NE, E, SE, S, SW, W, NW, p, n (xy location):
+            Use to specify the location of a feature of the resistor.
+        off (xy location), xoff (real), yoff (real):
+            Specify the offset from the specified location.
     '''
-    def __init__(self, center, orientation='h', name=None, value=None, nudge=5):
+    def __init__(self, orient='h', name=None, value=None, nudge=5, **kwargs):
         # Initialization and parameters {{{2
-        super().__init__(center)
+        self.set_coordinates(kwargs, dict(p=(1/2, 0), n=(-1/2, 0)), orient, 'v')
+        super().__init__()
+
         symbol = self.symbol
         schematic = self.sch_schematic
-        h, w = self.size
+        w, h = self.size
         lw = schematic.sch_line_width
         dr = max(2*lw, schematic.sch_dot_radius)
         dx = 5
         dy = 10
         undulations = 6
-        t0 = (w/2, 0)
-        t1 = (-w/2, 0)
+        p = self.pins['p']
+        n = self.pins['n']
 
         # Concealer {{{2
         concealer = schematic.rect(
@@ -407,14 +469,14 @@ class Resistor(Tile): # {{{1
         symbol.add(concealer)
 
         # Resistor {{{2
-        path = [t1]
+        path = [n]
         x = -dx*undulations
         for i in range(undulations):
             path.append((x, 0))
             path.append((x+dx, dy if i % 2 else -dy))
             x += 2*dx
             path.append((x, 0))
-        path.append(t0)
+        path.append(p)
         squiggle = schematic.polyline(
             path, fill='none',
             stroke_width=lw, stroke='black', stroke_linecap='round'
@@ -423,35 +485,32 @@ class Resistor(Tile): # {{{1
 
         # Orientation and translation {{{2
         # The transformation operations are performed by SVG in reverse order.
-        symbol.translate(center)
-        if '|' in orientation:
+        symbol.translate(self.center)
+        if '|' in orient:
             symbol.scale(-1, 1)
-        if '-' in orientation:
+        if '-' in orient:
             symbol.scale(1, -1)
-        if 'v' in orientation:
+        if 'v' in orient:
             symbol.rotate(-90)
-        self.t = self.map_pins([t0, t1], center, orientation, 'v')
-        self.p, self.n = self.t
 
         # Text {{{2
-        if 'v' in orientation:
+        if 'v' in orient:
             if name:
-                self.add_text(name, shift(center, 1.5*dy, -nudge), 'll')
+                self.add_text(name, shift(self.center, 1.5*dy, -nudge), 'll')
             if value:
-                self.add_text(value, shift(center, 1.5*dy, nudge), 'ul')
+                self.add_text(value, shift(self.center, 1.5*dy, nudge), 'ul')
         else:
             if name:
-                self.add_text(name, shift(center, 0, -2*dy), 'lm')
+                self.add_text(name, shift(self.center, 0, -2*dy), 'lm')
             if value:
-                self.add_text(value, shift(center, 0, 2*dy), 'um')
+                self.add_text(value, shift(self.center, 0, 2*dy), 'um')
 
 
 class Capacitor(Tile): # {{{1
     '''Add capacitor to schematic.
 
     Args:
-        center (pair): the x,y coordinates of the center of the tile
-        orientation (str):
+        orient (str):
             'v' = vertical (default),
             'h' = horizontal,
             '-' = flip about horizontal axis
@@ -459,20 +518,26 @@ class Capacitor(Tile): # {{{1
         name (str): the capacitor name
         value (str): the capacitor value
         nudge (num): offset used when positioning text (if needed)
+        C, N, NE, E, SE, S, SW, W, NW, p, n (xy location):
+            Use to specify the location of a feature of the capacitor.
+        off (xy location), xoff (real), yoff (real):
+            Specify the offset from the specified location.
     '''
-    def __init__(self, center, orientation='v', name=None, value=None, nudge=5):
+    def __init__(self, orient='v', name=None, value=None, nudge=5, **kwargs):
         # Initialization and parameters {{{2
-        super().__init__(center)
+        self.set_coordinates(kwargs, dict(p=(0, -1/2), n=(0, 1/2)), orient, 'h')
+        super().__init__()
+
         symbol = self.symbol
         schematic = self.sch_schematic
-        h, w = self.size
+        w, h = self.size
         lw = schematic.sch_line_width
         dr = max(2*lw, schematic.sch_dot_radius)
         gap = 15
         dgap = 5
         c_width = 40
-        t0 = (0, -h/2)
-        t1 = (0, h/2)
+        p = self.pins['p']
+        n = self.pins['n']
 
         # Concealer {{{2
         concealer = schematic.rect(
@@ -485,12 +550,12 @@ class Capacitor(Tile): # {{{1
 
         # Capacitor {{{2
         top_lead = schematic.line(
-            start=t0, end=(0, -gap/2),
+            start=p, end=(0, -gap/2),
             fill='none', stroke_width=lw, stroke='black', stroke_linecap='round'
         )
         symbol.add(top_lead)
         bottom_lead = schematic.line(
-            start=(0, gap/2-dgap), end=t1,
+            start=(0, gap/2-dgap), end=n,
             fill='none', stroke_width=lw, stroke='black', stroke_linecap='round'
         )
         symbol.add(bottom_lead)
@@ -511,35 +576,32 @@ class Capacitor(Tile): # {{{1
 
         # Orientation and translation {{{2
         # The transformation operations are performed by SVG in reverse order.
-        symbol.translate(center)
-        if '|' in orientation:
+        symbol.translate(self.center)
+        if '|' in orient:
             symbol.scale(-1, 1)
-        if '-' in orientation:
+        if '-' in orient:
             symbol.scale(1, -1)
-        if 'h' in orientation:
+        if 'h' in orient:
             symbol.rotate(-90)
-        self.t = self.map_pins([t0, t1], center, orientation, 'h')
-        self.p, self.n = self.t
 
         # Text {{{2
-        if 'h' in orientation:
+        if 'h' in orient:
             if name:
-                self.add_text(name, shift(center, gap, -nudge), 'll')
+                self.add_text(name, shift(self.center, gap, -nudge), 'll')
             if value:
-                self.add_text(value, shift(center, gap, nudge), 'ul')
+                self.add_text(value, shift(self.center, gap, nudge), 'ul')
         else:
             if name:
-                self.add_text(name, shift(center, nudge, -gap), 'll')
+                self.add_text(name, shift(self.center, nudge, -gap), 'll')
             if value:
-                self.add_text(value, shift(center, nudge, gap), 'ul')
+                self.add_text(value, shift(self.center, nudge, gap), 'ul')
 
 
 class Inductor(Tile): # {{{1
     '''Add inductor to schematic.
 
     Args:
-        center (pair): the x,y coordinates of the center of the tile
-        orientation (str):
+        orient (str):
             'v' = vertical,
             'h' = horizontal (default),
             '-' = flip about horizontal axis
@@ -547,14 +609,20 @@ class Inductor(Tile): # {{{1
         name (str): the inductor name
         value (str): the inductor value
         nudge (num): offset used when positioning text (if needed)
+        C, N, NE, E, SE, S, SW, W, NW, p, n (xy location):
+            Use to specify the location of a feature of the inductor.
+        off (xy location), xoff (real), yoff (real):
+            Specify the offset from the specified location.
     '''
-    def __init__(self, center, orientation='h', name=None, value=None, nudge=5):
+    def __init__(self, orient='h', name=None, value=None, nudge=5, **kwargs):
         # Initialization and parameters {{{2
-        super().__init__(center)
+        self.set_coordinates(kwargs, dict(p=(1/2, 0), n=(-1/2, 0)), orient, 'v')
+        super().__init__()
+
         symbol = self.symbol
         schematic = self.sch_schematic
         assert self.size[0] == self.size[1]
-        h, w = self.size
+        w, h = self.size
         lw = schematic.sch_line_width
         dr = max(2*lw, schematic.sch_dot_radius)
         xinc = 20
@@ -562,8 +630,8 @@ class Inductor(Tile): # {{{1
         ypeak = 15
         ytrough = -10
         undulations = 4
-        t0 = (w/2, 0)
-        t1 = (-w/2, 0)
+        p = self.pins['p']
+        n = self.pins['n']
 
         # Concealer {{{2
         concealer = schematic.rect(
@@ -579,7 +647,7 @@ class Inductor(Tile): # {{{1
         coil = schematic.path(
             fill='none', stroke_width=lw, stroke='black', stroke_linecap='round'
         )
-        coil.push('M', t1)
+        coil.push('M', n)
         coil.push('L', (x, 0))
         curve = []
         for i in range(undulations):
@@ -593,44 +661,41 @@ class Inductor(Tile): # {{{1
             ]
             x += xinc+xdec
         coil.push('C', curve[:-6])
-        coil.push('L', t0)
+        coil.push('L', p)
         symbol.add(coil)
 
         # Orientation and translation {{{2
         # The transformation operations are performed by SVG in reverse order.
-        symbol.translate(center)
-        if '|' in orientation:
+        symbol.translate(self.center)
+        if '|' in orient:
             symbol.scale(-1, 1)
-        if '-' in orientation:
+        if '-' in orient:
             symbol.scale(1, -1)
-        if 'v' in orientation:
+        if 'v' in orient:
             symbol.rotate(-90)
-        self.t = self.map_pins([t0, t1], center, orientation, 'v')
-        self.p, self.n = self.t
 
         # Text {{{2
-        if 'v' in orientation:
-            if '|' in orientation:
+        if 'v' in orient:
+            if '|' in orient:
                 just, x_nudge = 'r', ytrough-nudge
             else:
                 just, x_nudge = 'l', -ytrough+nudge
             if name:
-                self.add_text(name, shift(center, x_nudge, -nudge), 'l'+just)
+                self.add_text(name, shift(self.center, x_nudge, -nudge), 'l'+just)
             if value:
-                self.add_text(value, shift(center, x_nudge, nudge), 'u'+just)
+                self.add_text(value, shift(self.center, x_nudge, nudge), 'u'+just)
         else:
             if name:
-                self.add_text(name, shift(center, 0, -ypeak), 'lm')
+                self.add_text(name, shift(self.center, 0, -ypeak), 'lm')
             if value:
-                self.add_text(value, shift(center, 0, ypeak), 'um')
+                self.add_text(value, shift(self.center, 0, ypeak), 'um')
 
 
 class Diode(Tile): # {{{1
     '''Add diode to schematic.
 
     Args:
-        center (pair): the x,y coordinates of the center of the tile
-        orientation (str):
+        orient (str):
             'v' = vertical,
             'h' = horizontal (default),
             '-' = flip about horizontal axis
@@ -639,21 +704,26 @@ class Diode(Tile): # {{{1
         value (str): the diode value
         nudge (num): offset used when positioning text (if needed)
         color (str): color of symbol
+        C, N, NE, E, SE, S, SW, W, NW, a, c (xy location):
+            Use to specify the location of a feature of the diode.
+        off (xy location), xoff (real), yoff (real):
+            Specify the offset from the specified location.
     '''
     def __init__(self,
-        center, orientation='h', name=None, value=None, nudge=5, color='black'
+        orient='h', name=None, value=None, nudge=5, color='black', **kwargs
     ):
         # Initialization and parameters {{{2
-        super().__init__(center)
+        self.set_coordinates(kwargs, dict(a=(0, -1/2), c=(0, 1/2)), orient, 'h')
+        super().__init__()
         symbol = self.symbol
         schematic = self.sch_schematic
-        h, w = self.size
+        w, h = self.size
         lw = schematic.sch_line_width
         dr = max(2*lw, schematic.sch_dot_radius)
         dh = 35  # diode height
         dw = 40  # diode width
-        t0 = (0, -h/2)
-        t1 = (0, h/2)
+        a = self.pins['a']
+        c = self.pins['c']
 
         # Concealer {{{2
         concealer = schematic.rect(
@@ -666,12 +736,12 @@ class Diode(Tile): # {{{1
 
         # Diode {{{2
         top_lead = schematic.line(
-            start=t0, end=(0, -dh/2),
+            start=a, end=(0, -dh/2),
             fill='none', stroke_width=lw, stroke=color, stroke_linecap='round'
         )
         symbol.add(top_lead)
         bottom_lead = schematic.line(
-            start=(0, dh/2), end=t1,
+            start=(0, dh/2), end=c,
             fill='none', stroke_width=lw, stroke=color, stroke_linecap='round'
         )
         symbol.add(bottom_lead)
@@ -688,27 +758,25 @@ class Diode(Tile): # {{{1
 
         # Orientation and translation {{{2
         # The transformation operations are performed by SVG in reverse order.
-        symbol.translate(center)
-        if '|' in orientation:
+        symbol.translate(self.center)
+        if '|' in orient:
             symbol.scale(-1, 1)
-        if '-' in orientation:
+        if '-' in orient:
             symbol.scale(1, -1)
-        if 'h' in orientation:
+        if 'h' in orient:
             symbol.rotate(-90)
-        self.t = self.map_pins([t0, t1], center, orientation, 'h')
-        self.a, self.c = self.t
 
         # Text {{{2
-        if 'h' in orientation:
+        if 'h' in orient:
             if name:
-                self.add_text(name, shift(center, dh/2+nudge, -nudge), 'll')
+                self.add_text(name, shift(self.center, dh/2+nudge, -nudge), 'll')
             if value:
-                self.add_text(value, shift(center, dh/2+nudge, nudge), 'ul')
+                self.add_text(value, shift(self.center, dh/2+nudge, nudge), 'ul')
         else:
             if name:
-                self.add_text(name, shift(center, nudge/2, -dh/2-nudge), 'll')
+                self.add_text(name, shift(self.center, nudge/2, -dh/2-nudge), 'll')
             if value:
-                self.add_text(value, shift(center, nudge/2, dh/2+nudge), 'ul')
+                self.add_text(value, shift(self.center, nudge/2, dh/2+nudge), 'ul')
 
 
 class BJT(Tile): # {{{1
@@ -717,8 +785,7 @@ class BJT(Tile): # {{{1
     Args:
         kind (str): choose from 'npn' or 'pnp' (or just 'n' or 'p')
             if kind is '' the arrow is not shown.
-        center (pair): the x,y coordinates of the center of the tile
-        orientation (str):
+        orient (str):
             'v' = vertical,
             'h' = horizontal (default),
             '-' = flip about horizontal axis
@@ -726,24 +793,36 @@ class BJT(Tile): # {{{1
         name (str): the fet name
         value (str): the fet value
         nudge (num): offset used when positioning text (if needed)
+        C, N, NE, E, SE, S, SW, W, NW, c, b, e (xy location):
+            Use to specify the location of a feature of the transistor.
+        off (xy location), xoff (real), yoff (real):
+            Specify the offset from the specified location.
     '''
     def __init__(
-        self, center, kind='npn', orientation='v', name=None, value=None,
-        nudge=5
+        self, kind='npn', orient='v', name=None, value=None,
+        nudge=5, **kwargs
     ):
         # Initialization and parameters {{{2
-        super().__init__(center)
+        is_pnp = kind[0:1].lower() == 'p'
+        if is_pnp:
+            pins = dict(c=(1/2, 1/2), b=(-1/2, 0), e=(1/2, -1/2))
+        else:
+            pins = dict(c=(1/2, -1/2), b=(-1/2, 0), e=(1/2, 1/2))
+        self.set_coordinates(kwargs, pins, orient, 'h')
+        super().__init__()
         symbol = self.symbol
         schematic = self.sch_schematic
         assert self.size[0] == self.size[1]
-        h, w = self.size
+        w, h = self.size
         lw = schematic.sch_line_width
         dr = max(2*lw, schematic.sch_dot_radius)
         arrow_height = 12
         arrow_width = 30
-        c = (w/2, -h/2)
-        b = (-w/2, 0)
-        e = (w/2, h/2)
+        c = self.pins['c']
+        b = self.pins['b']
+        e = self.pins['e']
+        if is_pnp:
+            c, e = e, c
 
         # Concealers {{{2
         # These are use to hide wiring that pass under component.
@@ -787,11 +866,10 @@ class BJT(Tile): # {{{1
         if kind:
             arrow_x0 = w/4
             rotate_arrow=180*atan2(1/8, 1/2)/pi
-            if kind[0] == 'p':
+            if is_pnp:
                 arrow_y0 = -h/4
                 arrow_left = arrow_x0+arrow_width/2
                 arrow_right = arrow_x0-arrow_width/2
-                c, e = e, c
                 rotate_arrow=-rotate_arrow
             else:
                 arrow_y0 = h/4
@@ -810,30 +888,28 @@ class BJT(Tile): # {{{1
 
         # Orientation and translation {{{2
         # The transformation operations are performed by SVG in reverse order.
-        symbol.translate(center)
-        if '|' in orientation:
+        symbol.translate(self.center)
+        if '|' in orient:
             symbol.scale(-1, 1)
-        if '-' in orientation:
+        if '-' in orient:
             symbol.scale(1, -1)
-        if 'h' in orientation:
+        if 'h' in orient:
             symbol.rotate(-90)
-        self.t = self.map_pins([c, b, e], center, orientation, 'h')
-        self.c, self.b, self.e = self.t
 
         # Text {{{2
-        if 'h' in orientation:
-            if '-' in orientation:
+        if 'h' in orient:
+            if '-' in orient:
                 name_just, value_just = 'um', 'lm'
                 offset, nudge = h/2, nudge
             else:
                 name_just, value_just = 'lm', 'um'
                 offset, nudge = -h/2, -nudge
             if name:
-                self.add_text(name, shift(center, 0, nudge), name_just)
+                self.add_text(name, shift(self.center, 0, nudge), name_just)
             if value:
-                self.add_text(value, shift(center, 0, offset-nudge), value_just)
+                self.add_text(value, shift(self.center, 0, offset-nudge), value_just)
         else:
-            if '|' in orientation:
+            if '|' in orient:
                 xjust, xnudge = 'r', -nudge
             else:
                 xjust, xnudge  = 'l', nudge
@@ -843,9 +919,9 @@ class BJT(Tile): # {{{1
                 else:
                     nudge = 0
                     just = 'm' + xjust
-                self.add_text(name, shift(center, xnudge, -nudge), just)
+                self.add_text(name, shift(self.center, xnudge, -nudge), just)
             if value:
-                self.add_text(value, shift(center, xnudge, nudge), 'u'+xjust)
+                self.add_text(value, shift(self.center, xnudge, nudge), 'u'+xjust)
 
 
 class MOS(Tile): # {{{1
@@ -854,8 +930,7 @@ class MOS(Tile): # {{{1
     Args:
         kind (str): choose from 'nmos' or 'pmos' (or just 'n' or 'p')
             if kind is '' the arrow is not shown.
-        center (pair): the x,y coordinates of the center of the tile
-        orientation (str):
+        orient (str):
             'v' = vertical,
             'h' = horizontal (default),
             '-' = flip about horizontal axis
@@ -863,24 +938,35 @@ class MOS(Tile): # {{{1
         name (str): the fet name
         value (str): the fet value
         nudge (num): offset used when positioning text (if needed)
+        C, N, NE, E, SE, S, SW, W, NW, d, g, s (xy location):
+            Use to specify the location of a feature of the transistor.
+        off (xy location), xoff (real), yoff (real):
+            Specify the offset from the specified location.
     '''
     def __init__(
-        self, center, kind='n', orientation='v', name=None, value=None,
-        nudge=5
+        self, kind='n', orient='v', name=None, value=None, nudge=5, **kwargs
     ):
         # Initialization and parameters {{{2
-        super().__init__(center)
+        is_pmos =  kind[0:1].lower() == 'p'
+        if is_pmos:
+            pins = dict(d=(1/2, 1/2), g=(-1/2, 0), s=(1/2, -1/2))
+        else:
+            pins = dict(d=(1/2, -1/2), g=(-1/2, 0), s=(1/2, 1/2))
+        self.set_coordinates(kwargs, pins, orient, 'h')
+        super().__init__()
         symbol = self.symbol
         schematic = self.sch_schematic
         assert self.size[0] == self.size[1]
-        h, w = self.size
+        w, h = self.size
         lw = schematic.sch_line_width
         dr = max(2*lw, schematic.sch_dot_radius)
         arrow_height = 12
         arrow_width = 30
-        d = (w/2, -h/2)
-        g = (-w/2, 0)
-        s = (w/2, h/2)
+        d = self.pins['d']
+        g = self.pins['g']
+        s = self.pins['s']
+        if is_pmos:
+            d, s = s, d
 
         # Concealers {{{2
         # These are use to hide wiring that pass under component.
@@ -928,11 +1014,10 @@ class MOS(Tile): # {{{1
         symbol.add(gate_lead)
         if kind:
             arrow_x0 = w/4
-            if kind[0] == 'p':
+            if is_pmos:
                 arrow_y0 = -h/4
                 arrow_left = arrow_x0+arrow_width/2
                 arrow_right = arrow_x0-arrow_width/2
-                d, s = s, d
             else:
                 arrow_y0 = h/4
                 arrow_left = arrow_x0-arrow_width/2
@@ -949,30 +1034,28 @@ class MOS(Tile): # {{{1
 
         # Orientation and translation {{{2
         # The transformation operations are performed by SVG in reverse order.
-        symbol.translate(center)
-        if '|' in orientation:
+        symbol.translate(self.center)
+        if '|' in orient:
             symbol.scale(-1, 1)
-        if '-' in orientation:
+        if '-' in orient:
             symbol.scale(1, -1)
-        if 'h' in orientation:
+        if 'h' in orient:
             symbol.rotate(-90)
-        self.t = self.map_pins([d, g, s], center, orientation, 'h')
-        self.d, self.g, self.s = self.t
 
         # Text {{{2
-        if 'h' in orientation:
-            if '-' in orientation:
+        if 'h' in orient:
+            if '-' in orient:
                 name_just, value_just = 'um', 'lm'
                 offset, nudge = h/2, nudge
             else:
                 name_just, value_just = 'lm', 'um'
                 offset, nudge = -h/2, -nudge
             if name:
-                self.add_text(name, shift(center, 0, nudge), name_just)
+                self.add_text(name, shift(self.center, 0, nudge), name_just)
             if value:
-                self.add_text(value, shift(center, 0, offset-nudge), value_just)
+                self.add_text(value, shift(self.center, 0, offset-nudge), value_just)
         else:
-            if '|' in orientation:
+            if '|' in orient:
                 xjust, xnudge = 'r', -nudge
             else:
                 xjust, xnudge  = 'l', nudge
@@ -982,9 +1065,9 @@ class MOS(Tile): # {{{1
                 else:
                     nudge = 0
                     just = 'm' + xjust
-                self.add_text(name, shift(center, xnudge, -nudge), just)
+                self.add_text(name, shift(self.center, xnudge, -nudge), just)
             if value:
-                self.add_text(value, shift(center, xnudge, nudge), 'u'+xjust)
+                self.add_text(value, shift(self.center, xnudge, nudge), 'u'+xjust)
 
 
 class Amp(Tile): # {{{1
@@ -996,33 +1079,39 @@ class Amp(Tile): # {{{1
             'oa' (opamp), and
             'da' (diffamp)
             'comp' (comparator)
-        center (pair): the x,y coordinates of the center of the tile
-        orientation (str): choose from ...
+        orient (str): choose from ...
             'v' = vertical,
             'h' = horizontal (default),
             '-' = flip about horizontal axis,
             '|' = flip about vertical axis
         name (str): the amplifier name
         value (str): the amplifier value (currently unused)
+        w (num), h (num) : the width and height.
+        C, N, NE, E, SE, S, SW, W, NW, pi, i, ni, po, n, no. (xy location):
+            Use to specify the location of a feature of the amplifier.
+        off (xy location), xoff (real), yoff (real):
+            Specify the offset from the specified location.
     '''
     def __init__(
-        self, center, kind='oa', orientation='h', name=None, value=None, w=2, h=2
+        self, kind='oa', orient='h', name=None, value=None, w=2, h=2, **kwargs
     ):
         # Initialization and parameters {{{2
-        super().__init__(center, w, h)
+        pins = dict(
+            i =  (-1/2,  0),
+            pi = (-1/2, -1/4),
+            ni = (-1/2,  1/4),
+            o =  ( 1/2,  0),
+            po = ( 1/2,  1/4),
+            no = ( 1/2, -1/4),
+        )
+        self.set_coordinates(kwargs, pins, orient, 'v', w=w, h=h)
+        super().__init__()
         symbol = self.symbol
         schematic = self.sch_schematic
         w, h = self.size
         lw = schematic.sch_line_width
         sign_size = 14
         nudge = 5
-        vin  = (-w/2,  0)
-        pin  = (-w/2, -h/4)
-        nin  = (-w/2,  h/4)
-        out  = ( w/2,  0)
-        pout = ( w/2,  h/4)
-        nout = ( w/2, -h/4)
-        terms = [out, pin, nin]
 
         # Amp {{{2
         amp = schematic.polygon(
@@ -1052,8 +1141,6 @@ class Amp(Tile): # {{{1
                 stroke_width=lw, stroke='black', stroke_linecap='round'
             )
             symbol.add(plus_ns)
-        else:
-            terms = [out, vin]
         if kind == 'da':
             minus = schematic.line(
                 start=(-2*sign_size+nudge, -h/4),
@@ -1085,7 +1172,6 @@ class Amp(Tile): # {{{1
                 stroke_width=lw, stroke='black', stroke_linecap='round'
             )
             symbol.add(n_out_lead)
-            terms = [pout, nout, pin, nin]
         if kind == 'comp':
             comp = schematic.polyline(
                 [   (w/8-nudge,  h/8),
@@ -1100,32 +1186,25 @@ class Amp(Tile): # {{{1
 
         # Orientation and translation {{{2
         # The transformation operations are performed by SVG in reverse order.
-        symbol.translate(center)
-        if '|' in orientation:
+        symbol.translate(self.center)
+        if '|' in orient:
             symbol.scale(-1, 1)
-        if '-' in orientation:
+        if '-' in orient:
             symbol.scale(1, -1)
-        if 'v' in orientation:
+        if 'v' in orient:
             symbol.rotate(-90)
-        self.t = self.map_pins(terms, center, orientation, 'v')
-        if kind == 'da':
-            self.po, self.no, self.pi, self.ni = self.t
-        elif kind in 'oa comp'.split():
-            self.o, self.pi, self.ni = self.t
-        else:
-            self.o, self.i = self.t
 
 
         # Text {{{2
         if name:
-            if 'v' in orientation:
-                nudge = -h/8 if '-' in orientation else h/8
-                self.add_text(name, shift(center, 0, nudge), 'mm')
+            if 'v' in orient:
+                nudge = -h/8 if '-' in orient else h/8
+                self.add_text(name, shift(self.center, 0, nudge), 'mm')
             else:
-                nudge = w/8 if '|' in orientation else -w/8
-                self.add_text(name, shift(center, nudge, 0), 'mm')
+                nudge = w/8 if '|' in orient else -w/8
+                self.add_text(name, shift(self.center, nudge, 0), 'mm')
         #if value:  ignore for now
-        #    self.add_text(value, shift(center, -half/4, nudge), 'um')
+        #    self.add_text(value, shift(self.center, -half/4, nudge), 'um')
 
 
 class Gate(Tile): # {{{1
@@ -1134,31 +1213,32 @@ class Gate(Tile): # {{{1
     Args:
         kind (str): choose from: 'inv', 'buf', 'nand', 'and', 'nor', 'or',
             'xor', and 'xnor' (only inv is currently implemented).
-        center (pair): the x,y coordinates of the center of the tile
-        orientation (str): choose from ...
+        orient (str): choose from ...
             'v' = vertical,
             'h' = horizontal (default),
             '-' = flip about horizontal axis,
             '|' = flip about vertical axis
         name (str): the amplifier name
         value (str): the amplifier value (currently unused)
+        C, N, NE, E, SE, S, SW, W, NW, i, o (xy location):
+            Use to specify the location of a feature of the gate.
+        off (xy location), xoff (real), yoff (real):
+            Specify the offset from the specified location.
     '''
     def __init__(
-        self, center, kind='oa', orientation='h', name=None, value=None
+        self, kind='inv', orient='h', name=None, value=None, **kwargs
     ):
         # Initialization and parameters {{{2
-        super().__init__(center)
+        self.set_coordinates(kwargs, dict(i=(-1/2, 0), o=(1/2, 0)), orient, 'v')
+        super().__init__()
         symbol = self.symbol
         schematic = self.sch_schematic
-        h, w = self.size
+        w, h = self.size
         lw = schematic.sch_line_width
         nudge = 5
         r = 8
         inv_x = 55
         inv_y = 70
-        i  = (-w/2, 0)
-        o  = ( w/2, 0)
-        terms = [o, i]
 
         # Gate {{{2
         assert kind == 'inv'
@@ -1188,34 +1268,31 @@ class Gate(Tile): # {{{1
 
         # Orientation and translation {{{2
         # The transformation operations are performed by SVG in reverse order.
-        symbol.translate(center)
-        if '|' in orientation:
+        symbol.translate(self.center)
+        if '|' in orient:
             symbol.scale(-1, 1)
-        if '-' in orientation:
+        if '-' in orient:
             symbol.scale(1, -1)
-        if 'v' in orientation:
+        if 'v' in orient:
             symbol.rotate(-90)
-        self.t = self.map_pins(terms, center, orientation, 'v')
-        self.o, self.i = self.t
 
         # Text {{{2
         if name:
-            if 'v' in orientation:
-                nudge = -h/8 if '-' in orientation else h/8
-                self.add_text(name, shift(center, 0, nudge), 'mm')
+            if 'v' in orient:
+                nudge = -h/8 if '-' in orient else h/8
+                self.add_text(name, shift(self.center, 0, nudge), 'mm')
             else:
-                nudge = w/8 if '|' in orientation else -w/8
-                self.add_text(name, shift(center, nudge, 0), 'mm')
+                nudge = w/8 if '|' in orient else -w/8
+                self.add_text(name, shift(self.center, nudge, 0), 'mm')
         #if value:  ignore for now
-        #    self.add_text(value, shift(center, -half/4, nudge), 'um')
+        #    self.add_text(value, shift(self.center, -half/4, nudge), 'um')
 
 
 class Ground(Tile): # {{{1
     '''Add ground to schematic.
 
     Args:
-        center (pair): the x,y coordinates of the center of the tile
-        orientation (str): choose from ...
+        orient (str): choose from ...
             'v' = vertical,
             'h' = horizontal (default),
             '-' = flip about horizontal axis,
@@ -1223,12 +1300,17 @@ class Ground(Tile): # {{{1
         name (str): the ground name
         value (str): the ground value (currently unused)
         nudge (num): offset used when positioning text (if needed)
+        C, N, NE, E, SE, S, SW, W, NW, t (xy location):
+            Use to specify the location of a feature of the ground.
+        off (xy location), xoff (real), yoff (real):
+            Specify the offset from the specified location.
     '''
     def __init__(
-        self, center, kind='oa', orientation='v', name=None, value=None, nudge=5
+        self, kind='oa', orient='v', name=None, value=None, nudge=5, **kwargs
     ):
         # Initialization and parameters {{{2
-        super().__init__(center, 1, 1)
+        self.set_coordinates(kwargs, dict(t=(0, 0)), orient, 'h', w=1, h=1)
+        super().__init__()
         symbol = self.symbol
         schematic = self.sch_schematic
         w, h = self.size
@@ -1250,53 +1332,68 @@ class Ground(Tile): # {{{1
 
         # Orientation and translation {{{2
         # The transformation operations are performed by SVG in reverse order.
-        symbol.translate(center)
-        if '|' in orientation:
+        symbol.translate(self.center)
+        if '|' in orient:
             symbol.scale(-1, 1)
-        if '-' in orientation:
+        if '-' in orient:
             symbol.scale(1, -1)
-        if 'h' in orientation:
+        if 'h' in orient:
             symbol.rotate(-90)
-        self.t = self.map_pins(terms, center, orientation, 'h')
 
         # Text {{{2
         if name:
             x_nudge = y_nudge = 0
-            if 'h' in orientation:
-                x_nudge = -nudge if '|' in orientation else nudge
-                just = 'mr' if '|' in orientation else 'ml'
+            if 'h' in orient:
+                x_nudge = -nudge if '|' in orient else nudge
+                just = 'mr' if '|' in orient else 'ml'
             else:
-                y_nudge = -nudge if '-' in orientation else nudge
-                just = 'lm' if '-' in orientation else 'um'
-            self.add_text(name, shift(center, x_nudge, y_nudge), just)
+                y_nudge = -nudge if '-' in orient else nudge
+                just = 'lm' if '-' in orient else 'um'
+            self.add_text(name, shift(self.center, x_nudge, y_nudge), just)
         #if value:  ignore for now
-        #    self.add_text(value, shift(center, -half/4, nudge), 'um')
+        #    self.add_text(value, shift(self.center, -half/4, nudge), 'um')
 
 
 class Source(Tile): # {{{1
+    COORDINATE_OFFSETS = dict(
+        C = (0, 0),
+        N = (0, -1/4),
+        NW = (-0.70711/4, -0.70711/4),
+        W = (-1/4, 0),
+        SW = (-0.70711/4, 0.70711/4),
+        S = (0, 1/4),
+        SE = (0.70711/4, 0.70711/4),
+        E = (1/4, 0),
+        NE = (0.70711/4, -0.70711/4),
+    )
+
     '''Add source to schematic.
 
     Args:
-        center (pair): the x,y coordinates of the center of the tile
         kind (str): choose from:
              'empty', 'vdc', 'idc', 'sine', 'sum', 'mult',
             'cv' (controlled voltage) or 'ci' (controlled current)
-        orientation (str): choose from:
+        orient (str): choose from:
             'v' = vertical,
             'h' = horizontal (default),
             '-' = flip about horizontal axis,
             '|' = flip about vertical axis
         name (str): the source name
         value (str): the source value
-        nudge (num): offset used when positioning text (if needed)
         color (str): color of symbol
+        nudge (num): offset used when positioning text (if needed)
+        C, N, NE, E, SE, S, SW, W, NW, p, n (xy location):
+            Use to specify the location of a feature of the source.
+        off (xy location), xoff (real), yoff (real):
+            Specify the offset from the specified location.
     '''
     def __init__(
-        self, center, kind='empty', orientation='v', name=None, value=None,
-        color='black', nudge=5
+        self, kind='empty', orient='v', name=None, value=None, color='black',
+        nudge=5, **kwargs
     ):
         # Initialization and parameters {{{2
-        super().__init__(center, 2, 2)
+        self.set_coordinates(kwargs, dict(p=(1/2, 0), n=(-1/2, 0)), orient, 'v')
+        super().__init__()
         symbol = self.symbol
         schematic = self.sch_schematic
         assert self.size[0] == self.size[1]
@@ -1307,8 +1404,6 @@ class Source(Tile): # {{{1
         lw = schematic.sch_line_width
         sign_size = 14
         arrow_width = 5
-        t0 = (0, -size/2)
-        t1 = (0, size/2)
 
         # Source {{{2
         if kind in ('cv', 'ci'):
@@ -1345,9 +1440,6 @@ class Source(Tile): # {{{1
                 stroke_width=lw, stroke=color, stroke_linecap='round'
             )
             symbol.add(pos_lead)
-        else:
-            t0 = (0, -r)
-            t1 = (0,  r)
 
         if kind in ('vdc', 'cv'):
             minus = schematic.line(
@@ -1480,54 +1572,40 @@ class Source(Tile): # {{{1
 
         # Orientation and translation {{{2
         # The transformation operations are performed by SVG in reverse order.
-        symbol.translate(center)
-        if '|' in orientation:
+        symbol.translate(self.center)
+        if '|' in orient:
             symbol.scale(-1, 1)
-        if '-' in orientation:
+        if '-' in orient:
             symbol.scale(1, -1)
-        if 'h' in orientation:
+        if 'h' in orient:
             symbol.rotate(-90)
-        self.t = self.map_pins([t0, t1], center, orientation, 'h')
-        self.p, self.n = self.t
 
         # Principal coordinates {{{2
         # override those set in Tile
-        self.add_coordinates(center, dict(
-            C = (0, 0),
-            N = (0, -r),
-            NW = (-0.707*r, -0.707*r),
-            W = (-r, 0),
-            SW = (-0.707*r, 0.707*r),
-            S = (0, r),
-            SE = (0.707*r, 0.707*r),
-            E = (r, 0),
-            NE = (0.707*r, -0.707*r),
-        ))
 
         # Text {{{2
-        if 'h' in orientation:
+        if 'h' in orient:
             if name:
-                self.add_text(name, shift(center, r+nudge, -nudge), 'll')
+                self.add_text(name, shift(self.center, r+nudge, -nudge), 'll')
             if value:
-                self.add_text(value, shift(center, r+nudge, nudge), 'ul')
+                self.add_text(value, shift(self.center, r+nudge, nudge), 'ul')
         else:
             if name:
-                self.add_text(name, shift(center, nudge, -r-nudge), 'll')
+                self.add_text(name, shift(self.center, nudge, -r-nudge), 'll')
             if value:
-                self.add_text(value, shift(center, nudge, r+nudge), 'ul')
+                self.add_text(value, shift(self.center, nudge, r+nudge), 'ul')
 
 
 class Pin(Tile): # {{{1
     '''Add pin to schematic.
 
     Args:
-        center (pair): the x,y coordinates of the center of the tile
         kind (str): choose from: 'dot', 'in', 'out', 'none'
             'dot' a solid dot, can specify name and value
             'in' a hollow dot, name on the left, no value
             'out' a hollow dot, name on the right, no value
             'none' is used to place name and value with no other marker
-        orientation (str): choose from ...
+        orient (str): choose from ...
             'v' = vertical,
             'h' = horizontal (default),
             '-' = flip about horizontal axis,
@@ -1535,25 +1613,29 @@ class Pin(Tile): # {{{1
         name (str): the pin name
         value (str): the pin value (unused for in and out pins)
         w (num): the width of the tile (multiples of unit width)
-        l (num): the height of the tile (multiples of unit height)
+        h (num): the height of the tile (multiples of unit height)
         color (str): color of symbol
         nudge (num): offset used when positioning text (if needed)
+        C, N, NE, E, SE, S, SW, W, NW (xy location):
+            Use to specify the location of a feature of the pin.
+        off (xy location), xoff (real), yoff (real):
+            Specify the offset from the specified location.
     '''
     DEFAULT_KIND = 'out'
 
     def __init__(
-        self, center, kind=None, orientation='v', name=None, value=None,
-        w=1, l=1, color='black', nudge=5
+        self, kind=None, orient='v', name=None, value=None, w=1, h=1,
+        color='black', nudge=5, **kwargs
     ):
         # Initialization and parameters {{{2
-        super().__init__(center, w, l)
+        self.set_coordinates(kwargs, dict(t=(0, 0)), orient, 'v', w=w, h=h)
+        super().__init__()
         schematic = self.sch_schematic
         symbol = self.symbol
         r = schematic.sch_dot_radius
         lw = schematic.sch_line_width
         if kind is None:
             kind = self.DEFAULT_KIND
-        terms =[(0, 0)]
 
         # Pin {{{2
         if kind != 'none':
@@ -1573,30 +1655,29 @@ class Pin(Tile): # {{{1
 
         # Orientation and translation {{{2
         # The transformation operations are performed by SVG in reverse order.
-        symbol.translate(center)
-        #if '|' in orientation:
+        symbol.translate(self.center)
+        #if '|' in orient:
         #    symbol.scale(-1, 1)
-        #if '-' in orientation:
+        #if '-' in orient:
         #    symbol.scale(1, -1)
-        #if 'h' in orientation:
+        #if 'h' in orient:
         #    symbol.rotate(-90)
-        self.t = self.map_pins(terms, center, orientation, 'h')
 
         # Text {{{2
         x_nudge = r+nudge
         if kind == 'out' and name:
-            self.add_text(name, shift(center, 2*r+nudge, 0), 'ml')
+            self.add_text(name, shift(self.center, 2*r+nudge, 0), 'ml')
         elif kind == 'in' and name:
-            self.add_text(name, shift(center, -(2*r+nudge), 0), 'mr')
+            self.add_text(name, shift(self.center, -(2*r+nudge), 0), 'mr')
         else:
-            if '|' in orientation:
+            if '|' in orient:
                 x_nudge, just = -x_nudge, 'r'
             else:
                 just = 'l'
             if name:
-                self.add_text(name, shift(center, x_nudge, -nudge), 'l' + just)
+                self.add_text(name, shift(self.center, x_nudge, -nudge), 'l' + just)
             if value:
-                self.add_text(value, shift(center, x_nudge, nudge), 'u' + just)
+                self.add_text(value, shift(self.center, x_nudge, nudge), 'u' + just)
 
 class Dot(Pin): # {{{1
     DEFAULT_KIND = 'dot'
@@ -1605,28 +1686,31 @@ class Label(Tile): # {{{1
     '''Add label to schematic.
 
     Args:
-        center (pair): the x,y coordinates of the center of the tile
-        kind (str): choose from 'plain', 'arrow', 'slash', 'dot'
-        orientation (str): orientation of the symbol
+        kind (str): choose from 'plain', 'arrow', 'arrow|', 'slash', 'dot'
+        orient (str): orient of the symbol
         name (str): the label
         value (str): ignored
         loc (str): label location
             choose from 'c', 'n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'
         w (num): the width of the tile (multiples of unit width)
-        l (num): the length of the tile (multiples of unit width)
+        h (num): the height of the tile (multiples of unit height)
         color (str): color of the marker
         nudge (num): offset used when positioning text (if needed)
+        C, N, NE, E, SE, S, SW, W, NW, p, n (xy location):
+            Use to specify the location of a feature of the resistor.
+        off (xy location), xoff (real), yoff (real):
+            Specify the offset from the specified location.
     '''
 
     def __init__(
-        self, center, kind='plain', loc='c', orientation='h', name=None, value=None, w=1, l=1,
-        color='black', nudge=5
+        self, kind='plain', loc='c', orient='h', name=None, value=None, w=1, h=1,
+        color='black', nudge=5, **kwargs
     ):
         # Initialization and parameters {{{2
-        super().__init__(center, w, l)
+        self.set_coordinates(kwargs, {}, orient, 'v', w=w, h=h)
+        super().__init__()
         schematic = self.sch_schematic
         symbol = self.symbol
-        terms =[(0, 0)]
         lw = schematic.sch_line_width
         arrow_height = 12
         arrow_width = 30
@@ -1664,24 +1748,24 @@ class Label(Tile): # {{{1
             symbol.add(slash)
             y_nudge += slash_len/2
         elif kind == 'dot':
-            symbol = schematic.circle(
+            dot = schematic.circle(
                 center = (0, 0), r=r,
                 fill = color if kind == 'dot' else schematic.sch_background,
                 stroke_width = lw,
                 stroke = color,
             )
-            symbol.add(symbol)
+            symbol.add(dot)
             y_nudge += r
             x_nudge += r
 
         # Orientation and translation {{{2
         # The transformation operations are performed by SVG in reverse order.
-        symbol.translate(center)
-        if '|' in orientation:
+        symbol.translate(self.center)
+        if '|' in orient:
             symbol.scale(-1, 1)
-        if '-' in orientation:
+        if '-' in orient:
             symbol.scale(1, -1)
-        if 'v' in orientation:
+        if 'v' in orient:
             symbol.rotate(-90)
 
         # Text {{{2
@@ -1702,15 +1786,13 @@ class Label(Tile): # {{{1
                 dx = -x_nudge
                 h_just = 'r'
             just = v_just + h_just
-            self.add_text(name, shift(center, dx, dy), just)
-        self.t = self.map_pins(terms, center)
+            self.add_text(name, shift(self.center, dx, dy), just)
 
 class Box(Tile): # {{{1
     '''Add box to schematic.
 
     Args:
-        center (pair): the x,y coordinates of the center of the tile
-        orientation (str): choose from ...
+        orient (str): choose from ...
             'v' = vertical,
             'h' = horizontal (default),
             '-' = flip about horizontal axis,
@@ -1722,14 +1804,27 @@ class Box(Tile): # {{{1
         nudge (num): offset used when positioning text (if needed)
         line_width (num): the line width
         background (str): color of interior of box
+        C, N, NE, E, SE, S, SW, W, NW, p, n (xy location):
+            Use to specify the location of a feature of the resistor.
+        off (xy location), xoff (real), yoff (real):
+            Specify the offset from the specified location.
     '''
 
     def __init__(
-        self, center, orientation='h', name=None, value=None, w=2, h=1.5,
-        nudge=5, line_width=None, background=None, **extra
+        self, orient='h', name=None, value=None, nudge=5, line_width=None,
+        background=None, w=2, h=1.5, **kwargs
     ):
         # Initialization and parameters {{{2
-        super().__init__(center, w, h)
+        pins = dict(
+            i =  (-1/2,  0),
+            pi = (-1/2, -1/4),
+            ni = (-1/2,  1/4),
+            o =  ( 1/2,  0),
+            po = ( 1/2, -1/4),
+            no = ( 1/2,  1/4),
+        )
+        extra = self.set_coordinates(kwargs, pins, orient, 'v', w=w, h=h, extra=True)
+        super().__init__()
         symbol = self.symbol
         schematic = self.sch_schematic
         w, h = self.size
@@ -1750,32 +1845,29 @@ class Box(Tile): # {{{1
 
         # Orientation and translation {{{2
         # The transformation operations are performed by SVG in reverse order.
-        symbol.translate(center)
-        if '|' in orientation:
+        symbol.translate(self.center)
+        if '|' in orient:
             symbol.scale(-1, 1)
-        if '-' in orientation:
+        if '-' in orient:
             symbol.scale(1, -1)
-        if 'v' in orientation:
+        if 'v' in orient:
             symbol.rotate(-90)
-        self.t = self.map_pins(terms, center, orientation, 'v')
-        self.o, self.i = self.t
 
         # Text {{{2
         if value:
             if name:
-                self.add_text(name, shift(center, 0, -nudge), 'lm')
-            self.add_text(value, shift(center, 0, nudge), 'um')
+                self.add_text(name, shift(self.center, 0, -nudge), 'lm')
+            self.add_text(value, shift(self.center, 0, nudge), 'um')
         else:
             if name:
-                self.add_text(name, shift(center, 0, 0), 'mm')
+                self.add_text(name, shift(self.center, 0, 0), 'mm')
 
 class Switch(Tile): # {{{1
     '''Add switch to schematic.
 
     Args:
-        center (pair): the x,y coordinates of the center of the tile
         kind (str): the switch type, choose from 'spst' and 'spdt'
-        orientation (str): choose from ...
+        orient (str): choose from ...
             'v' = vertical,
             'h' = horizontal (default),
             '-' = flip about horizontal axis,
@@ -1784,21 +1876,31 @@ class Switch(Tile): # {{{1
         value (str): the pin value (unused for in and out pins)
         dots (bool): whether the dots should be drawn
         nudge (num): offset used when positioning text (if needed)
+        C, N, NE, E, SE, S, SW, W, NW, p, n (xy location):
+            Use to specify the location of a feature of the resistor.
+        off (xy location), xoff (real), yoff (real):
+            Specify the offset from the specified location.
     '''
 
     def __init__(
-        self, center, kind='spst', orientation='h', name=None, value=None,
-        dots=False, nudge=5
+        self, kind='spst', orient='h', name=None, value=None, dots=False,
+        nudge=5, **kwargs
     ):
         # Initialization and parameters {{{2
-        super().__init__(center, 2, 2)
+        pins = dict(i=(-1/2, 0), o=(1/2, 0), ot=(1/2, -1/4), ob=(1/2, 1/4))
+        self.set_coordinates(kwargs, pins, orient, 'v')
+        super().__init__()
         symbol = self.symbol
         schematic = self.sch_schematic
         w, h = self.size
-        sep = self.UNIT_HEIGHT
-        gap = self.UNIT_WIDTH
         r = 3
         lw = schematic.sch_line_width
+        i = self.pins['i']
+        o = self.pins['o']
+        ot = self.pins['ot']
+        ob = self.pins['ob']
+        sep = h/2
+        gap = w/2
 
         # Concealer {{{2
         # These are use to hide wiring that pass under component.
@@ -1822,9 +1924,8 @@ class Switch(Tile): # {{{1
                 stroke_width=lw, stroke='black',
             )
             symbol.add(l_pole)
-        tl = (-w/2, 0)
         l_lead = schematic.line(
-            start=tl, end=(-gap/2, 0),
+            start=i, end=(-gap/2, 0),
             stroke_width=lw, stroke='black',
         )
         symbol.add(l_lead)
@@ -1835,9 +1936,8 @@ class Switch(Tile): # {{{1
                     stroke_width=lw, stroke='black',
                 )
                 symbol.add(t_pole)
-            tt = (w/2, -sep/2)
             t_lead = schematic.line(
-                start=tt, end=(gap/2, -sep/2),
+                start=ot, end=(gap/2, -sep/2),
                 stroke_width=lw, stroke='black',
             )
             symbol.add(t_lead)
@@ -1847,13 +1947,11 @@ class Switch(Tile): # {{{1
                     stroke_width=lw, stroke='black',
                 )
                 symbol.add(b_pole)
-            tb = (w/2, sep/2)
             b_lead = schematic.line(
-                start=tb, end=(gap/2, sep/2),
+                start=ob, end=(gap/2, sep/2),
                 stroke_width=lw, stroke='black',
             )
             symbol.add(b_lead)
-            terms=[tt, tb, tl]
         else:
             if dots:
                 r_pole = schematic.circle(
@@ -1861,450 +1959,51 @@ class Switch(Tile): # {{{1
                     stroke_width=lw, stroke='black',
                 )
                 symbol.add(r_pole)
-            tr = (w/2, 0)
             r_lead = schematic.line(
-                start=tr, end=(gap/2, 0),
+                start=o, end=(gap/2, 0),
                 stroke_width=lw, stroke='black',
             )
             symbol.add(r_lead)
-            terms=[tr, tl]
 
         # Orientation and translation {{{2
         # The transformation operations are performed by SVG in reverse order.
-        symbol.translate(center)
-        if '|' in orientation:
+        symbol.translate(self.center)
+        if '|' in orient:
             symbol.scale(-1, 1)
-        if '-' in orientation:
+        if '-' in orient:
             symbol.scale(1, -1)
-        if 'v' in orientation:
+        if 'v' in orient:
             symbol.rotate(-90)
-        self.t = self.map_pins(terms, center, orientation, 'v')
 
         # Text {{{2
-        if 'v' in orientation:
-            if '|' in orientation:
+        if 'v' in orient:
+            if '|' in orient:
                 hjust = 'r'
                 nudge = -nudge
             else:
                 hjust = 'l'
-            offset = gap/2+r if '-' in orientation else -gap/2-r
+            offset = gap/2+r if '-' in orient else -gap/2-r
             if value:
                 dy = offset+nudge
-                self.add_text(value, shift(center, nudge, -dy), 'u'+hjust)
+                self.add_text(value, shift(self.center, nudge, -dy), 'u'+hjust)
                 just = 'l'+hjust
             else:
                 dy = 0
                 just = 'm'+hjust
             if name:
-                self.add_text(name, shift(center, nudge, -dy), just)
+                self.add_text(name, shift(self.center, nudge, -dy), just)
         else:
-            if '-' in orientation:
+            if '-' in orient:
                 vjust = 'l'
                 nudge = -nudge
             else:
                 vjust = 'u'
             if value:
                 dx = gap/2+r+nudge
-                self.add_text(value, shift(center, dx, nudge), vjust+'l')
+                self.add_text(value, shift(self.center, dx, nudge), vjust+'l')
                 just = vjust + 'r'
             else:
                 dx = 0
                 just = vjust + 'm'
             if name:
-                self.add_text(name, shift(center, -dx, nudge), just)
-
-
-# Tests {{{1
-if __name__ == '__main__':
-    from math import ceil, sqrt
-
-    class TestCase:
-        def __init__(self, **kwargs):
-            self.__dict__.update(kwargs)
-
-    # cases {{{2
-    cases = [
-        TestCase(
-            component = Resistor,
-            name = 'R{l}',
-            value = '50Ω',
-        ),
-        TestCase(
-            component = Capacitor,
-            name = 'C{l}',
-            value = '50μF',
-        ),
-        TestCase(
-            component = Inductor,
-            name = 'L{l}',
-            value = '50μH',
-        ),
-        TestCase(
-            component = Diode,
-            name = 'D{l}',
-            value = '10',
-        ),
-        TestCase(
-           component = BJT,
-            name = 'Qn{l}',
-            value = '10',
-            xoff = -50,
-            yoff = 0,
-            kwargs = dict(kind = 'npn'),
-        ),
-        TestCase(
-           component = BJT,
-            name = 'Qp{l}',
-            value = '10',
-            xoff = -50,
-            yoff = 0,
-            kwargs = dict(kind = 'pnp'),
-        ),
-        TestCase(
-           component = MOS,
-            name = 'Mn{l}',
-            value = '10',
-            xoff = -50,
-            yoff = 0,
-            kwargs = dict(kind = 'nmos'),
-        ),
-        TestCase(
-            component = MOS,
-            name = 'Mp{l}',
-            value = '10',
-            xoff = -50,
-            yoff = 0,
-            kwargs = dict(kind = 'pmos'),
-        ),
-        TestCase(
-            component = Amp,
-            name = 'A{l}',
-            kwargs = dict(kind = 'se'),
-        ),
-        TestCase(
-            component = Amp,
-            name = 'OA{l}',
-            kwargs = dict(kind = 'oa'),
-        ),
-        TestCase(
-            component = Amp,
-            name = 'DA{l}',
-            kwargs = dict(kind = 'da'),
-        ),
-        TestCase(
-            component = Ground,
-            name = 'G{l}{o}',
-        ),
-        TestCase(
-            component = Source,
-            name = 'U{l}',
-            value = '50',
-            kwargs = dict(kind = 'empty'),
-        ),
-        TestCase(
-            component = Source,
-            name = 'V{l}',
-            value = '5V',
-            kwargs = dict(kind = 'vdc'),
-        ),
-        TestCase(
-            component = Source,
-            name = 'I{l}',
-            value = '5μA',
-            kwargs = dict(kind = 'idc'),
-        ),
-        TestCase(
-            component = Source,
-            name = 'V{l}',
-            value = '5μA',
-            kwargs = dict(kind = 'sum'),
-        ),
-        TestCase(
-            component = Source,
-            name = 'V{l}',
-            value = '5μA',
-            kwargs = dict(kind = 'mult'),
-        ),
-        TestCase(
-            component = Source,
-            name = 'V{l}',
-            value = '5V',
-            kwargs = dict(kind = 'cv'),
-        ),
-        TestCase(
-            component = Source,
-            name = 'V{l}',
-            value = '5μA',
-            kwargs = dict(kind = 'ci'),
-        ),
-        TestCase(
-            component = Pin,
-            name = 'Vx',
-            value = '0V',
-            kwargs = dict(kind = 'none'),
-        ),
-        TestCase(
-            component = Pin,
-            name = 'in',
-            kwargs = dict(kind = 'in'),
-        ),
-        TestCase(
-            component = Pin,
-            name = 'out',
-            kwargs = dict(kind = 'out'),
-        ),
-        TestCase(
-            component = Dot,
-            name = 'Vx',
-            value = '0V',
-        ),
-        TestCase(
-            component = Label,
-            name = 'n',
-            kwargs = dict(loc = 'n'),
-        ),
-        TestCase(
-            component = Label,
-            name = 'ne',
-            kwargs = dict(loc = 'ne'),
-        ),
-        TestCase(
-            component = Label,
-            name = 'e',
-            kwargs = dict(loc = 'e'),
-        ),
-        TestCase(
-            component = Label,
-            name = 'se',
-            kwargs = dict(loc = 'se'),
-        ),
-        TestCase(
-            component = Label,
-            name = 's',
-            kwargs = dict(loc = 's'),
-        ),
-        TestCase(
-            component = Label,
-            name = 'sw',
-            kwargs = dict(loc = 'sw'),
-        ),
-        TestCase(
-            component = Label,
-            name = 'w',
-            kwargs = dict(loc = 'w'),
-        ),
-        TestCase(
-            component = Label,
-            name = 'nw',
-            kwargs = dict(loc = 'nw'),
-        ),
-        TestCase(
-            component = Label,
-            name = 'c',
-            kwargs = dict(loc = 'c'),
-        ),
-        TestCase(
-            component = Box,
-            name = 'box',
-            value = 'value',
-        ),
-        TestCase(
-            component = Switch,
-            name = 'Sw',
-            value = 'value',
-        ),
-        TestCase(
-            component = Switch,
-            name = 'Sw',
-            value = 'value',
-            kwargs = dict(kind = 'spdt'),
-        ),
-        TestCase(
-            component = Gate,
-            name = 'U',
-            value = 'value',
-            kwargs = dict(kind = 'inv'),
-        ),
-        TestCase(
-            component = Label,
-            name = 'x',
-            kwargs = dict(kind = 'arrow', orientation='v'),
-        ),
-        TestCase(
-            component = Label,
-            name = 'x',
-            kwargs = dict(kind = 'arrow', orientation='v-'),
-        ),
-        TestCase(
-            component = Label,
-            name = 'x',
-            kwargs = dict(kind = 'arrow', orientation='h'),
-        ),
-        TestCase(
-            component = Label,
-            name = 'x',
-            kwargs = dict(kind = 'arrow', orientation='h|'),
-        ),
-        TestCase(
-            component = Label,
-            name = 'x',
-            kwargs = dict(kind = 'arrow|', orientation='v'),
-        ),
-        TestCase(
-            component = Label,
-            name = 'x',
-            kwargs = dict(kind = 'arrow|', orientation='v-'),
-        ),
-        TestCase(
-            component = Label,
-            name = 'x',
-            kwargs = dict(kind = 'arrow|', orientation='h'),
-        ),
-        TestCase(
-            component = Label,
-            name = 'x',
-            kwargs = dict(kind = 'arrow|', orientation='h|'),
-        ),
-    ]
-    value_is_orientation = True
-
-    def make_grid(cases): # {{{2
-        K = len(cases)
-        sqrt_k = ceil(sqrt(K))
-        k = 0
-        for i in range(sqrt_k):
-            for j in range(sqrt_k):
-                yield i, j, cases[k]
-                k += 1
-                if k == K:
-                    return
-
-    # create schematic {{{2
-    schematic = Schematic(
-        filename = "schematic.svg",
-        debug = True
-    )
-
-    # run each case {{{2
-    for i, j, case in make_grid(cases):
-        def instantiate(case, dx, dy, orientation):
-            component = case.component
-            name = getattr(case, 'name', 'U{l}')
-            value = getattr(case, 'value', '500U')
-            xoff = getattr(case, 'xoff', 0)
-            yoff = getattr(case, 'yoff', 0)
-            if 'h' in orientation:
-                xoff, yoff = yoff, -xoff
-            if '|' in orientation:
-                xoff = -xoff
-            if '-' in orientation:
-                yoff = -yoff
-            if dy == 0:
-                location = 'l' if dx < 0 else 'r'
-            else:
-                assert dx == 0
-                location = 't' if dy < 0 else 'b'
-            name = name.format(l=location, o=orientation)
-            if value_is_orientation:
-                value = orientation
-            else:
-                value = value.format(i=1),
-            kwargs = dict(
-                center = (X0 + xoff + 100*dx, Y0 + yoff + 100*dy),
-                orientation = orientation,
-                name = name,
-                value = value
-            )
-            if hasattr(case, 'kwargs'):
-                kwargs.update(case.kwargs)
-            c = component(**kwargs)
-
-            # draw terminals if they exist
-            if hasattr(c, 'terms'):
-                d = 5
-                for i, t in enumerate(c.terms):
-                    schematic.add(schematic.line(
-                        (t[0]-d,t[1]-d), (t[0]+d,t[1]+d),
-                        stroke='black', stroke_width=1
-                    ))
-                    schematic.add(schematic.line(
-                        (t[0]+d,t[1]-d), (t[0]-d,t[1]+d),
-                        stroke='black', stroke_width=1
-                    ))
-                    schematic.add(schematic.text(
-                        str(i),
-                        insert=t,
-                        font_family=schematic.sch_font_family,
-                        font_size = schematic.sch_font_size,
-                        fill='black',
-                    ))
-
-        X0 = 200 + 800*i
-        Y0 = 200 + 400*j
-        box = schematic.rect(
-            insert = (X0-100, Y0-100),
-            size = (200, 200),
-            stroke_width = 1,
-            stroke = 'magenta',
-            fill = 'none'
-        )
-        schematic.add(box)
-        hline = schematic.line(
-            start=(X0-125, Y0), end=(X0+125, Y0),
-            stroke_width = 1, stroke = 'magenta',
-        )
-        schematic.add(hline)
-        vline = schematic.line(
-            start=(X0, Y0-125), end=(X0, Y0+125),
-            stroke_width = 1, stroke = 'magenta',
-        )
-        schematic.add(vline)
-
-        instantiate(case, -1, 0, 'v')
-        instantiate(case, 0, -1, 'h')
-        instantiate(case, 1, 0, 'v|')
-        instantiate(case, 0, 1, 'h-')
-
-        X0 = 600 + 800*i
-        box = schematic.rect(
-            insert = (X0-100, Y0-100),
-            size = (200, 200),
-            stroke_width = 1,
-            stroke = 'magenta',
-            fill = 'none'
-        )
-        schematic.add(box)
-        hline = schematic.line(
-            start=(X0-125, Y0), end=(X0+125, Y0),
-            stroke_width = 1, stroke = 'magenta',
-        )
-        schematic.add(hline)
-        vline = schematic.line(
-            start=(X0, Y0-125), end=(X0, Y0+125),
-            stroke_width = 1, stroke = 'magenta',
-        )
-        schematic.add(vline)
-
-        instantiate(case, -1, 0, 'v-')
-        instantiate(case, 0, -1, 'h|')
-        instantiate(case, 1, 0, 'v-|')
-        instantiate(case, 0, 1, 'h-|')
-
-    # close schematic {{{2
-    # determine size of schematic
-    I = J = 0
-    for i, j, case in make_grid(cases):
-        I = max(i, I)
-        J = max(j, J)
-    schematic.viewbox(0, 0, 800*(I+1), 400*(J+1))
-
-    # color background
-    bkgnd = schematic.rect(
-        insert = (0,0),
-        size = (800*(I+1), 400*(J+1)),
-        fill = 'green',
-        fill_opacity = 0.1
-    )
-    schematic.add(bkgnd)
-
-    schematic.close()
+                self.add_text(name, shift(self.center, -dx, nudge), just)

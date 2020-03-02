@@ -1,63 +1,46 @@
 #!/usr/bin/env python3
 
-from svg_schematic import (
-    Schematic, offsets_to_coordinates, shift_x, shift_y, shift,
-    Capacitor, Diode, Ground, Pin, Wire, Dot
-)
+from svg_schematic import Schematic Capacitor, Diode, Ground, Pin, Wire, Dot, with_x
+from inform import Error, error, os_error
 
-with Schematic(filename = "charge-pump.svg", line_width=2, background='none'):
+try:
+    with Schematic(
+        filename = "charge-pump.svg", line_width=2, background='none'):
 
-    x_offsets = dict(
-        i = 0,
-        d1 = 75,
-        c1 = 75,
-        d2 = 75,
-        c2 = 75,
-        d3 = 75,
-        c3 = 75,
-        d4 = 75,
-        c4 = 75,
-        d5 = 75,
-        c5 = 75,
-        o = 75
-    )
-    y_offsets = dict(
-        d = 0,
-        c = 75,
-        p1 = 75,
-        p2 = 50
-    )
-    offsets_to_coordinates(locals(), x_offsets, y_offsets)
+        vin = Pin(kind='in', name=r'$V_{\rm in}$', w=2)
+        p1 = Pin(C=vin.C, yoff=150, kind='in', name=r'$\phi_1$', w=2)
+        p2 = Pin(C=p1.C, yoff=50, kind='in', name=r'$\phi_2$', w=2)
+        d1 = Diode(a=vin.C, xoff=25, orient='h')
+        c1 = Capacitor(p=d1.c, off=(25, 25), orient='v')
+        d2 = Diode(a=d1.c, xoff=50, orient='h')
+        c2 = Capacitor(p=d2.c, off=(25, 25), orient='v')
+        d3 = Diode(a=d2.c, xoff=50, orient='h')
+        c3 = Capacitor(p=d3.c, off=(25, 25), orient='v')
+        d4 = Diode(a=d3.c, xoff=50, orient='h')
+        c4 = Capacitor(p=d4.c, off=(25, 25), orient='v')
+        d5 = Diode(a=d4.c, xoff=50, orient='h')
+        c5 = Capacitor(p=d5.c, off=(25, 25), orient='v')
+        vout = Pin(C=d5.c, xoff=75, kind='out', name=r'$V_{\rm out}$', w=2)
+        Ground(t=c5.n)
 
-    vin = Pin((i_x, d_y), kind='in', name=r'$V_{\rm in}$', w=2)
-    p1 = Pin((i_x, p1_y), kind='in', name=r'$\phi_1$', w=2)
-    p2 = Pin((i_x, p2_y), kind='in', name=r'$\phi_2$', w=2)
-    d1 = Diode((d1_x, d_y), orientation='h')
-    c1 = Capacitor((c1_x, c_y), orientation='v')
-    d2 = Diode((d2_x, d_y), orientation='h')
-    c2 = Capacitor((c2_x, c_y), orientation='v')
-    d3 = Diode((d3_x, d_y), orientation='h')
-    c3 = Capacitor((c3_x, c_y), orientation='v')
-    d4 = Diode((d4_x, d_y), orientation='h')
-    c4 = Capacitor((c4_x, c_y), orientation='v')
-    d5 = Diode((d5_x, d_y), orientation='h')
-    c5 = Capacitor((c5_x, c_y), orientation='v')
-    vout = Pin((o_x, d_y), kind='out', name=r'$V_{\rm out}$', w=2)
-    Ground(c5.t[1])
+        Wire([vin.t, d1.a])
+        Wire([d1.c, d2.a])
+        Wire([d2.c, d3.a])
+        Wire([d3.c, d4.a])
+        Wire([d4.c, d5.a])
+        Wire([d5.c, vout.t])
+        Wire([with_x(vin.t, c1.C), c1.p])
+        Wire([with_x(vin.t, c2.C), c2.p])
+        Wire([with_x(vin.t, c3.C), c3.p])
+        Wire([with_x(vin.t, c4.C), c4.p])
+        Wire([with_x(vin.t, c5.C), c5.p])
+        Wire([p1.t, c1.n], kind='-|')
+        Wire([p2.t, c2.n], kind='-|')
+        co = Dot(C=with_x(p1.C, c2.C), color='white')     # wire cross over
+        Wire([p1.t, c3.n], kind='-|')
+        Wire([p2.t, c4.n], kind='-|')
 
-    Wire([vin.t[0], d1.t[0]])
-    Wire([d1.t[1], d2.t[0]])
-    Wire([d2.t[1], d3.t[0]])
-    Wire([d3.t[1], d4.t[0]])
-    Wire([d4.t[1], d5.t[0]])
-    Wire([d5.t[1], vout.t[0]])
-    Wire([(c1_x, d_y), c1.t[0]])
-    Wire([(c2_x, d_y), c2.t[0]])
-    Wire([(c3_x, d_y), c3.t[0]])
-    Wire([(c4_x, d_y), c4.t[0]])
-    Wire([(c5_x, d_y), c5.t[0]])
-    Wire([(c1_x, p1_y), c1.t[1]])
-    Wire([(c2_x, p2_y), c2.t[1]])
-    Dot((c2_x, p1_y), color='white')     # wire cross over
-    Wire([p1.t[0], (c3_x, p1_y), c3.t[1]])
-    Wire([p2.t[0], (c4_x, p2_y), c4.t[1]])
+except Error as e:
+    e.report()
+except OSError as e:
+    error(os_error(e))
