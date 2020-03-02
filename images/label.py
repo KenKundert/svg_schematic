@@ -3,7 +3,7 @@ from inform import Error, error, os_error
 
 try:
     with Schematic(filename = 'label.svg'):
-        Wire([(0, -25), (0,225)], color='cyan')
+        Wire([(0, -25), (0,225)], color='blue')
         l = Label(kind='plain', name='plain', loc='se', w=3)
         Wire([shift_x(l.C, -50), shift_x(l.C, 50)])
         l = Label(kind='arrow', name='arrow', C=l.C, yoff=50, loc='se', w=3)

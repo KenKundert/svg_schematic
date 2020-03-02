@@ -3,7 +3,7 @@ from inform import Error, error, os_error
 
 try:
     with Schematic(filename = 'pin.svg'):
-        Wire([(0, -25), (0,175)], color='cyan')
+        Wire([(0, -25), (0,175)], color='blue')
         p = Pin(kind='none', name='none', value='none value', w=5)
         Wire([shift_x(p.C, -50), shift_x(p.C, 50)])
         p = Pin(kind='dot', name='dot', C=p.C, yoff=50, value='dot value', w=5)
