@@ -1054,6 +1054,9 @@ exceptions. See `noninverting amplifier`_ to see how this is done.
 Examples
 --------
 
+More examples are available in the *examples* directory.
+
+
 .. _noninverting amplifier:
 
 Non Inverting Amplifier
