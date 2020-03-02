@@ -219,13 +219,14 @@ a variant of the component symbol. They include
 ======  ========================================================
 Symbol  Kinds
 ======  ========================================================
-BJT     ``n``, ``p``
-MOS     ``n``, ``p``
+BJT     ``npn``, ``pnp``, ``n``, ``p``
+MOS     ``nmos``, ``pmos``, ``n``, ``p``
 Amp     ``se``, ``oa``, ``da``, ``comp``
 Gate    ``inv``
 Pin     ``dot``, ``in``, ``out``, ``none``
-Label   ``plain``, ``arrow``, ``slash``, ``dot``
+Label   ``plain``, ``arrow``, ``arrow|``, ``slash``, ``dot``
 Source  ``empty``, ``vdc``, ``idc``, ``sine``, ``sum``, ``mult``
+        ``cv``, ``ci``
 Switch  ``spst``, ``spdt``
 Wire    ``plain``, ``|-``, ``-|``, ``|-|``, ``-|-``
 ======  ========================================================
