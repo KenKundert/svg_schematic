@@ -520,7 +520,7 @@ For example, if two resistors that are offset both horizontally and vertically
 are connected by a wire, the results depend on ``kind`` as follows:
 
 .. image :: images/wires.svg
-    :width: 75 %
+    :width: 50 %
     :align: center
 
 *Wire* supports the ``line_width``  and ``color`` arguments.
@@ -602,7 +602,7 @@ Draws a capacitor.
     Capacitor(name='C1', value='1.2pF')
 
 .. image:: images/capacitor.svg
-    :width: 25 %
+    :width: 15 %
     :align: center
 
 Capacitors take the following arguments: ``orient``, ``name``, ``value``, 
@@ -680,7 +680,7 @@ Draws a bipolar transistor. Two kinds of BJT are available, *npn* and *pnp*.
     MOS(kind='p', name='Qp')
 
 .. image:: images/bjt.svg
-    :width: 50 %
+    :width: 30 %
     :align: center
 
 MOSFETs take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
@@ -711,7 +711,7 @@ non-polarized.
     MOS(kind='', name='M')
 
 .. image:: images/mos.svg
-    :width: 66 %
+    :width: 50 %
     :align: center
 
 MOSFETs take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
@@ -854,7 +854,7 @@ Two kinds of switch are available, *spst* (single-pole, single-throw) and *spdt*
     Switch(kind='spdt', name='φ₂')
 
 .. image:: images/switch.svg
-    :width: 50 %
+    :width: 30 %
     :align: center
 
 Switches take the following arguments: ``kind``, ``orient``, ``name``, 
@@ -887,7 +887,7 @@ Draws a box.
     Box(name='𝘻⁻¹', w=1, h=1)
 
 .. image:: images/box.svg
-    :width: 50 %
+    :width: 30 %
     :align: center
 
 Boxes take the following arguments: ``orient``, ``name``, ``value``, ``nudge``, 
@@ -919,7 +919,7 @@ Draws a ground.
     Ground()
 
 .. image:: images/ground.svg
-    :width: 10 %
+    :width: 7 %
     :align: center
 
 Ground take the following arguments: ``orient``, ``name``, ``value``,
@@ -944,7 +944,7 @@ Draws a pin.  Four kinds of pin are available, *none*, *dot*, *in*, and *out*.
     Pin(kind='out', name='out', C=p.C, yoff=50)
 
 .. image:: images/pin.svg
-    :width: 30 %
+    :width: 15 %
     :align: center
 
 Here the pins are drawn with wires to give better context.  The horizontal 
@@ -1001,7 +1001,7 @@ Place a label.  Five kinds of label are available, ``plain``, ``arrow``,
     Label(kind='dot', name='dot', loc='se')
 
 .. image:: images/label.svg
-    :width: 30 %
+    :width: 15 %
     :align: center
 
 Here the labels are drawn with wires to give better context.  The horizontal 
