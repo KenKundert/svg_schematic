@@ -107,6 +107,7 @@ named C, N, NE, E, SE, S, SW, W, and NW which are short for center, north,
 northwest, eash, southeast, south, southwest, west and northwest.
 
 .. image:: images/tile1.svg
+    :width: 50 %
 
 When placing a component, you can give the location of any of the principle 
 coordinates. And once placed, you can access the location of any of the 
@@ -129,6 +130,7 @@ You can also specify and access the component pins. For example, with the
 resistor there are two terminals ``p`` and ``n``.
 
 .. image:: images/tile2.svg
+    :width: 50 %
 
 The above example could also be given as:
 
@@ -153,6 +155,7 @@ a vertical axis (left to right) and adding ``-`` implies the component should be
 flipped along a horizontal axis (up to down).
 
 .. image:: images/orient.svg
+    :width: 60 %
 
 
 Name and Value
@@ -199,6 +202,7 @@ to adjust the location of the resulting text.  For example:
         error(os_error(e))
 
 .. image:: images/mfed.svg
+    :width: 100 %
 
 
 Kind
@@ -329,6 +333,7 @@ the capacitor produces the following results:
     c = Capacitor(C=r.C, off=(100, 25), name='C', orient='v')
 
 .. image:: images/rlc2.svg
+    :width: 25 %
 
 The *shift*, *shift_x*, and *shift_y* utility functions are provided to shift 
 the position of a coordinate pair.  Examples::
@@ -353,6 +358,7 @@ a little further away from the components:
     Wire([c.n, shift_y(c.n, 12.5), shift_y(l.n, 12.5), l.n])
 
 .. image:: images/rlc3.svg
+    :width: 25 %
 
 You can also use *with_x* and *with_y* to replace the *x* or *y* portion of 
 a coordinate pair. They take two arguments, the first is returned with the 
@@ -560,6 +566,7 @@ Draw a resistor.
     Resistor(name='Rs', value='50Ω')
 
 .. image:: images/resistor.svg
+    :width: 25 %
 
 Resistors take the following arguments: ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
@@ -583,6 +590,7 @@ Draws a capacitor.
     Capacitor(name='C1', value='1.2pF')
 
 .. image:: images/capacitor.svg
+    :width: 25 %
 
 Capacitors take the following arguments: ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
@@ -607,6 +615,7 @@ Draws an inductor.
     Inductor(name='L1', value='1μH')
 
 .. image:: images/inductor.svg
+    :width: 25 %
 
 Inductors take the following arguments: ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
@@ -630,6 +639,7 @@ Draws a diode.
     Diode(name='D1')
 
 .. image:: images/diode.svg
+    :width: 25 %
 
 Diodes take the following arguments: ``orient``, ``name``, ``value``, ``nudge``, 
 ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, ``p``, ``n``, 
@@ -655,6 +665,7 @@ Draws a bipolar transistor. Two kinds of BJT are available, *npn* and *pnp*.
     MOS(kind='p', name='Qp')
 
 .. image:: images/bjt.svg
+    :width: 50 %
 
 MOSFETs take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
@@ -684,6 +695,7 @@ non-polarized.
     MOS(kind='', name='M')
 
 .. image:: images/mos.svg
+    :width: 66 %
 
 MOSFETs take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
@@ -716,6 +728,7 @@ amplifier* and *comparator*.
     Amp(kind='comp', name='Ac')
 
 .. image:: images/amp.svg
+    :width: 100 %
 
 Amplifiers take the following arguments: ``kind``, ``orient``, ``name``, 
 ``value``, ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, 
@@ -749,6 +762,7 @@ inverter.
     Gate(kind='inv', name='U')
 
 .. image:: images/gate.svg
+    :width: 25 %
 
 Gates take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
@@ -784,6 +798,7 @@ current).
     Source(kind='ci', name='Ic')
 
 .. image:: images/source.svg
+    :width: 75 %
 
 Sources take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
@@ -819,6 +834,7 @@ Two kinds of switch are available, *spst* (single-pole, single-throw) and *spdt*
     Switch(kind='spdt', name='φ₂')
 
 .. image:: images/switch.svg
+    :width: 50 %
 
 Switches take the following arguments: ``kind``, ``orient``, ``name``, 
 ``value``, ``dots``, ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, 
@@ -850,6 +866,7 @@ Draws a box.
     Box(name='𝘻⁻¹', w=1, h=1)
 
 .. image:: images/box.svg
+    :width: 50 %
 
 Boxes take the following arguments: ``orient``, ``name``, ``value``, ``nudge``, 
 ``line_width``, ``background``, ``w``, ``h``, ``C``, ``N``, ``NE``, ``E``, 
@@ -880,6 +897,7 @@ Draws a ground.
     Ground()
 
 .. image:: images/ground.svg
+    :width: 10 %
 
 Ground take the following arguments: ``orient``, ``name``, ``value``,
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
@@ -903,6 +921,7 @@ Draws a pin.  Four kinds of pin are available, *none*, *dot*, *in*, and *out*.
     Pin(kind='out', name='out', C=p.C, yoff=50)
 
 .. image:: images/pin.svg
+    :width: 30 %
 
 Here the pins are drawn with wires to give better context.  The horizontal 
 location of the pins is indicated with the vertical blue line.
@@ -958,6 +977,7 @@ Place a label.  Five kinds of label are available, ``plain``, ``arrow``,
     Label(kind='dot', name='dot', loc='se')
 
 .. image:: images/label.svg
+    :width: 30 %
 
 Here the labels are drawn with wires to give better context.  The horizontal 
 location of the labels is indicated with the vertical blue line.
@@ -1042,6 +1062,7 @@ Here is an example of a typical schematic.
         error(os_error(e))
 
 .. image:: examples/noninverting.svg
+    :width: 50 %
 
 
 Passive Low Pass Filter
@@ -1114,3 +1135,4 @@ those values.
         error(os_error(e))
 
 .. image:: images/mfed.svg
+    :width: 100 %
