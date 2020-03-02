@@ -11,7 +11,7 @@ __released__ = '2020-03-02'
 
 
 # License {{{1
-# Copyright (C) 2018 Kenneth S. Kundert
+# Copyright (C) 2018-20 Kenneth S. Kundert
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

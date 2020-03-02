@@ -1177,7 +1177,7 @@ Releases
 
 **Latest development release**:
     | Version: 0.6.2
-    | Released: 2020-03-02'
+    | Released: 2020-03-02
 
     Moves almost fully to relative placement of components.
     - add ability to place a component by specifying location of its pins or 
