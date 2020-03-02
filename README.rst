@@ -684,7 +684,7 @@ Draws a bipolar transistor. Two kinds of BJT are available, *npn* and *pnp*.
     :width: 40 %
     :align: center
 
-MOSFETs take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
+BJTs take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
 ``p``, ``n``, ``off``, ``xoff`` & ``yoff``.  ``kind`` may be ``npn`` or ``pnp``, 
 or simply ``n`` or ``p``.
@@ -894,14 +894,15 @@ Draws a box.
 Boxes take the following arguments: ``orient``, ``name``, ``value``, ``nudge``, 
 ``line_width``, ``background``, ``w``, ``h``, ``C``, ``N``, ``NE``, ``E``, 
 ``SE``, ``S``, ``SW``, ``W``, ``NW``, ``i``, ``o``, ``off``, ``xoff`` 
-& ``yoff``.  In addition, you may specify *SVGwrite* arguments, as shown below.
+& ``yoff``.  In addition, you may specify *SVGwrite* arguments, as shown in the 
+example below.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
 contain the locations of the principle coordinates.
 The ``i`` and ``o`` attributes contain the coordinates of the input and output 
 pins.
 
-*Box* also support arbitrary *svgwrite* drawing parameters. This can be useful 
+Boxes also support arbitrary *svgwrite* drawing parameters. This can be useful 
 to draw the box with dashed lines:
 
 .. code-block:: python
@@ -923,7 +924,7 @@ Draws a ground.
     :width: 7 %
     :align: center
 
-Ground take the following arguments: ``orient``, ``name``, ``value``,
+Grounds take the following arguments: ``orient``, ``name``, ``value``,
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
 ``t``, ``off``, ``xoff`` & ``yoff``.  Currently ``value`` is ignored.
 
@@ -954,7 +955,7 @@ location of the pins is indicated with the vertical blue line.
 Pins take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
 ``nudge``, ``w``, ``h``, ``color``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, 
 ``SW``, ``W``, ``NW``, ``t``, ``off``, ``xoff`` & ``yoff``.  Currently ``value`` 
-is ignored.
+is ignored for ``in`` and ``out`` pins.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
 contain the locations of the principle coordinates.
@@ -968,9 +969,9 @@ Pins of kind ``none`` do not draw a symbol. Rather they are used to place labels
 at a particular point. ``dot`` pins place a small filled circle that is usually 
 used to represent a solder dot (though you can change the color to the 
 background color, generally 'white', and place it between two crossing wires to 
-create a visual gap in the lower wire).  Pins of type ``in`` and ``out`` are 
-render with a hollow circle that is offset slightly a wire terminates on one 
-side. These two pin types ignore the ``value`` argument.
+create a visual gap in the lower wire).  Pins of type ``in`` and ``out`` render 
+with a hollow circle that is offset slightly a wire terminates on one side. 
+These two pin types ignore the ``value`` argument.
 
 By default the width and height of the pin are 1, meaning that a unit sized tile 
 (50×50) is used.  This is significant if the label is at the edge of the 
@@ -1012,7 +1013,7 @@ Place a label.  Five kinds of label are available, ``plain``, ``arrow``,
 Here the labels are drawn with wires to give better context.  The horizontal 
 location of the labels is indicated with the vertical blue line.
 
-Pins take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
+Labels take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
 ``loc``, ``w``, ``h``, ``color``, ``nudge``, ``C``, ``N``, ``NE``, ``E``, 
 ``SE``, ``S``, ``SW``, ``W``, ``NW``, ``off``, ``xoff`` & ``yoff``.  Currently 
 ``value`` is ignored.
@@ -1020,6 +1021,14 @@ Pins take the following arguments: ``kind``, ``orient``, ``name``, ``value``,
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
 contain the locations of the principle coordinates.
 The ``t`` attribute contains the coordinates of the label.
+
+The kind may be 'plain', 'arrow', 'arrow|', 'slash' or 'dot'.  If 'plain' is 
+specified, no symbol is added, only the name is displayed.  If 'arrow' is 
+specified, an arrow is added and the centered on the specified location. If 
+'arrow|' is specified, the arrow terminates on the specified location.  If 
+'slash' is specified, a small slash is added through the center.  It is 
+generally used with buses to indicate the bus width.  Finally, 'dot' adds 
+a solder dot.
 
 By default the width and height of the label are 1, meaning that a unit sized 
 tile (50×50) is used.  This is significant if the label is at the edge of the 
@@ -1030,13 +1039,6 @@ width or height.
 It is important to remember that C represents the center of the tile used by the 
 label. Since the label will be on one side, C will not coincide with the 
 apparent visual center of the label.
-You can also specify the kind and orientation arguments. The kind may be 
-'plain', 'arrow', 'arrow|', 'slash' or 'dot'. If 'plain' is specified, no symbol 
-is added, only the name is displayed. If 'arrow' is specified, an arrow is added 
-and the centered on the specified location. If 'arrow|' is specified, the arrow 
-terminates on the specified location.  If 'slash' is specified, a small slash is 
-added through the center.  It is generally used with buses to indicate the bus 
-width.  Finally, 'dot' adds a solder dot.
 
 
 Exceptions
@@ -1086,6 +1088,15 @@ those values.
 .. image:: examples/Golden/mfed.svg
     :width: 80%
     :align: center
+
+
+Contributions
+-------------
+
+Contributions in the form of pull requests are welcome.
+
+I tend to create symbols as I need them.  If you create missing symbols, please 
+consider contributing them back to the project.
 
 
 Releases
