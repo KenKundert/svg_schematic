@@ -520,7 +520,7 @@ For example, if two resistors that are offset both horizontally and vertically
 are connected by a wire, the results depend on ``kind`` as follows:
 
 .. image :: images/wires.svg
-    :width: 50 %
+    :width: 30 %
     :align: center
 
 *Wire* supports the ``line_width``  and ``color`` arguments.
@@ -680,7 +680,7 @@ Draws a bipolar transistor. Two kinds of BJT are available, *npn* and *pnp*.
     MOS(kind='p', name='Qp')
 
 .. image:: images/bjt.svg
-    :width: 30 %
+    :width: 40 %
     :align: center
 
 MOSFETs take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
@@ -711,7 +711,7 @@ non-polarized.
     MOS(kind='', name='M')
 
 .. image:: images/mos.svg
-    :width: 50 %
+    :width: 60 %
     :align: center
 
 MOSFETs take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
@@ -854,7 +854,7 @@ Two kinds of switch are available, *spst* (single-pole, single-throw) and *spdt*
     Switch(kind='spdt', name='φ₂')
 
 .. image:: images/switch.svg
-    :width: 30 %
+    :width: 40 %
     :align: center
 
 Switches take the following arguments: ``kind``, ``orient``, ``name``, 
@@ -887,7 +887,7 @@ Draws a box.
     Box(name='𝘻⁻¹', w=1, h=1)
 
 .. image:: images/box.svg
-    :width: 30 %
+    :width: 40 %
     :align: center
 
 Boxes take the following arguments: ``orient``, ``name``, ``value``, ``nudge``, 
