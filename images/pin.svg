@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="100%" version="1.1" viewBox="-101.0,-26,203.0,203" width="100%">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="100%" version="1.1" viewBox="-126.0,-26,253.0,203" width="100%">
   <defs/>
   <g id="bkgnd">
-    <rect fill="white" height="203" stroke="none" stroke-width="1" width="203.0" x="-101.0" y="-26"/>
+    <rect fill="white" height="203" stroke="none" stroke-width="1" width="253.0" x="-126.0" y="-26"/>
   </g>
   <g id="wire">
     <polyline fill="none" points="0,-25 0,175" stroke="cyan" stroke-linecap="round" stroke-width="1"/>
   </g>
   <g id="symbol" transform="translate(0,0)">
-    <rect fill="none" height="50" stroke="none" width="200" x="-100.0" y="-25.0"/>
+    <rect fill="none" height="50" stroke="none" width="250" x="-125.0" y="-25.0"/>
   </g>
   <g id="text">
     <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="9" y="-5">none</text>
@@ -18,7 +18,7 @@
     <polyline fill="none" points="-50,0 50,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
   </g>
   <g id="symbol" transform="translate(0,50)">
-    <rect fill="none" height="50" stroke="none" width="200" x="-100.0" y="-25.0"/>
+    <rect fill="none" height="50" stroke="none" width="250" x="-125.0" y="-25.0"/>
     <circle cx="0" cy="0" fill="black" r="4" stroke="black" stroke-width="1"/>
   </g>
   <g id="text">
@@ -32,7 +32,7 @@
     <polyline fill="none" points="0,25 0,75" stroke="black" stroke-linecap="round" stroke-width="1"/>
   </g>
   <g id="symbol" transform="translate(0,100)">
-    <rect fill="none" height="50" stroke="none" width="200" x="-100.0" y="-25.0"/>
+    <rect fill="none" height="50" stroke="none" width="250" x="-125.0" y="-25.0"/>
     <circle cx="-4" cy="0" fill="white" r="4" stroke="black" stroke-width="1"/>
   </g>
   <g id="text">
@@ -42,7 +42,7 @@
     <polyline fill="none" points="0,100 25,100" stroke="black" stroke-linecap="round" stroke-width="1"/>
   </g>
   <g id="symbol" transform="translate(0,150)">
-    <rect fill="none" height="50" stroke="none" width="200" x="-100.0" y="-25.0"/>
+    <rect fill="none" height="50" stroke="none" width="250" x="-125.0" y="-25.0"/>
     <circle cx="4" cy="0" fill="white" r="4" stroke="black" stroke-width="1"/>
   </g>
   <g id="text">
