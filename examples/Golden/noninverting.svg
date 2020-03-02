@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="100%" version="1.1" viewBox="-51.0,-76.0,353.0,253.0" width="100%">
+  <defs/>
+  <g id="bkgnd">
+    <rect fill="white" height="253.0" stroke="none" stroke-width="1" width="353.0" x="-51.0" y="-76.0"/>
+  </g>
+  <g id="symbol" transform="translate(0,0)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <circle cx="0" cy="0" fill="white" r="25.0" stroke="black" stroke-width="1"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="0" x2="0" y1="-25.0" y2="-50.0"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="0" x2="0" y1="25.0" y2="50.0"/>
+    <path d="M -18.75 0 C -14.0625 -12.5 -4.6875 -12.5 0 0 4.6875 12.5 14.0625 12.5 18.75 0" fill="none" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="text"/>
+  <g id="symbol" transform="translate(0,-50.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="0" y="-55.0">Vin</text>
+  </g>
+  <g id="symbol" transform="translate(0,50.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <polyline fill="white" points="0,0 20.0,0 0,20.0 -20.0,0 0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="text"/>
+  <g id="symbol" transform="translate(150.0,-25.0)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <polygon fill="white" points="50.0,0 -50.0,-50.0 -50.0,50.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="-45.0" x2="-31.0" y1="25.0" y2="25.0"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="-45.0" x2="-31.0" y1="-25.0" y2="-25.0"/>
+    <line stroke="black" stroke-linecap="round" stroke-width="1" x1="-38.0" x2="-38.0" y1="-18.0" y2="-32.0"/>
+  </g>
+  <g id="text"/>
+  <g id="symbol" transform="translate(75.0,0.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="75.0" y="-5.0">Ve</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="0,-50.0 100.0,-50.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="symbol" transform="translate(250.0,-25.0)">
+    <rect fill="none" height="50" stroke="none" width="100" x="-50.0" y="-25.0"/>
+    <circle cx="4" cy="0" fill="white" r="4" stroke="black" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="263.0" y="-17.8">out</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="200.0,-25.0 250.0,-25.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="symbol" transform="translate(225.0,-25.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="black" r="4" stroke="black" stroke-width="1"/>
+  </g>
+  <g id="text"/>
+  <g id="symbol" transform="translate(75.0,100.0) rotate(-90)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <rect fill="white" height="4" stroke="none" width="92" x="-46.0" y="-2"/>
+    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="90.0" y="95.0">R1</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="75.0,50.0 75.0,0.0 100.0,0.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="symbol" transform="translate(150.0,50.0)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <rect fill="white" height="4" stroke="none" width="92" x="-46.0" y="-2"/>
+    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="150.0" y="30.0">R2</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="75.0,50.0 100.0,50.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="225.0,-25.0 225.0,50.0 200.0,50.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="symbol" transform="translate(75.0,50.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="black" r="4" stroke="black" stroke-width="1"/>
+  </g>
+  <g id="text"/>
+  <g id="symbol" transform="translate(75.0,150.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <polyline fill="white" points="0,0 20.0,0 0,20.0 -20.0,0 0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+  </g>
+  <g id="text"/>
+</svg>

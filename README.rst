@@ -71,7 +71,8 @@ example:
 When run, it produces the following schematic:
 
 .. image:: images/rlc.svg
-    :width: 25 %
+    :width: 35 %
+    :align: center
 
 
 Component Placement
@@ -108,6 +109,7 @@ northwest, eash, southeast, south, southwest, west and northwest.
 
 .. image:: images/tile1.svg
     :width: 50 %
+    :align: center
 
 When placing a component, you can give the location of any of the principle 
 coordinates. And once placed, you can access the location of any of the 
@@ -131,6 +133,7 @@ resistor there are two terminals ``p`` and ``n``.
 
 .. image:: images/tile2.svg
     :width: 50 %
+    :align: center
 
 The above example could also be given as:
 
@@ -156,6 +159,7 @@ flipped along a horizontal axis (up to down).
 
 .. image:: images/orient.svg
     :width: 60 %
+    :align: center
 
 
 Name and Value
@@ -202,7 +206,8 @@ to adjust the location of the resulting text.  For example:
         error(os_error(e))
 
 .. image:: images/mfed.svg
-    :width: 100 %
+    :width: 75 %
+    :align: center
 
 
 Kind
@@ -320,7 +325,8 @@ a terminal.  For example:
     Wire([r.n, c.n, l.n], kind='-|-')
 
 .. image:: images/rlc.svg
-    :width: 25 %
+    :width: 35 %
+    :align: center
 
 Notice that the center of ``r`` is placed at (0,0), then the center of ``c`` is 
 place 75 units to the right of ``r``, then the center of ``l`` is placed 75 
@@ -333,7 +339,8 @@ the capacitor produces the following results:
     c = Capacitor(C=r.C, off=(100, 25), name='C', orient='v')
 
 .. image:: images/rlc2.svg
-    :width: 25 %
+    :width: 35 %
+    :align: center
 
 The *shift*, *shift_x*, and *shift_y* utility functions are provided to shift 
 the position of a coordinate pair.  Examples::
@@ -358,7 +365,8 @@ a little further away from the components:
     Wire([c.n, shift_y(c.n, 12.5), shift_y(l.n, 12.5), l.n])
 
 .. image:: images/rlc3.svg
-    :width: 25 %
+    :width: 35 %
+    :align: center
 
 You can also use *with_x* and *with_y* to replace the *x* or *y* portion of 
 a coordinate pair. They take two arguments, the first is returned with the 
@@ -567,6 +575,7 @@ Draw a resistor.
 
 .. image:: images/resistor.svg
     :width: 25 %
+    :align: center
 
 Resistors take the following arguments: ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
@@ -591,6 +600,7 @@ Draws a capacitor.
 
 .. image:: images/capacitor.svg
     :width: 25 %
+    :align: center
 
 Capacitors take the following arguments: ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
@@ -616,6 +626,7 @@ Draws an inductor.
 
 .. image:: images/inductor.svg
     :width: 25 %
+    :align: center
 
 Inductors take the following arguments: ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
@@ -640,6 +651,7 @@ Draws a diode.
 
 .. image:: images/diode.svg
     :width: 25 %
+    :align: center
 
 Diodes take the following arguments: ``orient``, ``name``, ``value``, ``nudge``, 
 ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, ``p``, ``n``, 
@@ -666,6 +678,7 @@ Draws a bipolar transistor. Two kinds of BJT are available, *npn* and *pnp*.
 
 .. image:: images/bjt.svg
     :width: 50 %
+    :align: center
 
 MOSFETs take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
@@ -696,6 +709,7 @@ non-polarized.
 
 .. image:: images/mos.svg
     :width: 66 %
+    :align: center
 
 MOSFETs take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
@@ -729,6 +743,7 @@ amplifier* and *comparator*.
 
 .. image:: images/amp.svg
     :width: 100 %
+    :align: center
 
 Amplifiers take the following arguments: ``kind``, ``orient``, ``name``, 
 ``value``, ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, 
@@ -763,6 +778,7 @@ inverter.
 
 .. image:: images/gate.svg
     :width: 25 %
+    :align: center
 
 Gates take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
@@ -799,6 +815,7 @@ current).
 
 .. image:: images/source.svg
     :width: 75 %
+    :align: center
 
 Sources take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
@@ -835,6 +852,7 @@ Two kinds of switch are available, *spst* (single-pole, single-throw) and *spdt*
 
 .. image:: images/switch.svg
     :width: 50 %
+    :align: center
 
 Switches take the following arguments: ``kind``, ``orient``, ``name``, 
 ``value``, ``dots``, ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, 
@@ -867,6 +885,7 @@ Draws a box.
 
 .. image:: images/box.svg
     :width: 50 %
+    :align: center
 
 Boxes take the following arguments: ``orient``, ``name``, ``value``, ``nudge``, 
 ``line_width``, ``background``, ``w``, ``h``, ``C``, ``N``, ``NE``, ``E``, 
@@ -898,6 +917,7 @@ Draws a ground.
 
 .. image:: images/ground.svg
     :width: 10 %
+    :align: center
 
 Ground take the following arguments: ``orient``, ``name``, ``value``,
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
@@ -922,6 +942,7 @@ Draws a pin.  Four kinds of pin are available, *none*, *dot*, *in*, and *out*.
 
 .. image:: images/pin.svg
     :width: 30 %
+    :align: center
 
 Here the pins are drawn with wires to give better context.  The horizontal 
 location of the pins is indicated with the vertical blue line.
@@ -978,6 +999,7 @@ Place a label.  Five kinds of label are available, ``plain``, ``arrow``,
 
 .. image:: images/label.svg
     :width: 30 %
+    :align: center
 
 Here the labels are drawn with wires to give better context.  The horizontal 
 location of the labels is indicated with the vertical blue line.
@@ -1061,8 +1083,9 @@ Here is an example of a typical schematic.
     except OSError as e:
         error(os_error(e))
 
-.. image:: examples/noninverting.svg
+.. image:: examples/Golden/noninverting.svg
     :width: 50 %
+    :align: center
 
 
 Passive Low Pass Filter
@@ -1135,4 +1158,5 @@ those values.
         error(os_error(e))
 
 .. image:: images/mfed.svg
-    :width: 100 %
+    :width: 75 %
+    :align: center
