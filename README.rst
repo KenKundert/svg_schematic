@@ -70,7 +70,7 @@ example:
 
 When run, it produces the following schematic:
 
-.. image:: images/rlc.svg
+.. image:: images/Golden/rlc.svg
     :width: 35 %
     :align: center
 
@@ -107,7 +107,7 @@ Each component is embedded in a tile, and each tile has 9 principle coordinate
 named C, N, NE, E, SE, S, SW, W, and NW which are short for center, north, 
 northwest, eash, southeast, south, southwest, west and northwest.
 
-.. image:: images/tile1.svg
+.. image:: images/Golden/tile1.svg
     :width: 50 %
     :align: center
 
@@ -131,7 +131,7 @@ Pins as Coordinates
 You can also specify and access the component pins. For example, with the 
 resistor there are two terminals ``p`` and ``n``.
 
-.. image:: images/tile2.svg
+.. image:: images/Golden/tile2.svg
     :width: 50 %
     :align: center
 
@@ -157,7 +157,7 @@ degree rotation.  Adding ``|`` implies the component should be flipped along
 a vertical axis (left to right) and adding ``-`` implies the component should be 
 flipped along a horizontal axis (up to down).
 
-.. image:: images/orient.svg
+.. image:: images/Golden/orient.svg
     :width: 60 %
     :align: center
 
@@ -205,7 +205,7 @@ to adjust the location of the resulting text.  For example:
     except OSError as e:
         error(os_error(e))
 
-.. image:: images/mfed.svg
+.. image:: images/Golden/mfed.svg
     :width: 75 %
     :align: center
 
@@ -325,7 +325,7 @@ a terminal.  For example:
     Wire([r.p, c.p, l.p], kind='-|-')
     Wire([r.n, c.n, l.n], kind='-|-')
 
-.. image:: images/rlc.svg
+.. image:: images/Golden/rlc.svg
     :width: 35 %
     :align: center
 
@@ -339,7 +339,7 @@ the capacitor produces the following results:
 
     c = Capacitor(C=r.C, off=(100, 25), name='C', orient='v')
 
-.. image:: images/rlc2.svg
+.. image:: images/Golden/rlc2.svg
     :width: 35 %
     :align: center
 
@@ -365,7 +365,7 @@ a little further away from the components:
     Wire([r.n, shift_y(r.n, 12.5), shift_y(c.n, 12.5), c.n])
     Wire([c.n, shift_y(c.n, 12.5), shift_y(l.n, 12.5), l.n])
 
-.. image:: images/rlc3.svg
+.. image:: images/Golden/rlc3.svg
     :width: 35 %
     :align: center
 
@@ -520,21 +520,21 @@ horizontal, vertical, and horizontal.
 For example, if two resistors that are offset both horizontally and vertically 
 are connected by a wire, the results depend on ``kind`` as follows:
 
-.. image :: images/wires.svg
+.. image :: images/Golden/wires.svg
     :width: 30 %
     :align: center
 
 *Wire* supports the ``line_width``  and ``color`` arguments.
 
-*Wire* also support arbitrary *svgwrite* drawing parameters. This can be useful 
+*Wire* also supports arbitrary *svgwrite* drawing parameters. This can be useful 
 to draw the wire with dashed lines:
 
 .. code-block:: python
 
     Wire([(x0,y0), (x1,y1)], stroke_dasharray="4 2")
 
-*Wire* provides the ``b`` and ``e`` attributes, that contain the coordinates of 
-the beginning and end of the wire.
+*Wire* provides the ``b``, ``m``,  and ``e`` attributes, that contain the 
+coordinates of the beginning, the midpoint and the end of the wire.
 
 
 Components
@@ -577,7 +577,7 @@ Draw a resistor.
 
     Resistor(name='Rs', value='50Ω')
 
-.. image:: images/resistor.svg
+.. image:: images/Golden/resistor.svg
     :width: 25 %
     :align: center
 
@@ -602,7 +602,7 @@ Draws a capacitor.
 
     Capacitor(name='C1', value='1.2pF')
 
-.. image:: images/capacitor.svg
+.. image:: images/Golden/capacitor.svg
     :width: 15 %
     :align: center
 
@@ -628,7 +628,7 @@ Draws an inductor.
 
     Inductor(name='L1', value='1μH')
 
-.. image:: images/inductor.svg
+.. image:: images/Golden/inductor.svg
     :width: 25 %
     :align: center
 
@@ -653,7 +653,7 @@ Draws a diode.
 
     Diode(name='D1')
 
-.. image:: images/diode.svg
+.. image:: images/Golden/diode.svg
     :width: 25 %
     :align: center
 
@@ -680,7 +680,7 @@ Draws a bipolar transistor. Two kinds of BJT are available, *npn* and *pnp*.
     MOS(kind='n', name='Qn')
     MOS(kind='p', name='Qp')
 
-.. image:: images/bjt.svg
+.. image:: images/Golden/bjt.svg
     :width: 40 %
     :align: center
 
@@ -711,7 +711,7 @@ non-polarized.
     MOS(kind='p', name='Mp')
     MOS(kind='', name='M')
 
-.. image:: images/mos.svg
+.. image:: images/Golden/mos.svg
     :width: 60 %
     :align: center
 
@@ -745,13 +745,13 @@ amplifier* and *comparator*.
     Amp(kind='da', name='Ad')
     Amp(kind='comp', name='Ac')
 
-.. image:: images/amp.svg
+.. image:: images/Golden/amp.svg
     :width: 100 %
     :align: center
 
 Amplifiers take the following arguments: ``kind``, ``orient``, ``name``, 
-``value``, ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, 
-``NW``, ``p``, ``n``, ``off``, ``xoff`` & ``yoff``.
+``value``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
+``p``, ``n``, ``off``, ``xoff`` & ``yoff``.
 ``kind`` may be ``se``, ``oa``, ``da`` or ``comp``.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
@@ -780,7 +780,7 @@ inverter.
 
     Gate(kind='inv', name='U')
 
-.. image:: images/gate.svg
+.. image:: images/Golden/gate.svg
     :width: 25 %
     :align: center
 
@@ -817,7 +817,7 @@ current).
     Source(kind='cv', name='Vc')
     Source(kind='ci', name='Ic')
 
-.. image:: images/source.svg
+.. image:: images/Golden/source.svg
     :width: 75 %
     :align: center
 
@@ -854,7 +854,7 @@ Two kinds of switch are available, *spst* (single-pole, single-throw) and *spdt*
     Switch(kind='spst', name='φ₁')
     Switch(kind='spdt', name='φ₂')
 
-.. image:: images/switch.svg
+.. image:: images/Golden/switch.svg
     :width: 40 %
     :align: center
 
@@ -887,7 +887,7 @@ Draws a box.
     Box(name='4 bit', value='Flash')
     Box(name='𝘻⁻¹', w=1, h=1)
 
-.. image:: images/box.svg
+.. image:: images/Golden/box.svg
     :width: 40 %
     :align: center
 
@@ -919,7 +919,7 @@ Draws a ground.
 
     Ground()
 
-.. image:: images/ground.svg
+.. image:: images/Golden/ground.svg
     :width: 7 %
     :align: center
 
@@ -940,11 +940,11 @@ Draws a pin.  Four kinds of pin are available, *none*, *dot*, *in*, and *out*.
 .. code-block:: python
 
     Pin(kind='none', name='none', value='none value')
-    Pin(kind='dot', name='dot', C=p.C, yoff=50, value='dot value')
-    Pin(kind='in', name='in', C=p.C, yoff=50)
-    Pin(kind='out', name='out', C=p.C, yoff=50)
+    Pin(kind='dot', name='dot', value='dot value')
+    Pin(kind='in', name='in', yoff=50)
+    Pin(kind='out', name='out', yoff=50)
 
-.. image:: images/pin.svg
+.. image:: images/Golden/pin.svg
     :width: 30 %
     :align: center
 
@@ -959,6 +959,10 @@ is ignored.
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
 contain the locations of the principle coordinates.
 The ``t`` attribute contains the coordinates of the pin.
+
+It is important to remember that C represents the center of the tile used by the 
+pin. Since the pin label will be on one side, C will not coincide with the 
+apparent visual center of the pin and its label.
 
 Pins of kind ``none`` do not draw a symbol. Rather they are used to place labels 
 at a particular point. ``dot`` pins place a small filled circle that is usually 
@@ -1001,7 +1005,7 @@ Place a label.  Five kinds of label are available, ``plain``, ``arrow``,
     Label(kind='slash', name='slash', loc='se')
     Label(kind='dot', name='dot', loc='se')
 
-.. image:: images/label.svg
+.. image:: images/Golden/label.svg
     :width: 15 %
     :align: center
 
@@ -1010,8 +1014,8 @@ location of the labels is indicated with the vertical blue line.
 
 Pins take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
 ``loc``, ``w``, ``h``, ``color``, ``nudge``, ``C``, ``N``, ``NE``, ``E``, 
-``SE``, ``S``, ``SW``, ``W``, ``NW``, ``t``, ``off``, ``xoff`` & ``yoff``.  
-Currently ``value`` is ignored.
+``SE``, ``S``, ``SW``, ``W``, ``NW``, ``off``, ``xoff`` & ``yoff``.  Currently 
+``value`` is ignored.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
 contain the locations of the principle coordinates.
@@ -1023,7 +1027,9 @@ schematic.  If the labels extend beyond the tile, they may extend beyond the
 computed viewbox for the schematic.  You can fix this by specifying a larger 
 width or height.
 
-
+It is important to remember that C represents the center of the tile used by the 
+label. Since the label will be on one side, C will not coincide with the 
+apparent visual center of the label.
 You can also specify the kind and orientation arguments. The kind may be 
 'plain', 'arrow', 'arrow|', 'slash' or 'dot'. If 'plain' is specified, no symbol 
 is added, only the name is displayed. If 'arrow' is specified, an arrow is added 
@@ -1161,6 +1167,32 @@ those values.
     except OSError as e:
         error(os_error(e))
 
-.. image:: images/mfed.svg
+.. image:: images/Golden/mfed.svg
     :width: 75 %
     :align: center
+
+
+Releases
+--------
+
+**Latest development release**:
+    | Version: 0.6.1
+    | Released: 2020-03-02'
+
+    Moves almost fully to relative placement of components.
+    - add ability to place a component by specifying location of its pins or 
+      principle coordinates.
+    - add ability to add offsets when placing components.
+
+    This version is incompatible with previous versions.
+    - location of component must be specified with named argument.
+    - ``orientation`` arguments have been renamed to ``orient``.
+    - terminal array (``t``) has been removed
+
+    You can get upgrade previous schematics to this version by:
+    - adding ``C=`` to leading argument of all components.
+    - replacing ``orientation`` with ``orient`` in the argument lists of all 
+      components.
+    - replacing use of ``t`` with the actual names of the pins.
+
+**0.6 (2019-09-03)**:

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from svg_schematic import Schematic Capacitor, Diode, Ground, Pin, Wire, Dot, with_x
+from svg_schematic import Schematic, Capacitor, Diode, Ground, Pin, Wire, Dot, with_x
 from inform import Error, error, os_error
 
 try:
