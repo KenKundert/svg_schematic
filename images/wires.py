@@ -13,7 +13,6 @@ try:
         Wire([r11.p, r12.n], kind='plain')
         Label(name="kind='plain'", C=r12.C, off=(100, -25))
 
-
         r21 = Resistor(orient='h', C=r11.C, yoff=100)
         r22 = Resistor(orient='h', n=r21.p, off=(50,50))
         Wire([r21.p, r22.n], kind='|-')

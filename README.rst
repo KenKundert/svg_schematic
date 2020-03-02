@@ -504,21 +504,24 @@ when needed.  Example:
 
     Wire([(x0,y0), (x1,y1), (x2,y2), (x3,y3)])
 
-*Wire* supports the *kind* argument, which may be either `plain`, `|-`, `-|`, 
-`|-|`, or `-|-`.  With plain, any-angle line segments are added between each of 
-the points.  With `|-`, `-|`, `|-|`, and `-|-` the wires are constrained to 
-follow a Manhattan geometry (between each point there may be one, two, or three 
-line segments that are constrained to be either purely vertical or purely 
-horizontal.  With `|-` there are two segments, with the first being vertical.  
-With `-|`, there are also two segments, but the first is horizontal. With `|-|`, 
-and `-|-` there there are three segments with the middle segment being half way 
-between the two points. With `|-|`, the segments are vertical, horizontal, and 
-vertical.  With `-|-`, the segments are horizontal, vertical, and horizontal.
+*Wire* supports the *kind* argument, which may be either ``plain``, ``|-``, 
+``-|``, ``|-|``, or ``-|-``.  With plain, any-angle line segments are added 
+between each of the points.  With ``|-``, ``-|``, ``|-|``, and ``-|-`` the wires 
+are constrained to follow a Manhattan geometry (between each point there may be 
+one, two, or three line segments that are constrained to be either purely 
+vertical or purely horizontal.  With ``|-`` there are two segments, with the 
+first being vertical.  With ``-|``, there are also two segments, but the first 
+is horizontal.  With ``|-|``, and ``-|-`` there there are three segments with 
+the middle segment being half way between the two points. With ``|-|``, the 
+segments are vertical, horizontal, and vertical.  With ``-|-``, the segments are 
+horizontal, vertical, and horizontal.
 
 For example, if two resistors that are offset both horizontally and vertically 
 are connected by a wire, the results depend on ``kind`` as follows:
 
 .. image :: images/wires.svg
+    :width: 75 %
+    :align: center
 
 *Wire* supports the ``line_width``  and ``color`` arguments.
 
