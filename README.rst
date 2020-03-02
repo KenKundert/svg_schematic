@@ -944,7 +944,7 @@ Draws a pin.  Four kinds of pin are available, *none*, *dot*, *in*, and *out*.
     Pin(kind='out', name='out', C=p.C, yoff=50)
 
 .. image:: images/pin.svg
-    :width: 15 %
+    :width: 30 %
     :align: center
 
 Here the pins are drawn with wires to give better context.  The horizontal 
