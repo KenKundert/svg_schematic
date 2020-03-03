@@ -1,7 +1,7 @@
 SVG Schematic
 =============
 
-| Version: 0.6.2
+| Version: 0.7.0
 | Released: 2020-03-02
 |
 
@@ -1103,7 +1103,7 @@ Releases
 --------
 
 **Latest development release**:
-    | Version: 0.6.2
+    | Version: 0.7.0
     | Released: 2020-03-02
 
     Moves almost fully to relative placement of components.
