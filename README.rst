@@ -59,8 +59,8 @@ example:
     try:
         with Schematic(filename='rlc.svg'):
             r = Resistor(name='R', orient='v')
-            c = Capacitor(C=r.C, xoff=75, name='C', orient='v')
-            l = Inductor(C=c.C, xoff=75, name='L', orient='v')
+            c = Capacitor(C=r.C, xoff=100, name='C', orient='v')
+            l = Inductor(C=c.C, xoff=100, name='L', orient='v')
             Wire([r.p, l.p])
             Wire([r.n, l.n])
     except Error as e:
@@ -81,11 +81,11 @@ Component Placement
 In this example the resistor is placed without a location, and so its center is 
 placed at the origin, (0, 0).  You can then access the location of the center of 
 the resistor using ``r.C``, which is a XY-pair. That is passed to the capacitor 
-using `C=r.C` with an extra parameter of ``xoff=75``, meaning the center of the 
-capacitor is horizontally offset by 75 units from center of the resistor.  To 
-give you a sense of how far 75 units is, the length of the resistor is 100 
+using `C=r.C` with an extra parameter of ``xoff=100``, meaning the center of the 
+capacitor is horizontally offset by 100 units from center of the resistor.  To 
+give you a sense of how far 100 units is, the length of the resistor is 100 
 units.  Positive horizontal offsets shift the location to the right, positive 
-vertical offsets shift the location down.  Finally, the inductor is placed 75 
+vertical offsets shift the location down.  Finally, the inductor is placed 100 
 units to the right of the capacitor.
 
 When specifying offsets, you can specify the x-offset using ``xoff``, the 
@@ -113,16 +113,22 @@ northwest, eash, southeast, south, southwest, west and northwest.
 
 When placing a component, you can give the location of any of the principle 
 coordinates. And once placed, you can access the location of any of the 
-principle coordinates. Thus, you can stack one component on top of another 
-using:
+principle coordinates. Thus, the location of the components in the example could 
+be specified simply by placing the tiles side-by-side:
+
 
 .. code-block:: python
 
-    c1 = Capacitor(name='C1')
-    c2 = Capacitor(name='C2', N=c1.S)
+    with Schematic(filename = "rlc.svg"):
+        r = Resistor(name='R', orient='v')
+        c = Capacitor(W=r.E, name='C', orient='v')
+        l = Inductor(W=c.E, name='L', orient='v|')
+        Wire([r.p, c.p, l.p])
+        Wire([r.n, c.n, l.n])
 
-This places the north principle coordinate of ``c2`` at the south principle 
-coordinate of ``c1``, which effectively stacks ``c1`` directly over ``c2``.
+This places the west principle coordinate of ``c`` on the east principle 
+coordinate of ``r`` and then the west principle of ``l`` on the east principle 
+coordinate of ``c``.
 
 
 Pins as Coordinates
@@ -135,20 +141,24 @@ resistor there are two terminals ``p`` and ``n``.
     :width: 50 %
     :align: center
 
-The above example could also be given as:
+Using this approach you can draw a series RLC using:
 
 .. code-block:: python
 
-    c1 = Capacitor(name='C1')
-    c2 = Capacitor(name='C2', p=c1.n)
+    with Schematic(filename = "rlc.svg"):
+        r = Resistor(name='R', orient='h')
+        c = Capacitor(n=r.p, name='C', orient='h|')
+        l = Inductor(n=c.p, name='L', orient='h')
 
-This places the ``p`` terminal of ``C2`` at the ``n`` terminal of ``C1``, so it 
-is another way to stack ``C1`` over ``C2``.
+When run, it produces the following schematic:
+
+.. image:: images/Golden/rlc1b.svg
+    :width: 40 %
+    :align: center
 
 
 Orientation
 ~~~~~~~~~~~
-
 
 You can flip and rotate the components using the ``orient`` argument.
 Specifying ``v`` implies a vertical orientation, and ``h`` a horizontal 
@@ -179,7 +189,7 @@ to adjust the location of the resulting text.  For example:
 
     try:
         with Schematic(
-            filename = 'names.svg',
+            filename = 'mfed.svg',
             background = 'none',
         ):
             vin = Source(name='Vin', value='1 V', kind='sine')
@@ -205,7 +215,7 @@ to adjust the location of the resulting text.  For example:
     except OSError as e:
         error(os_error(e))
 
-.. image:: examples/Golden/mfed.svg
+.. image:: images/Golden/mfed.svg
     :width: 80%
     :align: center
 
@@ -219,8 +229,8 @@ a variant of the component symbol. They include
 ======  ========================================================
 Symbol  Kinds
 ======  ========================================================
-BJT     ``npn``, ``pnp``, ``n``, ``p``
-MOS     ``nmos``, ``pmos``, ``n``, ``p``
+BJT     ``npn``, ``pnp`` (or ``n``, ``p``)
+MOS     ``nmos``, ``pmos`` (or ``n``, ``p``)
 Amp     ``se``, ``oa``, ``da``, ``comp``
 Gate    ``inv``
 Pin     ``dot``, ``in``, ``out``, ``none``
@@ -1146,7 +1156,7 @@ those values.
     """
 
     from svg_schematic import (
-        Schematic, Capacitor, Ground, Inductor, Resistor, Pin, Source, Wire
+        Schematic, Capacitor, Dot, Ground, Inductor, Label, Resistor, Pin, Source, Wire
     )
     from inform import Error, error, os_error
     from quantiphy import Quantity
@@ -1178,6 +1188,11 @@ those values.
             Ground(C=rl.n)
             out = Pin(name='out', C=rl.p, xoff=50, w=2)
             Wire([l4.p, out.t])
+            Label(S=c3.N, yoff=-50, name=f'{Fo} LPF', loc='s')
+            Dot(C=c1.p)
+            Dot(C=c3.p)
+            Dot(C=c5.p)
+            Dot(C=rl.p)
 
     except Error as e:
         e.report()

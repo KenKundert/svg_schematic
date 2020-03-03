@@ -19,7 +19,7 @@ Design equations:
 """
 
 from svg_schematic import (
-    Schematic, Capacitor, Dot, Ground, Label, Inductor, Resistor, Pin, Source, Wire
+    Schematic, Capacitor, Dot, Ground, Inductor, Label, Resistor, Pin, Source, Wire
 )
 from inform import Error, error, os_error
 from quantiphy import Quantity

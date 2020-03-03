@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="100%" version="1.1" viewBox="-51.0,-63.5,253.0,128.0" width="100%">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="100%" version="1.1" viewBox="-51.0,-63.5,303.0,128.0" width="100%">
   <defs/>
   <g id="bkgnd">
-    <rect fill="white" height="128.0" stroke="none" stroke-width="1" width="253.0" x="-51.0" y="-63.5"/>
+    <rect fill="white" height="128.0" stroke="none" stroke-width="1" width="303.0" x="-51.0" y="-63.5"/>
   </g>
   <g id="symbol" transform="translate(0,0) rotate(-90)">
     <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
@@ -12,7 +12,7 @@
   <g id="text">
     <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="15.0" y="-5">R</text>
   </g>
-  <g id="symbol" transform="translate(75,0)">
+  <g id="symbol" transform="translate(100,0)">
     <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
     <rect fill="white" height="92" stroke="none" width="4" x="-2" y="-46.0"/>
     <line fill="none" stroke="black" stroke-linecap="round" stroke-width="1" x1="0" x2="0" y1="-50.0" y2="-7.5"/>
@@ -21,26 +21,26 @@
     <path d="M -20.0 7.5 c 10.0 -7.5 30.0 -7.5 40 0" fill="none" stroke="black" stroke-linecap="round" stroke-width="1"/>
   </g>
   <g id="text">
-    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="80" y="-15">C</text>
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="105" y="-15">C</text>
   </g>
-  <g id="symbol" transform="translate(150,0) scale(-1,1) rotate(-90)">
+  <g id="symbol" transform="translate(200,0) scale(-1,1) rotate(-90)">
     <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
     <rect fill="white" height="4" stroke="none" width="92" x="-46.0" y="-2"/>
     <path d="M -50.0 0 L -30.0 0 C -30.0 -15 -10.0 -15 -10.0 0 -10.0 10 -15.0 10 -15.0 0 -15.0 -15 5.0 -15 5.0 0 5.0 10 0.0 10 0.0 0 0.0 -15 20.0 -15 20.0 0 20.0 10 15.0 10 15.0 0 15.0 -15 35.0 -15 35.0 0 L 50.0 0" fill="none" stroke="black" stroke-linecap="round" stroke-width="1"/>
   </g>
   <g id="text">
-    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="135" y="-5">L</text>
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="185" y="-5">L</text>
   </g>
   <g id="wire">
-    <polyline fill="none" points="0,-50.0 0,-62.5 75,-62.5 75,-50.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <polyline fill="none" points="0,-50.0 0,-62.5 100,-62.5 100,-50.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
   </g>
   <g id="wire">
-    <polyline fill="none" points="75,-50.0 75,-62.5 150,-62.5 150,-50.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <polyline fill="none" points="100,-50.0 100,-62.5 200,-62.5 200,-50.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
   </g>
   <g id="wire">
-    <polyline fill="none" points="0,50.0 0,62.5 75,62.5 75,50.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <polyline fill="none" points="0,50.0 0,62.5 100,62.5 100,50.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
   </g>
   <g id="wire">
-    <polyline fill="none" points="75,50.0 75,62.5 150,62.5 150,50.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <polyline fill="none" points="100,50.0 100,62.5 200,62.5 200,50.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
   </g>
 </svg>
