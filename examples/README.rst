@@ -38,7 +38,7 @@ Inverting Amplifier (inverting.py)
     :literal:
 
 .. image::  Golden/inverting.svg
-    :width: 75%
+    :width: 60%
     :align: center
 
 
@@ -49,7 +49,7 @@ Non-Inverting Amplifier (noninverting.py)
     :literal:
 
 .. image::  Golden/noninverting.svg
-    :width: 60%
+    :width: 40%
     :align: center
 
 
