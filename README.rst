@@ -533,7 +533,7 @@ to draw the wire with dashed lines:
 
     Wire([(x0,y0), (x1,y1)], stroke_dasharray="4 2")
 
-*Wire* provides the ``b``, ``m``,  and ``e`` attributes, that contain the 
+*Wire* provides the ``b``, ``m``,  and ``e`` attributes that contain the 
 coordinates of the beginning, the midpoint and the end of the wire.
 
 
