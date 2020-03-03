@@ -13,6 +13,7 @@ setup(
     version='0.7.0',
     description='svg schematics',
     long_description=readme,
+    long_description_content_type='text/x-rst',
     url='https://github.com/kenkundert/svg_schematic',
     download_url='https://github.com/kenkundert/svg_schematic/tarball/master',
     author="Ken Kundert",
