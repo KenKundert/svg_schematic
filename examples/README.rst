@@ -27,7 +27,7 @@ be rendered by Latex.
     :literal:
 
 .. image::  Golden/inverter.svg
-    :width: 50%
+    :width: 30%
     :align: center
 
 
@@ -43,7 +43,7 @@ Inverting Amplifier (inverting.py)
 
 
 Non-Inverting Amplifier (noninverting.py)
------------------------
+-----------------------------------------
 
 .. include:: noninverting.py
     :literal:
@@ -64,12 +64,12 @@ be rendered by Latex.
     :literal:
 
 .. image::  Golden/oscillator.svg
-    :width: 50%
+    :width: 40%
     :align: center
 
 
 Passive Low Pass Filter (mfed.py)
-~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This example uses `QuantiPhy 
 <https://quantiphy.readthedocs.io/en/latest/index.html>`_ to compute the values 
