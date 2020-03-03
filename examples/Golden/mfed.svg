@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="100%" version="1.1" viewBox="-51.0,-101.0,703.0,178.0" width="100%">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="100%" version="1.1" viewBox="-51.0,-151.0,703.0,228.0" width="100%">
   <defs/>
   <g id="symbol" transform="translate(0,0)">
     <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
@@ -128,4 +128,30 @@
   <g id="wire">
     <polyline fill="none" points="425.0,-50.0 600.0,-50.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
   </g>
+  <g id="symbol" transform="translate(300.0,-125.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="300.0" y="-105.6">1 MHz LPF</text>
+  </g>
+  <g id="symbol" transform="translate(150.0,-50.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="black" r="4" stroke="black" stroke-width="1"/>
+  </g>
+  <g id="text"/>
+  <g id="symbol" transform="translate(300.0,-50.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="black" r="4" stroke="black" stroke-width="1"/>
+  </g>
+  <g id="text"/>
+  <g id="symbol" transform="translate(450.0,-50.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="black" r="4" stroke="black" stroke-width="1"/>
+  </g>
+  <g id="text"/>
+  <g id="symbol" transform="translate(550.0,-50.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="black" r="4" stroke="black" stroke-width="1"/>
+  </g>
+  <g id="text"/>
 </svg>
