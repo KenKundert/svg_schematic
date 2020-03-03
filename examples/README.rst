@@ -38,7 +38,7 @@ Inverting Amplifier (inverting.py)
     :literal:
 
 .. image::  Golden/inverting.svg
-    :width: 60%
+    :width: 50%
     :align: center
 
 
