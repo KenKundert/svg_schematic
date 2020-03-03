@@ -19,7 +19,7 @@ Design equations:
 """
 
 from svg_schematic import (
-    Schematic, Capacitor, Ground, Inductor, Resistor, Pin, Source, Wire
+    Schematic, Capacitor, Dot, Ground, Label, Inductor, Resistor, Pin, Source, Wire
 )
 from inform import Error, error, os_error
 from quantiphy import Quantity
@@ -51,6 +51,11 @@ try:
         Ground(C=rl.n)
         out = Pin(name='out', C=rl.p, xoff=50, w=2)
         Wire([l4.p, out.t])
+        Label(S=c3.N, yoff=-50, name=f'{Fo} LPF', loc='s')
+        Dot(C=c1.p)
+        Dot(C=c3.p)
+        Dot(C=c5.p)
+        Dot(C=rl.p)
 
 except Error as e:
     e.report()
