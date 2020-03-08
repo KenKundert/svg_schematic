@@ -31,7 +31,7 @@ globals().update(
 )
 
 try:
-    with Schematic(filename = 'mfed.svg', background = 'none'):
+    with Schematic(filename = 'mfed.svg', line_width=2, background = 'none'):
 
         vin = Source(name='Vin', value='1 V', kind='sine')
         Ground(C=vin.n)

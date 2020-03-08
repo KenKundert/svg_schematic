@@ -74,7 +74,8 @@ Passive Low Pass Filter (mfed.py)
 This example uses `QuantiPhy 
 <https://quantiphy.readthedocs.io/en/latest/index.html>`_ to compute the values 
 for the components in a low pass filter and then constructs the schematic using 
-those values.
+those values.  It sets ``line_width`` to 2 and employs dots at wire junctions to 
+give the schematic a heavier look.
 
 .. include:: mfed.py
     :literal:

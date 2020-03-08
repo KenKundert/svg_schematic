@@ -1054,11 +1054,11 @@ apparent visual center of the label.
 Exceptions
 ~~~~~~~~~~
 
-In the rare cases where *SVG_Schematic* it raises an `Inform Error 
-<https://inform.readthedocs.io/en/latest/user.html#exceptions>`_.  
+In the rare cases where *SVG_Schematic* it raises an error, it uses `Inform 
+Error <https://inform.readthedocs.io/en/latest/user.html#exceptions>`_.  
 *SVG_Schematic* is a wrapper around `svgwrite 
 <https://svgwrite.readthedocs.io/en/stable/index.html>`_.  It is not clear what 
-exceptions it will raise, but at a minimum it would raise *OSError* it is is 
+exceptions it will raise, but at a minimum it would raise *OSError* if it is 
 unable to open or close the SVG file.  Thus you should catch these two 
 exceptions. See `noninverting amplifier`_ to see how this is done.
 
