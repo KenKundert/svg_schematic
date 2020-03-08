@@ -37,6 +37,7 @@ Inverting Amplifier (inverting.py)
 ----------------------------------
 
 This schematic uses ``line_width = 1`` give the schematic a lighter look.
+It uses a 16 point serif font.
 
 .. include:: inverting.py
     :literal:
@@ -95,9 +96,9 @@ give the schematic a heavier look.
 Pipelined ADC (pipeline-adc.py)
 -------------------------------
 
-This example has a white background and so could route wires under components 
-rather than wiring to terminals, but it largely does not.
-It uses ``line_width = 2`` give the schematic a heavier look.
+This block diagram has a white background and so could route wires under 
+components rather than wiring to terminals, but it largely does not.
+It uses ``line_width = 2`` give the diagram a heavier look.
 
 .. include:: pipeline-adc.py
     :literal:
