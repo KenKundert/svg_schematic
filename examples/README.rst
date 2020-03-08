@@ -7,6 +7,7 @@ Charge Pump (charge-pump.py)
 This example has a transparent background and so all wires terminate at 
 terminals rather than passing underneath components. The labels are intended to 
 be rendered by Latex.
+It sets ``line_width`` to 2 give the schematic a heavier look.
 
 .. include:: charge-pump.py
     :literal:
@@ -22,6 +23,7 @@ Inverter (inverter.py)
 This example has a transparent background and so all wires terminate at 
 terminals rather than passing underneath components. The labels are intended to 
 be rendered by Latex.
+It sets ``line_width`` to 2 give the schematic a heavier look.
 
 .. include:: inverter.py
     :literal:
@@ -34,6 +36,8 @@ be rendered by Latex.
 Inverting Amplifier (inverting.py)
 ----------------------------------
 
+This schematic uses ``line_width = 1`` give the schematic a lighter look.
+
 .. include:: inverting.py
     :literal:
 
@@ -44,6 +48,8 @@ Inverting Amplifier (inverting.py)
 
 Non-Inverting Amplifier (noninverting.py)
 -----------------------------------------
+
+This schematic uses ``line_width = 1`` give the schematic a lighter look.
 
 .. include:: noninverting.py
     :literal:
@@ -59,6 +65,7 @@ Oscillator (oscillator.py)
 This example has a transparent background and so all wires terminate at 
 terminals rather than passing underneath components. The labels are intended to 
 be rendered by Latex.
+This schematic uses ``line_width = 2`` give the schematic a heavier look.
 
 .. include:: oscillator.py
     :literal:
@@ -90,6 +97,7 @@ Pipelined ADC (pipeline-adc.py)
 
 This example has a white background and so could route wires under components 
 rather than wiring to terminals, but it largely does not.
+It uses ``line_width = 2`` give the schematic a heavier look.
 
 .. include:: pipeline-adc.py
     :literal:
@@ -102,8 +110,10 @@ rather than wiring to terminals, but it largely does not.
 Receiver (receiver.py)
 ----------------------
 
-This example has a white background and so could route the wires underneath the 
-components, but does not.
+This block diagram has a white background and so could route the wires 
+underneath the components, but does not.
+It uses ``line_width = 2`` give the diagram a heavier look.
+It looks small because it is quite wide, and it is scaled to fit the page.
 
 .. include:: receiver.py
     :literal:
