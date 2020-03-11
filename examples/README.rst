@@ -122,3 +122,16 @@ It looks small because it is quite wide, and it is scaled to fit the page.
 .. image::  Golden/receiver.svg
     :width: 100%
     :align: center
+
+
+Network Map (network-map.py)
+----------------------------
+
+This is another block diagram.
+
+.. include:: network-map.py
+    :literal:
+
+.. image::  Golden/network-map.svg
+    :width: 75%
+    :align: center

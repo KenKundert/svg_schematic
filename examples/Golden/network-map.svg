@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="100%" version="1.1" viewBox="-189.5,-114.5,606.0,406.0" width="100%">
+  <defs/>
+  <g id="bkgnd">
+    <rect fill="white" height="406.0" stroke="none" stroke-width="1" width="606.0" x="-189.5" y="-114.5"/>
+  </g>
+  <g id="symbol" transform="translate(0,0)">
+    <rect fill="none" height="225.0" stroke="none" width="325.0" x="-162.5" y="-112.5"/>
+    <rect fill="white" height="225.0" stroke="black" stroke-dasharray="4 2" stroke-width="2" width="325.0" x="-162.5" y="-112.5"/>
+  </g>
+  <g id="text"/>
+  <g id="symbol" transform="translate(-162.5,112.5)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="-157.5" y="107.5">work</text>
+  </g>
+  <g id="symbol" transform="translate(0.0,37.5)">
+    <rect fill="none" height="100" stroke="none" width="275.0" x="-137.5" y="-50.0"/>
+    <rect color="lightgray" fill="white" height="100" stroke="black" stroke-width="2" width="275.0" x="-137.5" y="-50.0"/>
+  </g>
+  <g id="text"/>
+  <g id="wire">
+    <polyline fill="none" points="137.5,37.5 212.5,37.5" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="symbol" transform="translate(-137.5,87.5)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="-132.5" y="82.5">bastion</text>
+  </g>
+  <g id="symbol" transform="translate(-62.5,37.5)">
+    <rect fill="none" height="50" stroke="none" width="100" x="-50.0" y="-25.0"/>
+    <rect color="white" fill="white" height="50" stroke="black" stroke-width="2" width="100" x="-50.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="-62.5" y="44.7">www</text>
+  </g>
+  <g id="symbol" transform="translate(62.5,37.5)">
+    <rect fill="none" height="50" stroke="none" width="100" x="-50.0" y="-25.0"/>
+    <rect color="white" fill="white" height="50" stroke="black" stroke-width="2" width="100" x="-50.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="62.5" y="44.7">mail</text>
+  </g>
+  <g id="symbol" transform="translate(-75.0,-62.5)">
+    <rect fill="none" height="50" stroke="none" width="125.0" x="-62.5" y="-25.0"/>
+    <rect fill="white" height="50" stroke="black" stroke-width="2" width="125.0" x="-62.5" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="-75.0" y="-55.3">dump</text>
+  </g>
+  <g id="symbol" transform="translate(75.0,-62.5)">
+    <rect fill="none" height="50" stroke="none" width="125.0" x="-62.5" y="-25.0"/>
+    <rect fill="white" height="50" stroke="black" stroke-dasharray="2 2" stroke-width="2" width="125.0" x="-62.5" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="75.0" y="-55.3">my laptop</text>
+  </g>
+  <g id="symbol" transform="translate(0.0,212.5)">
+    <rect fill="none" height="100" stroke="none" width="325.0" x="-162.5" y="-50.0"/>
+    <rect fill="white" height="100" stroke="black" stroke-dasharray="4 2" stroke-width="2" width="325.0" x="-162.5" y="-50.0"/>
+  </g>
+  <g id="text"/>
+  <g id="symbol" transform="translate(-162.5,262.5)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="-157.5" y="257.5">home</text>
+  </g>
+  <g id="symbol" transform="translate(-75.0,212.5)">
+    <rect fill="none" height="50" stroke="none" width="125.0" x="-62.5" y="-25.0"/>
+    <rect color="lightgray" fill="white" height="50" stroke="black" stroke-dasharray="2 2" stroke-width="2" width="125.0" x="-62.5" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="-75.0" y="219.7">my laptop</text>
+  </g>
+  <g id="symbol" transform="translate(75.0,212.5)">
+    <rect fill="none" height="50" stroke="none" width="125.0" x="-62.5" y="-25.0"/>
+    <rect fill="white" height="50" stroke="black" stroke-width="2" width="125.0" x="-62.5" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="75.0" y="219.7">media</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="137.5,212.5 212.5,212.5" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="212.5,-112.5 212.5,262.5" stroke="black" stroke-linecap="round" stroke-width="4"/>
+  </g>
+  <g id="symbol" transform="translate(212.5,262.5)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="212.5" y="281.9">internet</text>
+  </g>
+  <g id="symbol" transform="translate(337.5,-62.5)">
+    <rect fill="none" height="50" stroke="none" width="150" x="-75.0" y="-25.0"/>
+    <rect fill="white" height="50" stroke="black" stroke-width="2" width="150" x="-75.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="337.5" y="-55.3">github</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="262.5,-62.5 212.5,-62.5" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="symbol" transform="translate(337.5,12.5)">
+    <rect fill="none" height="50" stroke="none" width="150" x="-75.0" y="-25.0"/>
+    <rect fill="white" height="50" stroke="black" stroke-width="2" width="150" x="-75.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="337.5" y="19.7">vps</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="262.5,12.5 212.5,12.5" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="symbol" transform="translate(337.5,87.5)">
+    <rect fill="none" height="50" stroke="none" width="150" x="-75.0" y="-25.0"/>
+    <rect fill="white" height="50" stroke="black" stroke-width="2" width="150" x="-75.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="337.5" y="94.7">backups</text>
+  </g>
+  <g id="wire">
+    <polyline fill="none" points="262.5,87.5 212.5,87.5" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="symbol" transform="translate(337.5,187.5)">
+    <rect fill="none" height="100" stroke="none" width="150" x="-75.0" y="-50.0"/>
+    <rect fill="white" height="100" stroke="black" stroke-dasharray="4 2" stroke-width="2" width="150" x="-75.0" y="-50.0"/>
+  </g>
+  <g id="text"/>
+  <g id="symbol" transform="translate(262.5,237.5)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="267.5" y="232.5">a wifi hotspot</text>
+  </g>
+  <g id="symbol" transform="translate(337.5,187.5)">
+    <rect fill="none" height="50" stroke="none" width="100" x="-50.0" y="-25.0"/>
+    <rect fill="white" height="50" stroke="black" stroke-dasharray="2 2" stroke-width="2" width="100" x="-50.0" y="-25.0"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="337.5" y="194.7">my laptop</text>
+  </g>
+</svg>
