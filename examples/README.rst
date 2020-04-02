@@ -133,5 +133,5 @@ This is another block diagram.
     :literal:
 
 .. image::  Golden/network-map.svg
-    :width: 50%
+    :width: 75%
     :align: center

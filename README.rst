@@ -293,7 +293,6 @@ coordinate in absolute terms. For example:
         Capacitor(C=(0, 0), name='C', orient='v')
         Inductor((C=75, 0), name='L', orient='v|')
 
-
 Notice that a wire is specified as a list of point, where each point is a tuple 
 that contains an XY pair.  The wire just connects the points with line segments.  
 The location of the components is given by giving the location of a feature on 
@@ -871,17 +870,14 @@ Two kinds of switch are available, *spst* (single-pole, single-throw) and *spdt*
 Switches take the following arguments: ``kind``, ``orient``, ``name``, 
 ``value``, ``dots``, ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, 
 ``SW``, ``W``, ``NW``, ``i``, ``o``, ``ot``, ``ob``, ``off``, ``xoff`` 
-& ``yoff``.
-``kind`` may be ``spst`` or ``spdt``.
-The *dots* argument determines whether the poles of the switch should be denoted 
-with large dots.
+& ``yoff``.  ``kind`` may be ``spst`` or ``spdt``.  The *dots* argument 
+determines whether the poles of the switch should be denoted with large dots.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
-contain the locations of the principle coordinates.
-The ``i`` ``ot``, ``o`` and ``ob`` attributes contain the coordinates of the 
-input, the top output, the output, and the bottom output pins.
-The pin attributes are always available, even if they do not seem appropriate 
-for the kind of switch drawn.
+contain the locations of the principle coordinates.  The ``i`` ``ot``, ``o`` and 
+``ob`` attributes contain the coordinates of the input, the top output, the 
+output, and the bottom output pins.  The pin attributes are always available, 
+even if they do not seem appropriate for the kind of switch drawn.
 
 You may pass a wire or wires directly under the switch and the wire will be 
 concealed by the switch.
@@ -952,8 +948,8 @@ Draws a pin.  Four kinds of pin are available, *none*, *dot*, *in*, and *out*.
 
     Pin(kind='none', name='none', value='none value')
     Pin(kind='dot', name='dot', value='dot value')
-    Pin(kind='in', name='in', yoff=50)
-    Pin(kind='out', name='out', yoff=50)
+    Pin(kind='in', name='in')
+    Pin(kind='out', name='out')
 
 .. image:: images/Golden/pin.svg
     :width: 30 %
@@ -984,10 +980,10 @@ with a hollow circle that is offset slightly a wire terminates on one side.
 These two pin types ignore the ``value`` argument.
 
 By default the width and height of the pin are 1, meaning that a unit sized tile 
-(50×50) is used.  This is significant if the label is at the edge of the 
+(50×50) is used.  This is significant if the pin is at the edge of the 
 schematic.  If the labels extend beyond the tile, they may extend beyond the 
 computed viewbox for the schematic.  You can fix this by specifying a larger 
-width or height.
+width.
 
 
 Dot
@@ -1044,7 +1040,7 @@ By default the width and height of the label are 1, meaning that a unit sized
 tile (50×50) is used.  This is significant if the label is at the edge of the 
 schematic.  If the labels extend beyond the tile, they may extend beyond the 
 computed viewbox for the schematic.  You can fix this by specifying a larger 
-width or height.
+width.
 
 It is important to remember that C represents the center of the tile used by the 
 label. Since the label will be on one side, C will not coincide with the 
@@ -1233,7 +1229,7 @@ Releases
     - ``orientation`` arguments have been renamed to ``orient``.
     - terminal array (``t``) has been removed
 
-    You can get upgrade previous schematics to this version by:
+    You can upgrade previous schematics to this version by:
 
     - adding ``C=`` to leading argument of all components.
     - replacing ``orientation`` with ``orient`` in the argument lists of all components.
