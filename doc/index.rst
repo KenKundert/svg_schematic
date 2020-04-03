@@ -2,12 +2,9 @@ SVG Schematic
 =============
 
 :Author: Ken Kundert
-:Version: 0.7.1
-:Released: 2020-04-03
+:Version: 0.7.0
+:Released: 2020-03-02
 
-
-Introduction
-------------
 
 This package allows you to create simple SVG schematics and block diagrams 
 without a mouse. Rather, you build the schematic using Python to instantiate and 
@@ -39,7 +36,7 @@ generate a simple RLC circuit:
 
 When run, it produces the following schematic:
 
-.. image:: doc/images/Golden/rlc.svg
+.. image:: images/Golden/rlc.svg
     :width: 35 %
     :align: center
 
@@ -70,5 +67,19 @@ Contributions
 
 Contributions in the form of pull requests are welcome.
 
-I tend to create symbols as I need them.  If you create missing symbols, please␣
+I tend to create symbols as I need them.  If you create missing symbols, please
 consider contributing them back to the project.
+
+
+Contents
+--------
+
+.. toctree::
+   :maxdepth: 1
+
+   concepts
+   classes
+   examples
+   releases
+
+*  :ref:`genindex`

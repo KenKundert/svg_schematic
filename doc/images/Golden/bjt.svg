@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="100%" version="1.1" viewBox="-76.0,-76.0,303.0,153.0" width="100%">
+  <defs/>
+  <g id="bkgnd">
+    <rect fill="white" height="153.0" stroke="none" stroke-width="1" width="303.0" x="-76.0" y="-76.0"/>
+  </g>
+  <g id="symbol" transform="translate(0,0)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <rect fill="white" height="92" stroke="none" width="4" x="48.0" y="-46.0"/>
+    <polyline fill="none" points="50.0,-50.0 50.0,-37.5 0,-25.0 0,25.0 50.0,37.5 50.0,50.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <line fill="none" stroke="black" stroke-linecap="square" stroke-width="3" x1="0" x2="0" y1="-37.5" y2="37.5"/>
+    <line fill="none" stroke="black" stroke-linecap="round" stroke-width="1" x1="-50.0" x2="0" y1="0" y2="0"/>
+    <polygon fill="black" points="10.0,19.0 40.0,25.0 10.0,31.0" stroke="none" transform="rotate(14.036243467926477,0,25.0)"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="5" y="7.2">Qn</text>
+  </g>
+  <g id="symbol" transform="translate(50.0,-50.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="blue" r="4" stroke="blue" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="50.0" y="-59.0">c</text>
+  </g>
+  <g id="symbol" transform="translate(-50.0,0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="blue" r="4" stroke="blue" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="-59.0" y="7.2">b</text>
+  </g>
+  <g id="symbol" transform="translate(50.0,50.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="blue" r="4" stroke="blue" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="50.0" y="73.4">e</text>
+  </g>
+  <g id="symbol" transform="translate(150,0)">
+    <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <rect fill="white" height="92" stroke="none" width="4" x="48.0" y="-46.0"/>
+    <polyline fill="none" points="50.0,-50.0 50.0,-37.5 0,-25.0 0,25.0 50.0,37.5 50.0,50.0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <line fill="none" stroke="black" stroke-linecap="square" stroke-width="3" x1="0" x2="0" y1="-37.5" y2="37.5"/>
+    <line fill="none" stroke="black" stroke-linecap="round" stroke-width="1" x1="-50.0" x2="0" y1="0" y2="0"/>
+    <polygon fill="black" points="40.0,-31.0 10.0,-25.0 40.0,-19.0" stroke="none" transform="rotate(-14.036243467926477,0,-25.0)"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="155" y="7.2">Qp</text>
+  </g>
+  <g id="symbol" transform="translate(200.0,-50.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="blue" r="4" stroke="blue" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="200.0" y="-59.0">e</text>
+  </g>
+  <g id="symbol" transform="translate(100.0,0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="blue" r="4" stroke="blue" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="91.0" y="7.2">b</text>
+  </g>
+  <g id="symbol" transform="translate(200.0,50.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="blue" r="4" stroke="blue" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="200.0" y="73.4">c</text>
+  </g>
+</svg>

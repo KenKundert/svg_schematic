@@ -20,14 +20,14 @@ try:
         Wire([lr.n, c.n])
 
         # gain stage
-        ml = MOS(d=ll.n, yoff=50, orient='|')
-        mr = MOS(d=lr.n, yoff=50, orient='')
+        ml = MOS(d=ll.n, yoff=75, orient='|')
+        mr = MOS(d=lr.n, yoff=75, orient='')
         Wire([ll.n, ml.d])
         Wire([lr.n, mr.d])
-        Wire([ml.g, shift_y(ml.g, -25), shift(ml.g, 50, -75), shift_y(mr.d, -25)])
-        Wire([mr.g, shift_y(mr.g, -25), shift(mr.g, -50, -75), shift_y(ml.d, -25)])
-        Wire([ml.s, mr.s])
-        Source(p=midpoint(ml.s, mr.s), kind='idc', value=r'$I_{\rm ss}$')
+        Wire([ml.g, shift_y(ml.g, -25), shift(ml.g, 50, -75), shift_y(lr.n, 50)])
+        Wire([mr.g, shift_y(mr.g, -25), shift(mr.g, -50, -75), shift_y(ll.n, 50)])
+        Wire([ml.s, shift_y(ml.s, 12), shift_y(mr.s, 12), mr.s])
+        Source(p=midpoint(ml.s, mr.s), yoff=12, kind='idc', value=r'$I_{\rm ss}$')
 
 except Error as e:
     e.report()

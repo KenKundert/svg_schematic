@@ -6,7 +6,7 @@ from svg_schematic import (
 from inform import Error, error, os_error
 
 try:
-    with Schematic(filename = "noninverting.svg"):
+    with Schematic(filename = "noninverting.svg", line_width=2):
 
         vin = Source(kind='sine')
         Label(C=vin.p, name='Vin', loc='n')
