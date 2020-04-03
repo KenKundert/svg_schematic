@@ -235,7 +235,8 @@ class Wire(Schematic): # {{{1
 
         # add the beginning and end points as attributes.
         self.b = points[0]
-        self.e = points[1]
+        self.e = points[-1]
+        self.m = midpoint(self.b, self.e)
 
         # preprocess points to add corners when manhattan geometry is requested
         if kind != 'plain':
