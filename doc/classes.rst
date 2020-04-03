@@ -5,17 +5,17 @@ Classes
 Schematic
 ---------
 
-When creating a schematic you may specify the following arguments: filename, 
-font_size, font_family (ex. 'serif' or 'sans-serif'), line_width, and 
-dot_radius.  The dot radius is the radius of solder-dots and pins.
+When creating a schematic you may specify the following arguments: ``filename``, 
+``font_size``, ``font_family`` (ex. 'serif' or 'sans-serif'), ``line_width``, 
+and ``dot_radius``.  The dot radius is the radius of solder-dots and pins.
 
-You can also specify background and outline, both of which are colors. The 
-default background is 'white' and the default outline is 'none'. If you set 
+You can also specify ``background`` and ``outline``, both of which are colors.  
+The default background is 'white' and the default outline is 'none'. If you set 
 background to 'none' be aware that this makes the concealers transparent, 
 meaning that you cannot wire under components, instead you must wire to the 
 pins.  It is common to start by setting outline to allow you to see the SVG 
 drawing area, and then later remove it when your schematic is complete.
-pad arguments are used to adjust the size of the SVG 
+Pad arguments are used to adjust the size of the SVG 
 
 The size of the SVG canvas is automatically sized to fit tightly around the 
 specified schematic objects. You might find that the text associated with input 
@@ -33,13 +33,14 @@ Wire
 ----
 
 Draws a wire between two or more points given in sequence. Each point should be 
-specified as a XY pair. Wires are often specified before components, which 
-places them on the lowest level, allowing the component to obscure the wires 
-when needed.  Example:
+specified as a XY pair.  Example:
 
 .. code-block:: python
 
     Wire([(x0,y0), (x1,y1), (x2,y2), (x3,y3)])
+
+Specifying wires before the components places them on a lower level, allowing 
+the component to obscure the wires when needed.
 
 *Wire* supports the *kind* argument, which may be either ``plain``, ``|-``, 
 ``-|``, ``|-|``, or ``-|-``.  With plain, any-angle line segments are added 
@@ -70,7 +71,7 @@ to draw the wire with dashed lines:
     Wire([(x0,y0), (x1,y1)], stroke_dasharray="4 2")
 
 *Wire* provides the ``b``, ``m``,  and ``e`` attributes that contain the 
-coordinates of the beginning, the midpoint and the end of the wire.
+coordinates of the beginning, the midpoint and the ending of the wire.
 
 
 Components
@@ -80,18 +81,21 @@ This section documents the available components. Components include an invisible
 tile in which the component should fit. The tile extent is used when determining 
 the size of the overall schematic.  Each component requires that you specify 
 location by giving the location of its principle coordinates or a pin. You can 
-also generally specify the orientation, the name, the value, and a text offset 
-using ``orient``, ``name``, ``value``, and ``nudge``.
+specify an placement offset using ``xoff``, ``yoff`, or ``off``. You can also 
+generally specify the orientation, the name, the value, and a text offset using 
+``orient``, ``name``, ``value``, and ``nudge``.
 
 The ``orient`` is specified as a string that generally consists of either 'v' or 
 'h', indicating that a vertical or horizontal orientation is desired, but may 
 include '|' and '-', indicating that the component should be flipped about 
-either the vertical or horizontal axis. The *name* and *value* are strings that 
-are added to the component as labels, though not all components display the 
-*value*.  The *nudge* is a number that adjusts the placement of labels to avoid 
-wires.
+either the vertical or horizontal axis.
 
-In addition, some components support other arguments, such as *kind* or *loc*.
+The *name* and *value* are strings that are added to the component as labels, 
+though not all components display the *value*.  The *nudge* is a number that 
+adjusts the placement of labels to avoid wires.
+
+In addition, some components support other arguments, such as ``kind`` or 
+``loc``.
 
 You may pass wires directly under most components.  The component will conceal 
 the wire in those places where it should not be shown. This makes it simpler to 
@@ -230,6 +234,9 @@ contain the locations of the principle coordinates.
 The ``c``, ``b`` and ``e`` attributes contain the coordinates of the collector, 
 base and emitter terminals.
 
+If ``kind`` is 'p' or 'pnp' a PNP symbol is drawn, otherwise an NPN symbol is 
+drawn.
+
 You may pass a wire directly under the transistor and the wire will be concealed 
 by the transistor.
 
@@ -263,6 +270,9 @@ contain the locations of the principle coordinates.
 The ``d``, ``g`` and ``s`` attributes contain the coordinates of the drain, gate 
 and source terminals.
 
+If ``kind`` is 'n' or 'nmos' an NMOS symbol is drawn; if ``kind`` is 'p' or 
+'pmos' a PMOS symbol is drawn; otherwise an unpolarized symbol is drawn.
+
 You may pass a wire directly under the transistor and the wire will be concealed 
 by the transistor.
 
@@ -271,8 +281,8 @@ Amplifier
 ~~~~~~~~~
 
 Draws an amplifier.
-Four kinds of amplifier are available, *single-ended*, *opamp*, *differential 
-amplifier* and *comparator*.
+Four kinds of amplifier are available, single-ended (``se``), opamp (``oa``), 
+differential amplifier (``da``) and comparator (``comp``).
 
 .. code-block:: python
 
@@ -338,9 +348,9 @@ Source
 ~~~~~~
 
 Draws a source.
-Eight kinds of source are available, *empty*, *vdc*, *idc*, *sine*, *sum* 
-(summer), *mult* (multiplier), *cv* (controlled voltage) and *ci* (controlled 
-current).
+Eight kinds of source are available, ``empty``, ``vdc``, ``idc``, ``sine``, 
+``sum`` (summer), ``mult`` (multiplier), ``cv`` (controlled voltage) and ``ci`` 
+(controlled current).
 
 .. code-block:: python
 
@@ -380,8 +390,8 @@ Switch
 ~~~~~~
 
 Draws a switch.
-Two kinds of switch are available, *spst* (single-pole, single-throw) and *spdt* 
-(single-pole, double-throw).
+Two kinds of switch are available, ``spst`` (single-pole, single-throw) and 
+``spdt`` (single-pole, double-throw).
 
 
 
@@ -469,7 +479,8 @@ The ``t`` attribute contains the coordinates of the ground's terminal.
 Pin
 ~~~
 
-Draws a pin.  Four kinds of pin are available, *none*, *dot*, *in*, and *out*.
+Draws a pin.  Four kinds of pin are available, ``none``, ``dot``, ``in``, and 
+``out``.
 
 .. code-block:: python
 
