@@ -5,6 +5,7 @@ try:
     with Schematic(
         filename = 'wires.svg',
         background = 'none',
+        line_width = 2,
     ):
         r11 = Resistor(orient='h')
         r12 = Resistor(orient='h', n=r11.p, off=(50,50))

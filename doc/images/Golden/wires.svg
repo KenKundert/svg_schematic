@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="100%" version="1.1" viewBox="-51.0,-51.0,403.0,553.0" width="100%">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="100%" version="1.1" viewBox="-52.0,-52.0,406.0,556.0" width="100%">
   <defs/>
   <g id="symbol" transform="translate(0,0)">
     <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
-    <rect fill="none" height="4" stroke="none" width="92" x="-46.0" y="-2"/>
-    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <rect fill="none" height="8" stroke="none" width="92" x="-46.0" y="-4"/>
+    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="2"/>
   </g>
   <g id="text"/>
   <g id="symbol" transform="translate(150.0,50)">
     <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
-    <rect fill="none" height="4" stroke="none" width="92" x="-46.0" y="-2"/>
-    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <rect fill="none" height="8" stroke="none" width="92" x="-46.0" y="-4"/>
+    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="2"/>
   </g>
   <g id="text"/>
   <g id="wire">
-    <polyline fill="none" points="50.0,0 100.0,50" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <polyline fill="none" points="50.0,0 100.0,50" stroke="black" stroke-linecap="round" stroke-width="2"/>
   </g>
   <g id="symbol" transform="translate(225.0,25.0)">
     <rect fill="none" height="50" stroke="none" width="250" x="-125.0" y="-25.0"/>
@@ -24,18 +24,18 @@
   </g>
   <g id="symbol" transform="translate(0,100)">
     <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
-    <rect fill="none" height="4" stroke="none" width="92" x="-46.0" y="-2"/>
-    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <rect fill="none" height="8" stroke="none" width="92" x="-46.0" y="-4"/>
+    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="2"/>
   </g>
   <g id="text"/>
   <g id="symbol" transform="translate(150.0,150)">
     <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
-    <rect fill="none" height="4" stroke="none" width="92" x="-46.0" y="-2"/>
-    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <rect fill="none" height="8" stroke="none" width="92" x="-46.0" y="-4"/>
+    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="2"/>
   </g>
   <g id="text"/>
   <g id="wire">
-    <polyline fill="none" points="50.0,100 50.0,150 100.0,150" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <polyline fill="none" points="50.0,100 50.0,150 100.0,150" stroke="black" stroke-linecap="round" stroke-width="2"/>
   </g>
   <g id="symbol" transform="translate(225.0,125.0)">
     <rect fill="none" height="50" stroke="none" width="250" x="-125.0" y="-25.0"/>
@@ -45,18 +45,18 @@
   </g>
   <g id="symbol" transform="translate(0,200)">
     <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
-    <rect fill="none" height="4" stroke="none" width="92" x="-46.0" y="-2"/>
-    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <rect fill="none" height="8" stroke="none" width="92" x="-46.0" y="-4"/>
+    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="2"/>
   </g>
   <g id="text"/>
   <g id="symbol" transform="translate(150.0,250)">
     <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
-    <rect fill="none" height="4" stroke="none" width="92" x="-46.0" y="-2"/>
-    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <rect fill="none" height="8" stroke="none" width="92" x="-46.0" y="-4"/>
+    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="2"/>
   </g>
   <g id="text"/>
   <g id="wire">
-    <polyline fill="none" points="50.0,200 100.0,200 100.0,250" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <polyline fill="none" points="50.0,200 100.0,200 100.0,250" stroke="black" stroke-linecap="round" stroke-width="2"/>
   </g>
   <g id="symbol" transform="translate(225.0,225.0)">
     <rect fill="none" height="50" stroke="none" width="250" x="-125.0" y="-25.0"/>
@@ -66,18 +66,18 @@
   </g>
   <g id="symbol" transform="translate(0,300)">
     <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
-    <rect fill="none" height="4" stroke="none" width="92" x="-46.0" y="-2"/>
-    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <rect fill="none" height="8" stroke="none" width="92" x="-46.0" y="-4"/>
+    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="2"/>
   </g>
   <g id="text"/>
   <g id="symbol" transform="translate(150.0,350)">
     <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
-    <rect fill="none" height="4" stroke="none" width="92" x="-46.0" y="-2"/>
-    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <rect fill="none" height="8" stroke="none" width="92" x="-46.0" y="-4"/>
+    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="2"/>
   </g>
   <g id="text"/>
   <g id="wire">
-    <polyline fill="none" points="50.0,300 50.0,325.0 100.0,325.0 100.0,350" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <polyline fill="none" points="50.0,300 50.0,325.0 100.0,325.0 100.0,350" stroke="black" stroke-linecap="round" stroke-width="2"/>
   </g>
   <g id="symbol" transform="translate(225.0,325.0)">
     <rect fill="none" height="50" stroke="none" width="250" x="-125.0" y="-25.0"/>
@@ -87,18 +87,18 @@
   </g>
   <g id="symbol" transform="translate(0,400)">
     <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
-    <rect fill="none" height="4" stroke="none" width="92" x="-46.0" y="-2"/>
-    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <rect fill="none" height="8" stroke="none" width="92" x="-46.0" y="-4"/>
+    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="2"/>
   </g>
   <g id="text"/>
   <g id="symbol" transform="translate(150.0,450)">
     <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
-    <rect fill="none" height="4" stroke="none" width="92" x="-46.0" y="-2"/>
-    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <rect fill="none" height="8" stroke="none" width="92" x="-46.0" y="-4"/>
+    <polyline fill="none" points="-50.0,0 -30,0 -25,-10 -20,0 -20,0 -15,10 -10,0 -10,0 -5,-10 0,0 0,0 5,10 10,0 10,0 15,-10 20,0 20,0 25,10 30,0 50.0,0" stroke="black" stroke-linecap="round" stroke-width="2"/>
   </g>
   <g id="text"/>
   <g id="wire">
-    <polyline fill="none" points="50.0,400 75.0,400 75.0,450 100.0,450" stroke="black" stroke-linecap="round" stroke-width="1"/>
+    <polyline fill="none" points="50.0,400 75.0,400 75.0,450 100.0,450" stroke="black" stroke-linecap="round" stroke-width="2"/>
   </g>
   <g id="symbol" transform="translate(225.0,425.0)">
     <rect fill="none" height="50" stroke="none" width="250" x="-125.0" y="-25.0"/>
