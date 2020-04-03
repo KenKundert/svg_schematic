@@ -14,7 +14,7 @@ setup(
     description='svg schematics',
     long_description=readme,
     long_description_content_type='text/x-rst',
-    url='https://github.com/kenkundert/svg_schematic',
+    url='https://svg_schematic.readthedocs.io',
     download_url='https://github.com/kenkundert/svg_schematic/tarball/master',
     author="Ken Kundert",
     author_email='quantiphy@nurdletech.com',
