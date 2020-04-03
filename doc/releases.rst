@@ -5,6 +5,9 @@ Releases
     | Version: 0.7.2
     | Released: 2020-04-03
 
+    - reorganized documentation into a formal manual.
+
+
 **0.7 (2020-03-02)**:
 
     Moves almost fully to relative placement of components.
@@ -23,5 +26,6 @@ Releases
     - adding ``C=`` to leading argument of all components.
     - replacing ``orientation`` with ``orient`` in the argument lists of all components.
     - replacing use of ``t`` with the actual names of the pins.
+
 
 **0.6 (2019-09-03)**:

@@ -7,15 +7,15 @@ SVG Schematic
 
 
 This package allows you to create simple SVG schematics and block diagrams 
-without a mouse. Rather, you build the schematic using Python to instantiate and 
-place the symbols and wires.
+without a mouse.  Instead, you build the schematic using Python to instantiate 
+and place the symbols and wires.
 
 
 Simple Example
 --------------
 
-Here is a simple example that demonstrates the package. Here is the code to 
-generate a simple RLC circuit:
+Here is a simple example that demonstrates the package. It generates the 
+schematic of a shunt RLC circuit:
 
 .. code-block:: python
 

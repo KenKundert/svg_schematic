@@ -47,7 +47,7 @@ y-offset using ``yoff``, and you can specify both with ``off`` as a tuple. For
 example, ``off=(50,25)`` is equivalent to ``xoff=50, yoff=25``.
 
 Wires are added using an list of points, where each point is an XY-pair. In the 
-simplest case, a line is run between each of the point specified.  Thus, the 
+simplest case, a line is run between each of the points specified.  Thus, the 
 first wire runs from ``r.p`` to ``l.p``, where ``r`` is the resistor and ``r.p`` 
 is the location of the ``p`` terminal of the resistor.  ``l.p`` is the location 
 of the positive terminal of the inductor.  The second wire connects the negative 
@@ -59,7 +59,7 @@ Principle Coordinates
 
 Each component is embedded in a tile, and each tile has 9 principle coordinate 
 named C, N, NE, E, SE, S, SW, W, and NW which are short for center, north, 
-northwest, east, southeast, south, southwest, west and northwest.
+northeast, east, southeast, south, southwest, west and northwest.
 
 .. image:: images/Golden/tile1.svg
     :width: 50 %
@@ -81,15 +81,15 @@ be specified simply by placing the tiles side-by-side:
         Wire([r.n, c.n, l.n])
 
 This places the west principle coordinate of ``c`` on the east principle 
-coordinate of ``r`` and then the west principle of ``l`` on the east principle 
-coordinate of ``c``.
+coordinate of ``r`` and then the west principle coordinate of ``l`` on the east 
+principle coordinate of ``c``.
 
 
 Pins as Coordinates
 -------------------
 
-You can also specify and access the component pins. For example, with the 
-resistor there are two terminals ``p`` and ``n``.
+You can also specify and access the component pin locations. For example, with 
+the resistor there are two terminals ``p`` and ``n``.
 
 .. image:: images/Golden/tile2.svg
     :width: 50 %
@@ -245,16 +245,16 @@ coordinate in absolute terms. For example:
         Wire([(0, -50), (0, 50)])
         Resistor(C=(-75, 0), name='R', orient='v')
         Capacitor(C=(0, 0), name='C', orient='v')
-        Inductor((C=75, 0), name='L', orient='v|')
+        Inductor((C=(75, 0), name='L', orient='v|')
 
-Notice that a wire is specified as a list of point, where each point is a tuple 
+Notice that a wire is specified as a list of points, where each point is a tuple 
 that contains an XY pair.  The wire just connects the points with line segments.  
 The location of the components is given by giving the location of a feature on 
 the component. In this case it is the center (``C``) of the component that is 
 specified. Again the location is an XY-pair.
 
 This approach turns out to be rather cumbersome as it requires a lot of planning 
-is a lot of work if you need to move things around.  In that case you likely 
+and is a lot of work if you need to move things around.  In that case you likely 
 have to adjust a large number coordinates.  Since schematics of any complexity 
 are often adjusted repeatedly before they are correct and aesthetically 
 appealing, this approach can lead to a lot of tedious work.
@@ -272,8 +272,8 @@ Now, *r.C*, *r.N*, *r.NE*, *r.E*, *r.SE*, *r.S*, *r.SW*, *r.W*, and *r.NW*
 contain the coordinates of the center, north, northeast, east, southeast, south, 
 southwest, west, and northwest corners.  In addition, *r.p* and *r.n* hold the 
 coordinates of the positive and negative terminals.  Finally, wires provide the 
-*b* and *e* attributes, which contain the coordinates of their beginning and 
-ending.
+*b*, *m*, and *e* attributes, which contain the coordinates of their beginning, 
+midpoint, and ending.
 
 Once you place the first component, you then specify the location of the 
 remaining components relative to one that has already been placed. To do so, you 
@@ -307,7 +307,7 @@ the capacitor produces the following results:
     :align: center
 
 The *shift*, *shift_x*, and *shift_y* utility functions are provided to shift 
-the position of a coordinate pair.  Examples::
+the position of a coordinate pair.  Examples:
 
 .. code-block:: python
 
