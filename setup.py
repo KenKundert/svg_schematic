@@ -10,7 +10,7 @@ with open('README.rst') as f:
 
 setup(
     name='svg_schematic',
-    version='0.7.0',
+    version='0.7.1',
     description='svg schematics',
     long_description=readme,
     long_description_content_type='text/x-rst',

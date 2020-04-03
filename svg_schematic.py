@@ -6,8 +6,8 @@
 """
 *SVG Schematic* is a Python library can be used to create schematics using SVG.
 """
-__version__ = '0.7.0'
-__released__ = '2020-03-02'
+__version__ = '0.7.1'
+__released__ = '2020-04-03'
 
 
 # License {{{1
