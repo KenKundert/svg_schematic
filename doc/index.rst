@@ -2,8 +2,8 @@ SVG Schematic
 =============
 
 :Author: Ken Kundert
-:Version: 0.7.2
-:Released: 2020-04-03
+:Version: 0.7.3
+:Released: 2020-04-09
 
 
 This package allows you to create simple SVG schematics and block diagrams 

@@ -2,8 +2,8 @@ Releases
 --------
 
 **Latest development release**:
-    | Version: 0.7.2
-    | Released: 2020-04-03
+    | Version: 0.7.3
+    | Released: 2020-04-09
 
     - reorganized documentation into a formal manual.
 
