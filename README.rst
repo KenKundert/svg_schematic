@@ -55,6 +55,13 @@ You can find the latest development version of the source code on
 `Github <https://github.com/KenKundert/svg_schematic>`_.
 
 
+Documentation
+-------------
+
+You can find documentation at `ReadTheDocs 
+<https://svg_schematic.readthedocs.io>`_.
+
+
 Issues
 ------
 
