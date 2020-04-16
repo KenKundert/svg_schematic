@@ -16,6 +16,7 @@ develop-eggs
 .installed.cfg
 images/*.svg
 examples/*.svg
+doc/.build
 
 # Installer logs
 pip-log.txt

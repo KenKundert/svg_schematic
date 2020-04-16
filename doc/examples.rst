@@ -30,22 +30,6 @@ It uses a 16 point serif font.
     :align: center
 
 
-Passive Low Pass Filter
------------------------
-
-This example uses `QuantiPhy 
-<https://quantiphy.readthedocs.io/en/latest/index.html>`_ to compute the values 
-for the components in a low pass filter and then constructs the schematic using 
-those values.
-
-.. include:: ../examples/mfed.py
-    :literal:
-
-.. image:: ../examples/Golden/mfed.svg
-    :width: 80%
-    :align: center
-
-
 Charge Pump
 -----------
 
