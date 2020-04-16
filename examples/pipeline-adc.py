@@ -46,7 +46,7 @@ try:
         ec = Box(NW=s2.SW, off=(-75, 50), name='Digital Error Correction', w=9, h=1)
         out = Pin(t=shift_x(ec.o, 50), kind='out', name='out', w=2)
         Wire([ec.o, out.t])
-        Label(C=shift_x(ec.E, 25), kind='slash', loc='s', name='10')
+        Label(C=shift_x(ec.E, 25), kind='slash', loc='s', name='8')
 
         w1 = Wire([midpoint(adc.o, dac.i), with_y(midpoint(adc.o, dac.i), ec.N)])
         w2 = Wire([s2.S, with_y(s2.S, ec.N)])
