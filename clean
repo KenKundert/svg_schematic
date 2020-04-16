@@ -2,6 +2,7 @@
 
 set nonomatch
 rm -f *.svg
+rm -f examples/*.svg
 
 # the rest is common to all python directories
 rm -f *.pyc *.pyo .test*.sum expected result install.out
