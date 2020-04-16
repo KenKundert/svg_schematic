@@ -5,8 +5,8 @@ Releases
     | Version: 1.0.0
     | Released: 2020-04-16
 
+**1.0 (2020-04-16)**:
     - reorganized documentation into a formal manual.
-
 
 **0.7 (2020-03-02)**:
 
