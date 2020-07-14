@@ -2,8 +2,8 @@ Releases
 --------
 
 **Latest development release**:
-    | Version: 1.0.1
-    | Released: 2020-07-13
+    | Version: 1.0.2
+    | Released: 2020-07-14
 
     - added Converter symbols.
 
