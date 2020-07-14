@@ -14,10 +14,10 @@ try:
         avdd = Pin(C=pvdd.C, yoff=50, kind='in', name='avdd', w=2)
         Wire([avdd.C, shift_x(avdd.C, 50)])
 
-        adjust = Pin(C=avdd.C, yoff=90, kind='in', name='adjust', w=4)
-        reference = Converter(i=adjust.C, xoff=75, name='ref')
-        adjust2ref = Wire([adjust.C, reference.i])
-        Label(C=adjust2ref.m, kind='slash', name='6', loc='se')
+        lvl = Pin(C=avdd.C, yoff=90, kind='in', name='lvl', w=2)
+        reference = Converter(i=lvl.C, xoff=75, name='ref')
+        lvl2ref = Wire([lvl.C, reference.i])
+        Label(C=lvl2ref.m, kind='slash', name='6', loc='se')
 
         amp = Amp(pi=reference.o, xoff=50, kind='oa', name='amp')
         Wire([reference.o, amp.pi])
@@ -65,7 +65,7 @@ try:
         Label(C=RG.S, loc='s', name='ramp_gen')
         Wire([R1.n, fb, Rt.n], kind='|-')
 
-        en = Pin(C=adjust.C, yoff=250, kind='in', name='en', w=2)
+        en = Pin(C=lvl.C, yoff=250, kind='in', name='en', w=2)
         Wire([en.C, shift_x(en.C, 50)])
         avss = Pin(C=en.C, yoff=50, kind='in', name='avss', w=2)
         Wire([avss.C, shift_x(avss.C, 50)])
