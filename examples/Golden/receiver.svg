@@ -169,9 +169,6 @@
   <g id="symbol" transform="translate(900.0,0.0)">
     <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
     <polygon fill="white" points="50.0,0 -50.0,-50.0 -50.0,50.0" stroke="black" stroke-linecap="round" stroke-width="2"/>
-    <line stroke="black" stroke-linecap="round" stroke-width="2" x1="-45.0" x2="-31.0" y1="25.0" y2="25.0"/>
-    <line stroke="black" stroke-linecap="round" stroke-width="2" x1="-45.0" x2="-31.0" y1="-25.0" y2="-25.0"/>
-    <line stroke="black" stroke-linecap="round" stroke-width="2" x1="-38.0" x2="-38.0" y1="-18.0" y2="-32.0"/>
   </g>
   <g id="text">
     <text fill="black" font-family="sans" font-size="12" text-anchor="middle" x="887.5" y="4.800000000000001">IF Amp</text>

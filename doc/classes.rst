@@ -277,12 +277,12 @@ You may pass a wire directly under the transistor and the wire will be concealed
 by the transistor.
 
 
-Amplifier
-~~~~~~~~~
+Amplifiers and Converters
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Draws an amplifier.
-Four kinds of amplifier are available, single-ended (``se``), opamp (``oa``), 
-differential amplifier (``da``) and comparator (``comp``).
+Draws an amplifier or a converter.
+Four kinds are available, single-ended (``se``), opamp (``oa``), differential 
+amplifier (``da``) and comparator (``comp``).
 
 .. code-block:: python
 
@@ -290,14 +290,18 @@ differential amplifier (``da``) and comparator (``comp``).
     Amp(kind='oa', name='Ao')
     Amp(kind='da', name='Ad')
     Amp(kind='comp', name='Ac')
+    Converter(kind='se', name='As')
+    Converter(kind='oa', name='Ao')
+    Converter(kind='da', name='Ad')
+    Converter(kind='comp', name='Ac')
 
 .. image:: images/Golden/amp.svg
     :width: 100 %
     :align: center
 
-Amplifiers take the following arguments: ``kind``, ``orient``, ``name``, 
-``value``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
-``p``, ``n``, ``off``, ``xoff`` & ``yoff``.
+Amplifiers and Converters take the following arguments: ``kind``, ``orient``, 
+``name``, ``value``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, 
+``NW``, ``p``, ``n``, ``off``, ``xoff`` & ``yoff``.
 ``kind`` may be ``se``, ``oa``, ``da`` or ``comp``.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
@@ -308,12 +312,12 @@ input, the input, the negative input, the positive output, the output, and the
 negative output terminals.  All 6 pin attributes are always available, even if 
 they do not seem appropriate for the kind of amplifier drawn.
 
-You can reshape the amplifier using ``w`` and ``h`` to specify the width and 
-height.  The default values for each are 2, and you should not deviate too far 
-from 2 or you will end up with an ugly amplifier.
+You can reshape the amplifier or converter using ``w`` and ``h`` to specify the 
+width and height.  The default values for each are 2, and you should not deviate 
+too far from 2 or you will end up with an ugly symbol.
 
-You may pass a wire or wires directly under the amplifier and the wire will be 
-concealed by the amplifier.
+You may pass a wire or wires directly under the amplifier or converter and the 
+wire will be concealed.
 
 
 Gate
@@ -436,9 +440,9 @@ Draws a box.
 
 Boxes take the following arguments: ``orient``, ``name``, ``value``, ``nudge``, 
 ``line_width``, ``background``, ``w``, ``h``, ``C``, ``N``, ``NE``, ``E``, 
-``SE``, ``S``, ``SW``, ``W``, ``NW``, ``i``, ``o``, ``off``, ``xoff`` 
-& ``yoff``.  In addition, you may specify *SVGwrite* arguments, as shown in the 
-example below.
+``SE``, ``S``, ``SW``, ``W``, ``NW``, ``i``, ``pi``, ``ni``, ``o``, ``po``, 
+``no``, ``off``, ``xoff`` & ``yoff``.  In addition, you may specify *SVGwrite* 
+arguments, as shown in the example below.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
 contain the locations of the principle coordinates.
@@ -530,6 +534,9 @@ Dot
 Draw a solder dot (a small filled circle) or a wire gap (a small filled circle 
 with the color of the background that is placed between two crossing wires).  
 Dot is just an alias for Pin, except that the default kind is 'dot'.
+
+It is common to place a dot at a level between two crossing wires and specify 
+a color of white to create a pass-under.
 
 .. code-block:: python
 

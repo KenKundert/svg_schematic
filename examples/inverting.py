@@ -19,7 +19,7 @@ try:
         vg = Dot(C=rin.E, xoff=25)
         rfb = Resistor(W=vg.C, xoff=25, name='Rfb')
         oj = Dot(C=rfb.E, xoff=25)
-        amp = Amp(C=rfb.C, yoff=75, orient='-')
+        amp = Amp(C=rfb.C, yoff=75, orient='-', kind='oa')
         Wire([oj.C, amp.o], kind='|-')
         gnd = Ground(C=amp.pi, xoff=-25, orient='h|')
         Wire([gnd.C, amp.pi])

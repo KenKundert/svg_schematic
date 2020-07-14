@@ -1094,7 +1094,7 @@ class Amp(Tile): # {{{1
             Specify the offset from the specified location.
     '''
     def __init__(
-        self, kind='oa', orient='h', name=None, value=None, w=2, h=2, **kwargs
+        self, kind='se', orient='h', name=None, value=None, w=2, h=2, **kwargs
     ):
         # Initialization and parameters {{{2
         pins = dict(
@@ -1114,15 +1114,29 @@ class Amp(Tile): # {{{1
         sign_size = 14
         nudge = 5
 
-        # Amp {{{2
-        amp = schematic.polygon(
-            [   ( w/2,  0),
-                (-w/2, -h/2),
-                (-w/2, +h/2),
-            ], fill=schematic.sch_background,
-            stroke_width=lw, stroke='black', stroke_linecap='round'
-        )
-        symbol.add(amp)
+        # Draw symbol {{{2
+        if isinstance(self, Converter):
+            converter = schematic.polygon(
+                [   ( w/2,  0),
+                    (   0, -h/2),
+                    (-w/2, -h/2),
+                    (-w/2, +h/2),
+                    (   0, +h/2),
+                ], fill=schematic.sch_background,
+                stroke_width=lw, stroke='black', stroke_linecap='round'
+            )
+            out_x = w/4
+            symbol.add(converter)
+        else:
+            amp = schematic.polygon(
+                [   ( w/2,  0),
+                    (-w/2, -h/2),
+                    (-w/2, +h/2),
+                ], fill=schematic.sch_background,
+                stroke_width=lw, stroke='black', stroke_linecap='round'
+            )
+            out_x = 0
+            symbol.add(amp)
         if kind in 'oa da comp'.split():
             minus = schematic.line(
                 start=(-w/2+nudge, h/4),
@@ -1144,31 +1158,31 @@ class Amp(Tile): # {{{1
             symbol.add(plus_ns)
         if kind == 'da':
             minus = schematic.line(
-                start=(-2*sign_size+nudge, -h/4),
-                end=(-sign_size+nudge, -h/4),
+                start=(out_x-2*sign_size+nudge, -h/4),
+                end=(out_x-sign_size+nudge, -h/4),
                 stroke_width=lw, stroke='black', stroke_linecap='round'
             )
             symbol.add(minus)
             plus_ew = schematic.line(
-                start=(-2*sign_size+nudge, h/4),
-                end=(-sign_size+nudge, h/4),
+                start=(out_x-2*sign_size+nudge, h/4),
+                end=(out_x-sign_size+nudge, h/4),
                 stroke_width=lw, stroke='black', stroke_linecap='round'
             )
             symbol.add(plus_ew)
             plus_ns = schematic.line(
-                start=(-3*sign_size/2+nudge, h/4+sign_size/2-1),
-                end=(-3*sign_size/2+nudge, h/4-sign_size/2),
+                start=(out_x-3*sign_size/2+nudge, h/4+sign_size/2-1),
+                end=(out_x-3*sign_size/2+nudge, h/4-sign_size/2),
                 stroke_width=lw, stroke='black', stroke_linecap='round'
             )
             symbol.add(plus_ns)
             p_out_lead = schematic.line(
-                start=(0, h/4),
+                start=(out_x, h/4),
                 end=(w/2, h/4),
                 stroke_width=lw, stroke='black', stroke_linecap='round'
             )
             symbol.add(p_out_lead)
             n_out_lead = schematic.line(
-                start=(0, -h/4),
+                start=(out_x, -h/4),
                 end=(w/2, -h/4),
                 stroke_width=lw, stroke='black', stroke_linecap='round'
             )
@@ -1207,6 +1221,9 @@ class Amp(Tile): # {{{1
         #if value:  ignore for now
         #    self.add_text(value, shift(self.center, -half/4, nudge), 'um')
 
+
+class Converter(Amp): # {{{1
+    pass
 
 class Gate(Tile): # {{{1
     '''Add gate to schematic.
@@ -1698,7 +1715,7 @@ class Label(Tile): # {{{1
         color (str): color of the marker
         nudge (num): offset used when positioning text (if needed)
         C, N, NE, E, SE, S, SW, W, NW, p, n (xy location):
-            Use to specify the location of a feature of the resistor.
+            Use to specify the location of a feature of the label.
         off (xy location), xoff (real), yoff (real):
             Specify the offset from the specified location.
     '''
@@ -1805,8 +1822,8 @@ class Box(Tile): # {{{1
         nudge (num): offset used when positioning text (if needed)
         line_width (num): the line width
         background (str): color of interior of box
-        C, N, NE, E, SE, S, SW, W, NW, p, n (xy location):
-            Use to specify the location of a feature of the resistor.
+        C, N, NE, E, SE, S, SW, W, NW, i, pi, ni, o, po, (xy location):
+            Use to specify the location of a feature of the box.
         off (xy location), xoff (real), yoff (real):
             Specify the offset from the specified location.
     '''
@@ -1878,7 +1895,7 @@ class Switch(Tile): # {{{1
         dots (bool): whether the dots should be drawn
         nudge (num): offset used when positioning text (if needed)
         C, N, NE, E, SE, S, SW, W, NW, p, n (xy location):
-            Use to specify the location of a feature of the resistor.
+            Use to specify the location of a feature of the switch.
         off (xy location), xoff (real), yoff (real):
             Specify the offset from the specified location.
     '''

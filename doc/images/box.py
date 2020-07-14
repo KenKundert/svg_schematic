@@ -4,8 +4,12 @@ from inform import Error, error, os_error
 try:
     with Schematic(filename = 'box.svg'):
         b = Box(name='4 bit', value='Flash')
+        Label(C=b.pi, name='pi', loc='w', kind='dot', color='blue')
         Label(C=b.i, name='i', loc='w', kind='dot', color='blue')
+        Label(C=b.ni, name='ni', loc='w', kind='dot', color='blue')
+        Label(C=b.po, name='po', loc='e', kind='dot', color='blue')
         Label(C=b.o, name='o', loc='e', kind='dot', color='blue')
+        Label(C=b.no, name='no', loc='e', kind='dot', color='blue')
 
         b = Box(name='𝘻⁻¹', w=1, h=1, C=b.C, xoff=150)
         Label(C=b.i, name='i', loc='w', kind='dot', color='blue')
