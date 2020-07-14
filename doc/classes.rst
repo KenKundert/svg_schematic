@@ -290,10 +290,10 @@ amplifier (``da``) and comparator (``comp``).
     Amp(kind='oa', name='Ao')
     Amp(kind='da', name='Ad')
     Amp(kind='comp', name='Ac')
-    Converter(kind='se', name='As')
-    Converter(kind='oa', name='Ao')
-    Converter(kind='da', name='Ad')
-    Converter(kind='comp', name='Ac')
+    Converter(kind='se', name='Cs')
+    Converter(kind='oa', name='Co')
+    Converter(kind='da', name='Cd')
+    Converter(kind='comp', name='Cc')
 
 .. image:: images/Golden/amp.svg
     :width: 100 %
