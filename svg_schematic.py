@@ -1112,7 +1112,8 @@ class Amp(Tile): # {{{1
         w, h = self.size
         lw = schematic.sch_line_width
         sign_size = 14
-        nudge = 5
+        nudge = kwargs.get('nudge', 0)
+        delta = 5
 
         # Draw symbol {{{2
         if isinstance(self, Converter):
@@ -1139,39 +1140,39 @@ class Amp(Tile): # {{{1
             symbol.add(amp)
         if kind in 'oa da comp'.split():
             minus = schematic.line(
-                start=(-w/2+nudge, h/4),
-                end=(-w/2+nudge+sign_size, h/4),
+                start=(-w/2+delta, h/4),
+                end=(-w/2+delta+sign_size, h/4),
                 stroke_width=lw, stroke='black', stroke_linecap='round'
             )
             symbol.add(minus)
             plus_ew = schematic.line(
-                start=(-w/2+nudge, -h/4),
-                end=(-w/2+nudge+sign_size, -h/4),
+                start=(-w/2+delta, -h/4),
+                end=(-w/2+delta+sign_size, -h/4),
                 stroke_width=lw, stroke='black', stroke_linecap='round'
             )
             symbol.add(plus_ew)
             plus_ns = schematic.line(
-                start=(-w/2+nudge+sign_size/2, -h/4+sign_size/2),
-                end=(-w/2+nudge+sign_size/2, -h/4-sign_size/2),
+                start=(-w/2+delta+sign_size/2, -h/4+sign_size/2),
+                end=(-w/2+delta+sign_size/2, -h/4-sign_size/2),
                 stroke_width=lw, stroke='black', stroke_linecap='round'
             )
             symbol.add(plus_ns)
         if kind == 'da':
             minus = schematic.line(
-                start=(out_x-2*sign_size+nudge, -h/4),
-                end=(out_x-sign_size+nudge, -h/4),
+                start=(out_x-2*sign_size+delta, -h/4),
+                end=(out_x-sign_size+delta, -h/4),
                 stroke_width=lw, stroke='black', stroke_linecap='round'
             )
             symbol.add(minus)
             plus_ew = schematic.line(
-                start=(out_x-2*sign_size+nudge, h/4),
-                end=(out_x-sign_size+nudge, h/4),
+                start=(out_x-2*sign_size+delta, h/4),
+                end=(out_x-sign_size+delta, h/4),
                 stroke_width=lw, stroke='black', stroke_linecap='round'
             )
             symbol.add(plus_ew)
             plus_ns = schematic.line(
-                start=(out_x-3*sign_size/2+nudge, h/4+sign_size/2-1),
-                end=(out_x-3*sign_size/2+nudge, h/4-sign_size/2),
+                start=(out_x-3*sign_size/2+delta, h/4+sign_size/2-1),
+                end=(out_x-3*sign_size/2+delta, h/4-sign_size/2),
                 stroke_width=lw, stroke='black', stroke_linecap='round'
             )
             symbol.add(plus_ns)
@@ -1189,14 +1190,15 @@ class Amp(Tile): # {{{1
             symbol.add(n_out_lead)
         if kind == 'comp':
             comp = schematic.polyline(
-                [   (w/8-nudge,  h/8),
-                    (w/8,        h/8),
-                    (w/8,       -h/8),
-                    (w/8+nudge, -h/8)
+                [   (-w/2 + w/8-delta,  h/8),
+                    (-w/2 + w/8,        h/8),
+                    (-w/2 + w/8,       -h/8),
+                    (-w/2 + w/8+delta, -h/8)
                 ],
                 fill='none',
                 stroke_width=lw, stroke='black', stroke_linecap='round'
             )
+            nudge += 10
             symbol.add(comp)
 
         # Orientation and translation {{{2
@@ -1216,7 +1218,7 @@ class Amp(Tile): # {{{1
                 nudge = -h/8 if '-' in orient else h/8
                 self.add_text(name, shift(self.center, 0, nudge), 'mm')
             else:
-                nudge = w/8 if '|' in orient else -w/8
+                nudge = w/8 - nudge if '|' in orient else -w/8 + nudge
                 self.add_text(name, shift(self.center, nudge, 0), 'mm')
         #if value:  ignore for now
         #    self.add_text(value, shift(self.center, -half/4, nudge), 'um')

@@ -95,6 +95,20 @@ give the schematic a heavier look.
     :align: center
 
 
+Buck Regulator
+--------------
+
+This example uses white dot as a pass-under (on the line that runs from ramp 
+generator to the comparator.
+
+.. include:: ../examples/buck.py
+    :literal:
+
+.. image::  ../examples/Golden/buck.svg
+    :width: 100%
+    :align: center
+
+
 Pipelined ADC
 -------------
 
