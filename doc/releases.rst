@@ -5,6 +5,8 @@ Releases
     | Version: 1.0.1
     | Released: 2020-07-13
 
+    - added Converter symbols.
+
 **1.0 (2020-04-16)**:
     - reorganized documentation into a formal manual.
 
