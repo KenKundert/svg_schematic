@@ -629,6 +629,7 @@ class Inductor(Tile): # {{{1
         xinc = 20
         xdec = -5
         ypeak = 15
+        dy = 5  # extra vertical spacing for text
         ytrough = -10
         undulations = 4
         p = self.pins['p']
@@ -687,9 +688,9 @@ class Inductor(Tile): # {{{1
                 self.add_text(value, shift(self.center, x_nudge, nudge), 'u'+just)
         else:
             if name:
-                self.add_text(name, shift(self.center, 0, -ypeak), 'lm')
+                self.add_text(name, shift(self.center, 0, -ypeak-dy), 'lm')
             if value:
-                self.add_text(value, shift(self.center, 0, ypeak), 'um')
+                self.add_text(value, shift(self.center, 0, ypeak+dy), 'um')
 
 
 class Diode(Tile): # {{{1

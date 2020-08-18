@@ -10,8 +10,8 @@
     <path d="M -50.0 0 L -30.0 0 C -30.0 -15 -10.0 -15 -10.0 0 -10.0 10 -15.0 10 -15.0 0 -15.0 -15 5.0 -15 5.0 0 5.0 10 0.0 10 0.0 0 0.0 -15 20.0 -15 20.0 0 20.0 10 15.0 10 15.0 0 15.0 -15 35.0 -15 35.0 0 L 50.0 0" fill="none" stroke="black" stroke-linecap="round" stroke-width="1"/>
   </g>
   <g id="text">
-    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="0" y="-15">L1</text>
-    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="0" y="29.4">1μH</text>
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="0" y="-20">L1</text>
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="0" y="34.4">1μH</text>
   </g>
   <g id="symbol" transform="translate(50.0,0)">
     <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
