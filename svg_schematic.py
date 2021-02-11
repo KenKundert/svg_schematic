@@ -1393,7 +1393,7 @@ class Source(Tile): # {{{1
     Args:
         kind (str): choose from:
              'empty', 'vdc', 'idc', 'sine', 'sum', 'mult',
-            'cv' (controlled voltage) or 'ci' (controlled current)
+            'cv' (controlled voltage), 'ci' (controlled current), or 'noise'
         orient (str): choose from:
             'v' = vertical,
             'h' = horizontal (default),
