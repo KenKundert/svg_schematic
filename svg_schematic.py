@@ -1,7 +1,6 @@
 # SVG Schematics by Ken Kundert
 # encoding: utf8
 
-
 # Description {{{1
 """
 *SVG Schematic* is a Python library can be used to create schematics using SVG.
@@ -11,7 +10,7 @@ __released__ = '2020-08-18'
 
 
 # License {{{1
-# Copyright (C) 2018-20 Kenneth S. Kundert
+# Copyright (C) 2018-21 Kenneth S. Kundert
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
