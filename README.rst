@@ -1,6 +1,16 @@
 SVG Schematic
 =============
 
+.. image:: https://pepy.tech/badge/svg_schematic/month
+    :target: https://pepy.tech/project/svg_schematic
+
+.. image:: https://img.shields.io/pypi/v/svg_schematic.svg
+    :target: https://pypi.python.org/pypi/svg_schematic
+
+.. image:: https://img.shields.io/pypi/pyversions/svg_schematic.svg
+    :target: https://pypi.python.org/pypi/svg_schematic/
+
+
 :Author: Ken Kundert
 :Version: 1.1.0
 :Released: 2020-08-18
