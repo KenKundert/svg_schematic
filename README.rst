@@ -4,6 +4,9 @@ SVG Schematic
 .. image:: https://pepy.tech/badge/svg_schematic/month
     :target: https://pepy.tech/project/svg_schematic
 
+.. image:: https://img.shields.io/readthedocs/svg_schematic.svg
+   :target: https://svg_schematic.readthedocs.io/en/latest/?badge=latest
+
 .. image:: https://img.shields.io/pypi/v/svg_schematic.svg
     :target: https://pypi.python.org/pypi/svg_schematic
 

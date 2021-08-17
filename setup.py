@@ -19,7 +19,7 @@ setup(
     author = "Ken Kundert",
     author_email = 'quantiphy@nurdletech.com',
     license = 'GPLv3+',
-    zip_safe = False,
+    zip_safe = True,
     py_modules = 'svg_schematic'.split(),
     install_requires = 'svgwrite inform'.split(),
     python_requires = '>=3.6',
