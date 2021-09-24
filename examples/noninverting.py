@@ -12,7 +12,7 @@ try:
         Label(C=vin.p, name='Vin', loc='n')
         Ground(C=vin.n)
         amp = Amp(pi=vin.p, xoff=100, kind='oa')
-        Label(C=amp.ni, xoff=-25, name='Ve', loc='n')
+        Label(C=amp.ni, xoff=-25, name='Vf', loc='n')
         Wire([vin.p, amp.pi])
         out = Pin(C=amp.o, xoff=50, name='out', w=2)
         Wire([amp.o, out.C])
