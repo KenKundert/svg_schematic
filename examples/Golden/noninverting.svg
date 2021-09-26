@@ -35,7 +35,7 @@
     <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
   </g>
   <g id="text">
-    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="75.0" y="-5.0">Ve</text>
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="middle" x="75.0" y="-5.0">Vf</text>
   </g>
   <g id="wire">
     <polyline fill="none" points="0,-50.0 100.0,-50.0" stroke="black" stroke-linecap="round" stroke-width="2"/>
