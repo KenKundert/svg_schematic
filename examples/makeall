@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
 
-from shlib import lsf, Run, set_prefs, to_path
-from inform import Error
-set_prefs(use_inform=True)
+try:
+    from shlib import lsf, Run, set_prefs, to_path
+    from inform import Error
+    set_prefs(use_inform=True)
+except ImportError:
+    print(
+        'Run `pip install --user -r requirements.txt`',
+        'to install missing packages.'
+    )
+    raise SystemExit
 
 golden = to_path('Golden')
 

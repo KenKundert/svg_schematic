@@ -2,13 +2,13 @@
 Draw a 5th Order Low Pass Passive Filer with Maximally Flat Envelope Delay
 
 Use the following parameters:
-    Fo = 1MHz   -- 3dB corner frequency
-    Rref = 50Ω  -- termination impedance
+    Fo = 1MHz   — 3dB corner frequency
+    Rref = 50Ω  — termination impedance
 
 Design equations:
-    Omega0 = 2*π*Fo
-    Lscale = Rref/Omega0
-    Cscale = 1/(Rref*Omega0)
+    ω0 = 2*π*Fo
+    Lscale = Rref/ω0
+    Cscale = 1/(Rref*ω0)
 
     Rs = 1.0000 * Rref   "Ω"
     C1 = 0.2715 * Cscale "F"
@@ -18,12 +18,20 @@ Design equations:
     C5 = 2.2873 * Cscale "F"
 """
 
-from svg_schematic import (
-    Schematic, Capacitor, Dot, Ground, Inductor, Label, Resistor, Pin, Source, Wire
-)
-from inform import Error, error, os_error
-from quantiphy import Quantity
-from math import pi
+try:
+    from svg_schematic import (
+        Schematic, Capacitor, Dot, Ground, Inductor, Label, Resistor, Pin,
+        Source, Wire
+    )
+    from inform import Error, error, os_error
+    from quantiphy import Quantity
+    from math import pi
+except ImportError:
+    print(
+        'Run `pip install --user -r requirements.txt`',
+        'to install missing packages.'
+    )
+    raise SystemExit
 
 Quantity.set_prefs(map_sf=Quantity.map_sf_to_greek, prec=2)
 globals().update(

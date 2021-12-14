@@ -17,7 +17,7 @@ setup(
     url = 'https://svg_schematic.readthedocs.io',
     download_url = 'https://github.com/kenkundert/svg_schematic/tarball/master',
     author = "Ken Kundert",
-    author_email = 'quantiphy@nurdletech.com',
+    author_email = 'svg_schematic@nurdletech.com',
     license = 'GPLv3+',
     zip_safe = True,
     py_modules = 'svg_schematic'.split(),
