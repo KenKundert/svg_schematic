@@ -35,9 +35,9 @@ Component Placement
 In this example the resistor is placed without a location, and so its center is 
 placed at the origin, (0, 0).  You can then access the location of the center of 
 the resistor using ``r.C``, which is a XY-pair. That is passed to the capacitor 
-using `C=r.C` with an extra parameter of ``xoff=100``, meaning the center of the 
-capacitor is horizontally offset by 100 units from center of the resistor.  To 
-give you a sense of how far 100 units is, the length of the resistor is 100 
+using ``C=r.C`` with an extra parameter of ``xoff=100``, meaning the center of 
+the capacitor is horizontally offset by 100 units from center of the resistor.  
+To give you a sense of how far 100 units is, the length of the resistor is 100 
 units.  Positive horizontal offsets shift the location to the right, positive 
 vertical offsets shift the location down.  Finally, the inductor is placed 100 
 units to the right of the capacitor.
@@ -218,9 +218,10 @@ There are a few things to note.
     and specifying the size as ``w=1, h=1`` implies the tile will be 50x50.  
     Most components have a size of 2×2 and so sit within a 100x100 tile.  You 
     need not specify the size as an integer.
-#.  When the schematic is used with Latex, you can use Latex formatting in the 
-    name and value. For example, you can specify: `name='$L_1$'`. You should use 
-    raw strings if your string contains backslashes: `value=r'$10 \\mu H$'`.
+#.  When the schematic is used with :ref:`Latex`, you can use Latex formatting 
+    in the name and value. For example, you can specify: `name='$L_1$'`. You 
+    should use raw strings if your string contains backslashes: `value=r'$10 
+    \\mu H$'`.
 #.  Components provide provide individual attributes for the location of each 
     terminal.  For example, the resistor, capacitor, and inductor components 
     provide the *p* and *n* terminal attributes. The MOS component provides the 
@@ -380,6 +381,8 @@ As a result, these objects may fall partially or completely outside the bounds
 of the drawing. You can add padding when you first instantiate *Schematic* or 
 you can use the *svgwrite* *viewbox* method to extend the bounds.
 
+
+.. _latex:
 
 Latex
 -----

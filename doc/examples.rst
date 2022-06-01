@@ -35,7 +35,7 @@ Charge Pump
 
 This example has a transparent background and so all wires terminate at 
 terminals rather than passing underneath components. The labels are intended to 
-be rendered by Latex.
+be rendered by :ref:`Latex`.
 It sets ``line_width`` to 2 give the schematic a heavier look.
 
 .. include:: ../examples/charge-pump.py
@@ -51,7 +51,7 @@ Inverter
 
 This example has a transparent background and so all wires terminate at 
 terminals rather than passing underneath components. The labels are intended to 
-be rendered by Latex.
+be rendered by :ref:`Latex`.
 It sets ``line_width`` to 2 give the schematic a heavier look.
 
 .. include:: ../examples/inverter.py
@@ -67,7 +67,7 @@ Oscillator
 
 This example has a transparent background and so all wires terminate at 
 terminals rather than passing underneath components. The labels are intended to 
-be rendered by Latex.
+be rendered by :ref:`Latex`.
 This schematic uses ``line_width = 2`` give the schematic a heavier look.
 
 .. include:: ../examples/oscillator.py
