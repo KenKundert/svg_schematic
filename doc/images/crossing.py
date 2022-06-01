@@ -4,16 +4,16 @@ from inform import Error, error, os_error
 try:
     with Schematic(filename = 'crossing.svg'):
         c = Crossing()
-        Label(C=c.pi, name='pi', loc='w', kind='dot', color='blue')
-        Label(C=c.ni, name='ni', loc='w', kind='dot', color='blue')
-        Label(C=c.po, name='po', loc='e', kind='dot', color='blue')
-        Label(C=c.no, name='no', loc='e', kind='dot', color='blue')
+        Label(C=c.pi, name='pi', loc='w', kind='dot', color='blue', w=3)
+        Label(C=c.ni, name='ni', loc='w', kind='dot', color='blue', w=3)
+        Label(C=c.po, name='po', loc='e', kind='dot', color='blue', w=3)
+        Label(C=c.no, name='no', loc='e', kind='dot', color='blue', w=3)
 
         c = Crossing(C=c.C, w=2, h=2, xoff=150)
-        Label(C=c.pi, name='pi', loc='w', kind='dot', color='blue')
-        Label(C=c.ni, name='ni', loc='w', kind='dot', color='blue')
-        Label(C=c.po, name='po', loc='e', kind='dot', color='blue')
-        Label(C=c.no, name='no', loc='e', kind='dot', color='blue')
+        Label(C=c.pi, name='pi', loc='w', kind='dot', color='blue', w=3)
+        Label(C=c.ni, name='ni', loc='w', kind='dot', color='blue', w=3)
+        Label(C=c.po, name='po', loc='e', kind='dot', color='blue', w=3)
+        Label(C=c.no, name='no', loc='e', kind='dot', color='blue', w=3)
 
 except Error as e:
     e.report()
