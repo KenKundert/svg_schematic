@@ -270,6 +270,6 @@ def setup(app):
 from shutil import rmtree
 try:
     print('removing build directory')
-    rmtree("build")
+    rmtree("_build")
 except OSError as e:
     print(str(e))
