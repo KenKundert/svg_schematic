@@ -41,7 +41,7 @@ globals().update(
 try:
     with Schematic(filename = 'mfed.svg', line_width=2, background = 'none'):
 
-        vin = Source(name='Vin', value='1 V', kind='sine')
+        vin = Source(kind='sine')
         Ground(C=vin.n)
         rs = Resistor(name='Rs', value=Rref, n=vin.p, xoff=25)
         Wire([vin.p, rs.n])
