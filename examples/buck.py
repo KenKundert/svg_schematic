@@ -10,11 +10,11 @@ try:
     with Schematic(
         filename = "buck.svg", line_width=2, background='none'):
 
-        pvdd = Pin(kind='in', name='pvdd', w=2)
-        avdd = Pin(C=pvdd.C, yoff=50, kind='in', name='avdd', w=2)
+        pvdd = Pin(kind='in', name='pvdd', w=3)
+        avdd = Pin(C=pvdd.C, yoff=50, kind='in', name='avdd', w=3)
         Wire([avdd.C, shift_x(avdd.C, 50)])
 
-        lvl = Pin(C=avdd.C, yoff=90, kind='in', name='lvl', w=2)
+        lvl = Pin(C=avdd.C, yoff=90, kind='in', name='lvl', w=3)
         reference = Converter(i=lvl.C, xoff=75, name='ref')
         lvl2ref = Wire([lvl.C, reference.i])
         Label(C=lvl2ref.m, kind='slash', name='6', loc='se')
@@ -48,7 +48,7 @@ try:
         Wire([pfet.d, ind.n])
         cap = Capacitor(p=ind.p, orient='v')
         Ground(C=cap.n)
-        out = Pin(C=ind.p, xoff=100, kind='out', name='out', w=2)
+        out = Pin(C=ind.p, xoff=100, kind='out', name='out', w=3)
         out_wire = Wire([ind.p, out.C])
 
         fb = shift_y(R1.n, 100)
@@ -65,9 +65,9 @@ try:
         Label(C=RG.S, loc='s', name='ramp_gen')
         Wire([R1.n, fb, Rt.n], kind='|-')
 
-        en = Pin(C=lvl.C, yoff=250, kind='in', name='en', w=2)
+        en = Pin(C=lvl.C, yoff=250, kind='in', name='en', w=3)
         Wire([en.C, shift_x(en.C, 50)])
-        avss = Pin(C=en.C, yoff=50, kind='in', name='avss', w=2)
+        avss = Pin(C=en.C, yoff=50, kind='in', name='avss', w=3)
         Wire([avss.C, shift_x(avss.C, 50)])
 
 except Error as e:
