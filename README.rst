@@ -15,7 +15,7 @@ SVG Schematic
 
 
 :Author: Ken Kundert
-:Version: 1.1.1
+:Version: 1.1.2
 :Released: 2022-06-01
 
 
