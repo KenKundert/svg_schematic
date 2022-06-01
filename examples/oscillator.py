@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from svg_schematic import (
-    Schematic, Capacitor, MOS, Inductor, Label, Source, Wire,
+    Schematic, Capacitor, MOS, Inductor, Label, Source, Wire, Crossing,
     midpoint, shift, shift_y,
 )
 from inform import Error, error, os_error
@@ -24,8 +24,11 @@ try:
         mr = MOS(d=lr.n, yoff=75, orient='')
         Wire([ll.n, ml.d])
         Wire([lr.n, mr.d])
-        Wire([ml.g, shift_y(ml.g, -25), shift(ml.g, 50, -75), shift_y(lr.n, 50)])
-        Wire([mr.g, shift_y(mr.g, -25), shift(mr.g, -50, -75), shift_y(ll.n, 50)])
+        crossing = Crossing(C=midpoint(ml.g, mr.g), yoff=-50, orient='v', pass_under='white')
+        Wire([ml.g, crossing.pi], kind='-|')
+        Wire([mr.g, crossing.ni], kind='-|')
+        Wire([lr.n, crossing.po], kind='|-')
+        Wire([ll.n, crossing.no], kind='|-')
         Wire([ml.s, shift_y(ml.s, 12), shift_y(mr.s, 12), mr.s])
         Source(p=midpoint(ml.s, mr.s), yoff=12, kind='idc', value=r'$I_{\rm ss}$')
 

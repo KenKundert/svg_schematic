@@ -401,6 +401,8 @@ class Tile(Schematic): # {{{1
         self.pins = {k: (w*v[0], h*v[1]) for k, v in pins.items()}
 
         # rotate and flip pins about normalized center
+        # rotate (v or h) is the rotation that requires rotation if requested.
+        # Thus if a symbol is drawn horizontally, then rotate would be 'v'
         pins = {}
         for name, loc in self.pins.items():
             x, y = loc
@@ -2078,21 +2080,26 @@ class Crossing(Tile): # {{{1
             Use to specify the location of a feature of the crossing.
         off (xy location), xoff (real), yoff (real):
             Specify the offset from the specified location.
+        orient (str): choose from ...
+            'v' = vertical,
+            'h' = horizontal (default),
+            '-' = flip about horizontal axis,
+            '|' = flip about vertical axis
         pass_under (str): color of the pass under concealer
 
     You will need to specify pass_under if the schematic background color is
     none.  You can set it to 'none' to eliminate the pass under concealer.
     '''
 
-    def __init__(self, w=1, h=1, pass_under=None, **kwargs):
+    def __init__(self, orient='h', w=1, h=1, pass_under=None, **kwargs):
         # Initialization and parameters {{{2
         pins = dict(
             pi = (-1/2, -1/2),
             ni = (-1/2,  1/2),
-            po = ( 1/2, -1/2),
-            no = ( 1/2,  1/2),
+            po = ( 1/2,  1/2),
+            no = ( 1/2, -1/2),
         )
-        self.set_coordinates(kwargs, pins, w=w, h=h)
+        self.set_coordinates(kwargs, pins, orient, 'v', w=w, h=h)
         super().__init__()
         symbol = self.symbol
         schematic = self.sch_schematic

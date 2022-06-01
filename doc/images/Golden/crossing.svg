@@ -6,7 +6,7 @@
   </g>
   <g id="symbol" transform="translate(0,0)">
     <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
-    <rect fill="white" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <rect fill="white" height="50" stroke="white" stroke-width="2" width="50" x="-25.0" y="-25.0"/>
     <line stroke="black" stroke-width="1" x1="-25.0" x2="25.0" y1="25.0" y2="-25.0"/>
     <circle cx="0" cy="0" fill="white" r="3" stroke="none"/>
     <line stroke="black" stroke-width="1" x1="-25.0" x2="25.0" y1="-25.0" y2="25.0"/>
@@ -26,23 +26,23 @@
   <g id="text">
     <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="-34.0" y="32.2">ni</text>
   </g>
-  <g id="symbol" transform="translate(25.0,-25.0)">
-    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
-    <circle cx="0" cy="0" fill="blue" r="4" stroke="blue" stroke-width="1"/>
-  </g>
-  <g id="text">
-    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="34.0" y="-17.8">po</text>
-  </g>
   <g id="symbol" transform="translate(25.0,25.0)">
     <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
     <circle cx="0" cy="0" fill="blue" r="4" stroke="blue" stroke-width="1"/>
   </g>
   <g id="text">
-    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="34.0" y="32.2">no</text>
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="34.0" y="32.2">po</text>
+  </g>
+  <g id="symbol" transform="translate(25.0,-25.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="blue" r="4" stroke="blue" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="34.0" y="-17.8">no</text>
   </g>
   <g id="symbol" transform="translate(150,0)">
     <rect fill="none" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
-    <rect fill="white" height="100" stroke="none" width="100" x="-50.0" y="-50.0"/>
+    <rect fill="white" height="100" stroke="white" stroke-width="2" width="100" x="-50.0" y="-50.0"/>
     <line stroke="black" stroke-width="1" x1="-50.0" x2="50.0" y1="50.0" y2="-50.0"/>
     <circle cx="0" cy="0" fill="white" r="3" stroke="none"/>
     <line stroke="black" stroke-width="1" x1="-50.0" x2="50.0" y1="-50.0" y2="50.0"/>
@@ -62,18 +62,18 @@
   <g id="text">
     <text fill="black" font-family="sans-serif" font-size="18" text-anchor="end" x="91.0" y="57.2">ni</text>
   </g>
-  <g id="symbol" transform="translate(200.0,-50.0)">
-    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
-    <circle cx="0" cy="0" fill="blue" r="4" stroke="blue" stroke-width="1"/>
-  </g>
-  <g id="text">
-    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="209.0" y="-42.8">po</text>
-  </g>
   <g id="symbol" transform="translate(200.0,50.0)">
     <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
     <circle cx="0" cy="0" fill="blue" r="4" stroke="blue" stroke-width="1"/>
   </g>
   <g id="text">
-    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="209.0" y="57.2">no</text>
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="209.0" y="57.2">po</text>
+  </g>
+  <g id="symbol" transform="translate(200.0,-50.0)">
+    <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
+    <circle cx="0" cy="0" fill="blue" r="4" stroke="blue" stroke-width="1"/>
+  </g>
+  <g id="text">
+    <text fill="black" font-family="sans-serif" font-size="18" text-anchor="start" x="209.0" y="-42.8">no</text>
   </g>
 </svg>

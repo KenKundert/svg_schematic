@@ -5,6 +5,7 @@ Releases
     | Version: 1.1.1
     | Released: 2022-06-01
 
+    - added Crossing symbols
     - added Converter symbols.
 
 **1.0 (2020-04-16)**:
