@@ -70,6 +70,46 @@ def with_y(p1, a2):
         # second argument is a number, use it
         return (p1[0], a2)
 
+# with_min_x() {{{2
+def with_min_x(p1, *args):
+    """Returns the first argument (a coordinate pair) with the x value replaced with
+    the smallest x value of the remaining arguments."""
+    if args:
+        min_x = min(a[0] if isinstance(a, tuple) else a for a in args)
+    else:
+        min_x = p1[0]
+    return (min_x, p1[1])
+
+# with_max_x() {{{2
+def with_max_x(p1, *args):
+    """Returns the first argument (a coordinate pair) with the x value replaced with
+    the largest x values of the remaining arguments."""
+    if args:
+        max_x = max(a[0] if isinstance(a, tuple) else a for a in args)
+    else:
+        max_x = p1[0]
+    return (max_x, p1[1])
+
+# with_min_y() {{{2
+def with_min_y(p1, *args):
+    """Returns the first argument (a coordinate pair) with the y value replaced with
+    the smallest y value of the remaining arguments."""
+    if args:
+        min_y = min(a[1] if isinstance(a, tuple) else a for a in args)
+    else:
+        min_y = p1[1]
+    return (p1[0], min_y)
+
+# with_max_y() {{{2
+def with_max_y(p1, *args):
+    """Returns the first argument (a coordinate pair) with the y value replaced with
+    the largest y values of the remaining arguments."""
+    if args:
+        max_y = max(a[1] if isinstance(a, tuple) else a for a in args)
+    else:
+        max_y = p1[1]
+    return (p1[0], max_y)
+
 # midpoint() {{{2
 def midpoint(p1, p2):
     """Returns the point midway between two points."""
@@ -77,12 +117,14 @@ def midpoint(p1, p2):
 
 # midpoint_x() {{{2
 def midpoint_x(p1, p2):
-    """Returns the point midway between two points."""
+    """Returns the point with x value midway between two points
+    and the y value of the first point."""
     return ((p1[0] + p2[0])/2, p1[1])
 
 # midpoint_y() {{{2
 def midpoint_y(p1, p2):
-    """Returns the point midway between two points."""
+    """Returns the point with y value midway between two points
+    and the y value of the first point."""
     return (p1[0], (p1[1] + p2[1])/2)
 
 # offsets_to_coordinates() {{{2
@@ -1849,7 +1891,6 @@ class Box(Tile): # {{{1
         schematic = self.sch_schematic
         w, h = self.size
         lw = schematic.sch_line_width if line_width is None else line_width
-        terms = [(w/2, 0), (-w/2, 0)]
 
         # Box {{{2
         fill = schematic.sch_background if background is None else background
@@ -2027,3 +2068,71 @@ class Switch(Tile): # {{{1
                 just = vjust + 'm'
             if name:
                 self.add_text(name, shift(self.center, -dx, nudge), just)
+
+
+class Crossing(Tile): # {{{1
+    '''Add wire crossing to schematic.
+
+    Args:
+        C, N, NE, E, SE, S, SW, W, NW, pi, ni, po, no (xy location):
+            Use to specify the location of a feature of the crossing.
+        off (xy location), xoff (real), yoff (real):
+            Specify the offset from the specified location.
+        pass_under (str): color of the pass under concealer
+
+    You will need to specify pass_under if the schematic background color is
+    none.  You can set it to 'none' to eliminate the pass under concealer.
+    '''
+
+    def __init__(self, w=1, h=1, pass_under=None, **kwargs):
+        # Initialization and parameters {{{2
+        pins = dict(
+            pi = (-1/2, -1/2),
+            ni = (-1/2,  1/2),
+            po = ( 1/2, -1/2),
+            no = ( 1/2,  1/2),
+        )
+        self.set_coordinates(kwargs, pins, w=w, h=h)
+        super().__init__()
+        symbol = self.symbol
+        schematic = self.sch_schematic
+        w, h = self.size
+        r = 3
+        lw = schematic.sch_line_width
+
+        # Concealer {{{2
+        # These are use to hide wiring that pass under component.
+        concealer = schematic.rect(
+            insert = (-w/2, -h/2),
+            size = self.size,
+            stroke = schematic.sch_background,
+            stroke_width = 2*lw,
+            fill = schematic.sch_background,
+        )
+        symbol.add(concealer)
+
+        # Crossing {{{2
+        # wire from upper left to lower right
+        wire = schematic.line(
+            start=(-w/2, h/2), end=(w/2, -h/2),
+            stroke_width=lw, stroke='black',
+        )
+        symbol.add(wire)
+
+        # pass under concealer (a white dot)
+        pass_under_concealer = schematic.circle(
+            (0, 0), r=r,
+            stroke = 'none',
+            fill = pass_under or schematic.sch_background
+        )
+        symbol.add(pass_under_concealer)
+
+        # wire from lower left to upper right
+        wire = schematic.line(
+            start=(-w/2, -h/2), end=(w/2, h/2),
+            stroke_width=lw, stroke='black',
+        )
+        symbol.add(wire)
+
+        # Orientation and translation {{{2
+        symbol.translate(self.center)

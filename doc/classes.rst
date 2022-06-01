@@ -1,5 +1,5 @@
-Classes
-=======
+Classes and Functions
+=====================
 
 
 Schematic
@@ -72,6 +72,55 @@ to draw the wire with dashed lines:
 
 *Wire* provides the ``b``, ``m``,  and ``e`` attributes that contain the 
 coordinates of the beginning, the midpoint and the ending of the wire.
+
+
+Label
+~~~~~
+
+Place a label.  Five kinds of label are available, ``plain``, ``arrow``, 
+``arrow|``, ``slash``, and ``dot``.
+
+.. code-block:: python
+
+    Label(kind='plain', name='plain', loc='se')
+    Label(kind='arrow', name='arrow', loc='se')
+    Label(kind='arrow|', name='arrow|', loc='se')
+    Label(kind='slash', name='slash', loc='se')
+    Label(kind='dot', name='dot', loc='se')
+
+.. image:: images/Golden/label.svg
+    :width: 15 %
+    :align: center
+
+Here the labels are drawn with wires to give better context.  The horizontal 
+location of the labels is indicated with the vertical blue line.
+
+Labels take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
+``loc``, ``w``, ``h``, ``color``, ``nudge``, ``C``, ``N``, ``NE``, ``E``, 
+``SE``, ``S``, ``SW``, ``W``, ``NW``, ``off``, ``xoff`` & ``yoff``.  Currently 
+``value`` is ignored.
+
+The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
+contain the locations of the principle coordinates.
+The ``t`` attribute contains the coordinates of the label.
+
+The kind may be 'plain', 'arrow', 'arrow|', 'slash' or 'dot'.  If 'plain' is 
+specified, no symbol is added, only the name is displayed.  If 'arrow' is 
+specified, an arrow is added and the centered on the specified location. If 
+'arrow|' is specified, the arrow terminates on the specified location.  If 
+'slash' is specified, a small slash is added through the center.  It is 
+generally used with buses to indicate the bus width.  Finally, 'dot' adds 
+a solder dot.
+
+By default the width and height of the label are 1, meaning that a unit sized 
+tile (50×50) is used.  This is significant if the label is at the edge of the 
+schematic.  If the labels extend beyond the tile, they may extend beyond the 
+computed viewbox for the schematic.  You can fix this by specifying a larger 
+width.
+
+It is important to remember that C represents the center of the tile used by the 
+label. Since the label will be on one side, C will not coincide with the 
+apparent visual center of the label.
 
 
 Components
@@ -446,8 +495,8 @@ arguments, as shown in the example below.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
 contain the locations of the principle coordinates.
-The ``i`` and ``o`` attributes contain the coordinates of the input and output 
-pins.
+The ``i`` ``pi``, ``ni`` and ``o``, ``po``, ``no`` attributes contain the 
+coordinates of the input and output pins.
 
 Boxes also support arbitrary *svgwrite* drawing parameters. This can be useful 
 to draw the box with dashed lines:
@@ -455,6 +504,30 @@ to draw the box with dashed lines:
 .. code-block:: python
 
     Box(w=1, h=1, stroke_dasharray="4 2")
+
+
+Crossing
+~~~~~~~~
+
+Draws a wire crossing in such a was as to maintain symmetry in schematics.
+
+.. code-block:: python
+
+    Crossing()
+    Crossing(w=2, h=2)
+
+.. image:: images/Golden/crossing.svg
+    :width: 40 %
+    :align: center
+
+Crossings take the following arguments: , ``pass_under``, ``w``, ``h``, ``C``, 
+``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, ``pi``, ``ni``, 
+``po``, ``no``, ``off``, ``xoff`` & ``yoff``.
+
+The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
+contain the locations of the principle coordinates.
+The ``pi`` and ``pi`` attributes contain the coordinates of the input and output 
+pins.
 
 
 Ground
@@ -590,6 +663,133 @@ width.
 It is important to remember that C represents the center of the tile used by the 
 label. Since the label will be on one side, C will not coincide with the 
 apparent visual center of the label.
+
+
+Location Functions
+------------------
+
+shift
+~~~~~
+
+Shifts a point by specified amounts in both the *x* and *y* directions.
+
+.. py:function:: shift(point, dx, dy)
+
+*point* is an (*x*, *y*) coordinate and *dx* and *dy* are numbers.  The return 
+value is (*x* + *dx*, *y* + *dy*).
+
+
+shift_x
+~~~~~~~
+
+Shifts a point by specified amount in the *x* direction.
+
+.. py:function:: shift_x(point, dx)
+
+*point* is an (*x*, *y*) coordinate and *dx* is a number.  The return value is 
+(*x* + *dx*, *y*).
+
+
+shift_y
+~~~~~~~
+
+Shifts a point by specified amount in the *y* direction.
+
+.. py:function:: shift_y(point, dy)
+
+*point* is an (*x*, *y*) coordinate and *dy* is a number.  The return value is 
+(*x*, *y* + *dy*).
+
+
+with_x
+~~~~~~
+
+Returns the first argument (a coordinate pair) with the *x* value replaced with
+the second argument.  The second argument may either be a number or a coordinate 
+pair.
+
+.. py:function:: with_x(point, x)
+
+
+with_y
+~~~~~~
+
+Returns the first argument (a coordinate pair) with the *y* value replaced with
+the second argument.  The second argument may either be a number or a coordinate 
+pair.
+
+.. py:function:: with_y(point, y)
+
+
+with_min_x
+~~~~~~~~~~
+
+Returns the first argument (a coordinate pair) with the *x* value replaced with
+the smallest of the remaining arguments.  The remaining arguments may either be 
+numbers or a coordinate pairs.
+
+.. py:function:: with_min_x(point, ...)
+
+
+with_max_x
+~~~~~~~~~~
+
+Returns the first argument (a coordinate pair) with the *x* value replaced with
+the largest of the remaining arguments.  The remaining arguments may either be 
+numbers or a coordinate pairs.
+
+.. py:function:: with_max_x(point, ...)
+
+
+with_min_y
+~~~~~~~~~~
+
+Returns the first argument (a coordinate pair) with the *y* value replaced with
+the smallest of the remaining arguments.  The remaining arguments may either be 
+numbers or a coordinate pairs.
+
+.. py:function:: with_min_y(point, ...)
+
+
+with_max_y
+~~~~~~~~~~
+
+Returns the first argument (a coordinate pair) with the *y* value replaced with
+the largest of the remaining arguments.  The remaining arguments may either be 
+numbers or a coordinate pairs.
+
+.. py:function:: with_max_y(point, ...)
+
+
+midpoint
+~~~~~~~~
+
+Returns the point midway between two points.
+
+.. py:function:: midpoint(point1, point2)
+
+
+midpoint_x
+~~~~~~~~~~
+
+Returns the point with *x* value midway between two points and the *y* value of 
+the first point.
+
+.. py:function:: midpoint_x(point1, point2)
+
+
+midpoint_y
+~~~~~~~~~~
+
+Returns the point with *y* value midway between two points and the *x* value of 
+the first point.
+
+.. py:function:: midpoint_y(point1, point2)
+
+
+
+
+
 
 
 Exceptions
