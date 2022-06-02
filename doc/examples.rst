@@ -98,7 +98,7 @@ give the schematic a heavier look.
 Buck Regulator
 --------------
 
-This example uses white dot as a pass-under (on the line that runs from ramp 
+This example uses a white dot as a pass-under (on the line that runs from ramp 
 generator to the comparator.
 
 .. include:: ../examples/buck.py
