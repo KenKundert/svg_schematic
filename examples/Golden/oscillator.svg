@@ -76,7 +76,7 @@
     <rect fill="none" height="50" stroke="none" width="50" x="-25.0" y="-25.0"/>
     <rect fill="none" height="50" stroke="none" stroke-width="4" width="50" x="-25.0" y="-25.0"/>
     <line stroke="black" stroke-width="2" x1="-25.0" x2="25.0" y1="25.0" y2="-25.0"/>
-    <circle cx="0" cy="0" fill="red" r="3" stroke="none"/>
+    <circle cx="0" cy="0" fill="white" r="3" stroke="none"/>
     <line stroke="black" stroke-width="2" x1="-25.0" x2="25.0" y1="-25.0" y2="25.0"/>
   </g>
   <g id="text"/>
@@ -88,9 +88,6 @@
   </g>
   <g id="wire">
     <polyline fill="none" points="125,125.0 125,175.0 25.0,175.0" stroke="black" stroke-linecap="round" stroke-width="2"/>
-  </g>
-  <g id="wire">
-    <polyline fill="none" points="-125,125.0 -125,175.0 -25.0,175.0" stroke="black" stroke-linecap="round" stroke-width="2"/>
   </g>
   <g id="wire">
     <polyline fill="none" points="-125.0,300.0 -125.0,312.0 125.0,312.0 125.0,300.0" stroke="black" stroke-linecap="round" stroke-width="2"/>
