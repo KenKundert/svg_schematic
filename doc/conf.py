@@ -263,13 +263,3 @@ def setup(app):
 #autodoc_mock_inports = ['pygobject']
 #
 #used doc/requirements.txt instead
-
-
-# read-the-docs does not seem to update its figures properly, so delete them
-# before building
-from shutil import rmtree
-try:
-    print('removing build directory')
-    rmtree("_build")
-except OSError as e:
-    print(str(e))

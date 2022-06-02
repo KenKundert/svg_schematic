@@ -5,7 +5,7 @@ from inform import Error, error, os_error
 
 try:
     with Schematic(
-        filename = 'mfed.svg',
+        filename = 'lpf.svg',
         background = 'none',
     ):
         vin = Source(name='Vin', value='1 V', kind='sine')

@@ -143,7 +143,7 @@ to adjust the location of the resulting text.  For example:
 
     try:
         with Schematic(
-            filename = 'mfed.svg',
+            filename = 'lpf.svg',
             background = 'none',
         ):
             vin = Source(name='Vin', value='1 V', kind='sine')
@@ -169,7 +169,7 @@ to adjust the location of the resulting text.  For example:
     except OSError as e:
         error(os_error(e))
 
-.. image:: images/Golden/mfed.svg
+.. image:: images/Golden/lpf.svg
     :width: 80%
     :align: center
 

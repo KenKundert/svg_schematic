@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
 from shlib import lsf, Run, set_prefs, to_path
-from inform import Error
+from inform import Error, error
 set_prefs(use_inform=True)
 
 golden = to_path('Golden')
 
 for py_file in lsf(select='*.py'):
+    svg_file = py_file.with_suffix('.svg')
     print(str(py_file))
     cmd = ['python3', py_file]
     try:
@@ -21,3 +22,13 @@ if golden.exists():
             Run(cmd, 'soEW')
         except Error as e:
             e.report()
+
+# sphinx puts all figures in the same directory, so make sure we do not have 
+# figures with the same name in our two source directories
+
+examples = to_path('../../examples/Golden')
+local_figures = set(f.name for f in golden.iterdir())
+example_figures = set(f.name for f in examples.iterdir())
+dups = local_figures & example_figures
+if dups:
+    error('conflicting filenames.', codicil=', '.join(dups))
