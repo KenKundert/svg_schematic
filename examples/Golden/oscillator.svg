@@ -90,6 +90,9 @@
     <polyline fill="none" points="125,125.0 125,175.0 25.0,175.0" stroke="black" stroke-linecap="round" stroke-width="2"/>
   </g>
   <g id="wire">
+    <polyline fill="none" points="-125,125.0 -125,175.0 -25.0,175.0" stroke="black" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="wire">
     <polyline fill="none" points="-125.0,300.0 -125.0,312.0 125.0,312.0 125.0,300.0" stroke="black" stroke-linecap="round" stroke-width="2"/>
   </g>
   <g id="symbol" transform="translate(0.0,362.0)">

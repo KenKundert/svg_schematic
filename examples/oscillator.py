@@ -28,7 +28,7 @@ try:
         Wire([ml.g, cross.pi], kind='-|')
         Wire([mr.g, cross.ni], kind='-|')
         Wire([lr.n, cross.po], kind='|-')
-        # Wire([ll.n, cross.no], kind='|-')
+        Wire([ll.n, cross.no], kind='|-')
         Wire([ml.s, shift_y(ml.s, 12), shift_y(mr.s, 12), mr.s])
         Source(p=midpoint(ml.s, mr.s), yoff=12, kind='idc', value=r'$I_{\rm ss}$')
 
