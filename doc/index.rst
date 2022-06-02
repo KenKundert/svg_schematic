@@ -2,7 +2,7 @@ SVG Schematic
 =============
 
 :Author: Ken Kundert
-:Version: 1.1.2
+:Version: 1.1.3
 :Released: 2022-06-01
 
 
