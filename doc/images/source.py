@@ -45,7 +45,6 @@ try:
         Label(C=s.W, name='W', loc='w', kind='dot', color='blue', w=2)
         Label(C=s.NW, name='NW', loc='nw', kind='dot', color='blue', w=2)
 
-
 except Error as e:
     e.report()
 except OSError as e:

@@ -97,7 +97,7 @@ location of the labels is indicated with the vertical blue line.
 
 Labels take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
 ``loc``, ``w``, ``h``, ``color``, ``nudge``, ``C``, ``N``, ``NE``, ``E``, 
-``SE``, ``S``, ``SW``, ``W``, ``NW``, ``off``, ``xoff`` & ``yoff``.  Currently 
+``SE``, ``S``, ``SW``, ``W``, ``NW``, ``off``, ``xoff`` and ``yoff``.  Currently 
 ``value`` is ignored.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
@@ -172,7 +172,7 @@ Draw a resistor.
 
 Resistors take the following arguments: ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
-``p``, ``n``, ``off``, ``xoff`` & ``yoff``.
+``p``, ``n``, ``off``, ``xoff`` and ``yoff``.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
 contain the locations of the principle coordinates. The ``p`` and ``n`` 
@@ -197,7 +197,7 @@ Draws a capacitor.
 
 Capacitors take the following arguments: ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
-``p``, ``n``, ``off``, ``xoff`` & ``yoff``.
+``p``, ``n``, ``off``, ``xoff`` and ``yoff``.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
 contain the locations of the principle coordinates. The ``p`` and ``n`` 
@@ -223,7 +223,7 @@ Draws an inductor.
 
 Inductors take the following arguments: ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
-``p``, ``n``, ``off``, ``xoff`` & ``yoff``.
+``p``, ``n``, ``off``, ``xoff`` and ``yoff``.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
 contain the locations of the principle coordinates. The ``p`` and ``n`` 
@@ -248,7 +248,7 @@ Draws a diode.
 
 Diodes take the following arguments: ``orient``, ``name``, ``value``, ``nudge``, 
 ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, ``p``, ``n``, 
-``off``, ``xoff`` & ``yoff``.
+``off``, ``xoff`` and ``yoff``.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
 contain the locations of the principle coordinates.  The ``a`` and ``c`` 
@@ -275,8 +275,8 @@ Draws a bipolar transistor. Two kinds of BJT are available, *npn* and *pnp*.
 
 BJTs take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
-``p``, ``n``, ``off``, ``xoff`` & ``yoff``.  ``kind`` may be ``npn`` or ``pnp``, 
-or simply ``n`` or ``p``.
+``p``, ``n``, ``off``, ``xoff`` and ``yoff``.  ``kind`` may be ``npn`` or 
+``pnp``, or simply ``n`` or ``p``.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
 contain the locations of the principle coordinates.
@@ -309,7 +309,7 @@ non-polarized.
 
 MOSFETs take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
-``p``, ``n``, ``off``, ``xoff`` & ``yoff``.
+``p``, ``n``, ``off``, ``xoff`` and ``yoff``.
 ``kind`` may be ``nmos`` or ``pmos``, or simply ``n`` or ``p``.  If an empty 
 string is specified, the terminal locations are those of an *nmos*, but the 
 arrow is not drawn.
@@ -350,7 +350,7 @@ amplifier (``da``) and comparator (``comp``).
 
 Amplifiers and Converters take the following arguments: ``kind``, ``orient``, 
 ``name``, ``value``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, 
-``NW``, ``p``, ``n``, ``off``, ``xoff`` & ``yoff``.
+``NW``, ``p``, ``n``, ``off``, ``xoff`` and ``yoff``.
 ``kind`` may be ``se``, ``oa``, ``da`` or ``comp``.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
@@ -385,7 +385,7 @@ inverter.
 
 Gates take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
-``p``, ``n``, ``off``, ``xoff`` & ``yoff``.
+``p``, ``n``, ``off``, ``xoff`` and ``yoff``.
 ``kind`` may be ``inv``.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
@@ -422,7 +422,7 @@ Eight kinds of source are available, ``empty``, ``vdc``, ``idc``, ``sine``,
 
 Sources take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
-``p``, ``n``, ``off``, ``xoff`` & ``yoff``.
+``p``, ``n``, ``off``, ``xoff`` and ``yoff``.
 ``kind`` may be ``empty``, ``vdc``, ``idc``, ``sine``, ``sum``, ``mult``, ``cv`` 
 or ``ci``.
 
@@ -459,9 +459,9 @@ Two kinds of switch are available, ``spst`` (single-pole, single-throw) and
 
 Switches take the following arguments: ``kind``, ``orient``, ``name``, 
 ``value``, ``dots``, ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, 
-``SW``, ``W``, ``NW``, ``i``, ``o``, ``ot``, ``ob``, ``off``, ``xoff`` 
-& ``yoff``.  ``kind`` may be ``spst`` or ``spdt``.  The *dots* argument 
-determines whether the poles of the switch should be denoted with large dots.
+``SW``, ``W``, ``NW``, ``i``, ``o``, ``ot``, ``ob``, ``off``, ``xoff`` and 
+``yoff``.  ``kind`` may be ``spst`` or ``spdt``.  The *dots* argument determines 
+whether the poles of the switch should be denoted with large dots.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
 contain the locations of the principle coordinates.  The ``i`` ``ot``, ``o`` and 
@@ -490,11 +490,13 @@ Draws a box.
 Boxes take the following arguments: ``orient``, ``name``, ``value``, ``nudge``, 
 ``line_width``, ``background``, ``w``, ``h``, ``C``, ``N``, ``NE``, ``E``, 
 ``SE``, ``S``, ``SW``, ``W``, ``NW``, ``i``, ``pi``, ``ni``, ``o``, ``po``, 
-``no``, ``off``, ``xoff`` & ``yoff``.  In addition, you may specify *SVGwrite* 
+``no``, ``off``, ``xoff`` and ``yoff``.  In addition, you may specify *SVGwrite* 
 arguments, as shown in the example below.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
-contain the locations of the principle coordinates.
+contain the locations of the principle coordinates.  They are arranged along the 
+surface of the box.
+
 The ``i`` ``pi``, ``ni`` and ``o``, ``po``, ``no`` attributes contain the 
 coordinates of the input and output pins.
 
@@ -522,7 +524,7 @@ Draws a wire crossing in such a was as to maintain symmetry in schematics.
 
 Crossings take the following arguments: , ``pass_under``, ``w``, ``h``, ``C``, 
 ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, ``pi``, ``ni``, 
-``po``, ``no``, ``off``, ``xoff`` & ``yoff``.
+``po``, ``no``, ``off``, ``xoff`` and ``yoff``.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
 contain the locations of the principle coordinates.
@@ -546,7 +548,7 @@ Draws a ground.
 
 Grounds take the following arguments: ``orient``, ``name``, ``value``,
 ``nudge``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW``, 
-``t``, ``off``, ``xoff`` & ``yoff``.  Currently ``value`` is ignored.
+``t``, ``off``, ``xoff`` and ``yoff``.  Currently ``value`` is ignored.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
 contain the locations of the principle coordinates.
@@ -575,8 +577,8 @@ location of the pins is indicated with the vertical blue line.
 
 Pins take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
 ``nudge``, ``w``, ``h``, ``color``, ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, 
-``SW``, ``W``, ``NW``, ``t``, ``off``, ``xoff`` & ``yoff``.  Currently ``value`` 
-is ignored for ``in`` and ``out`` pins.
+``SW``, ``W``, ``NW``, ``t``, ``off``, ``xoff`` and ``yoff``.  Currently 
+``value`` is ignored for ``in`` and ``out`` pins.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
 contain the locations of the principle coordinates.
@@ -639,7 +641,7 @@ location of the labels is indicated with the vertical blue line.
 
 Labels take the following arguments: ``kind``, ``orient``, ``name``, ``value``, 
 ``loc``, ``w``, ``h``, ``color``, ``nudge``, ``C``, ``N``, ``NE``, ``E``, 
-``SE``, ``S``, ``SW``, ``W``, ``NW``, ``off``, ``xoff`` & ``yoff``.  Currently 
+``SE``, ``S``, ``SW``, ``W``, ``NW``, ``off``, ``xoff`` and ``yoff``.  Currently 
 ``value`` is ignored.
 
 The ``C``, ``N``, ``NE``, ``E``, ``SE``, ``S``, ``SW``, ``W``, ``NW`` attributes 
