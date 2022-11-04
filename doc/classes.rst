@@ -130,7 +130,7 @@ This section documents the available components. Components include an invisible
 tile in which the component should fit. The tile extent is used when determining 
 the size of the overall schematic.  Each component requires that you specify 
 location by giving the location of its principle coordinates or a pin. You can 
-specify an placement offset using ``xoff``, ``yoff`, or ``off``. You can also 
+specify an placement offset using ``xoff``, ``yoff``, or ``off``. You can also 
 generally specify the orientation, the name, the value, and a text offset using 
 ``orient``, ``name``, ``value``, and ``nudge``.
 

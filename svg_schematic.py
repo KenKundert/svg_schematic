@@ -1978,7 +1978,7 @@ class Switch(Tile): # {{{1
         # Switch {{{2
         switch = schematic.line(
             start=(-gap/2, 0), end=(gap/2, -sep/2),
-            stroke_width=lw, stroke='black',
+            stroke_width=lw, stroke='black', stroke_linecap='round'
         )
         symbol.add(switch)
         if dots:
