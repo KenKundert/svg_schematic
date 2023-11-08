@@ -101,7 +101,7 @@ pygments_style = 'sphinx'
 # html_theme = 'nature'
 # Use default rather than my normal nature so we get the read-the-docs style on
 # that website.
-html_theme = 'default'
+html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
