@@ -28,9 +28,7 @@ Simple Example
 --------------
 
 Here is a simple example that demonstrates the package. It generates the 
-schematic of a shunt RLC circuit:
-
-.. code-block:: python
+schematic of a shunt RLC circuit::
 
     from svg_schematic import Schematic, Resistor, Capacitor, Inductor, Wire
     from inform import Error, error, os_error
