@@ -72,7 +72,7 @@ Documentation
 -------------
 
 You can find documentation at `ReadTheDocs 
-<https://svg_schematic.readthedocs.io>`_.
+<https://svg-schematic.readthedocs.io>`_.
 
 
 Issues
