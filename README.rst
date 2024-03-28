@@ -58,7 +58,8 @@ Installation
 Requires Python3. Works best with Python3.6 or newer.
 
 You can download and install the latest
-stable version of the code from `PyPI <https://pypi.python.org>`_ using::
+stable version of the code from `PyPI 
+<https://pypi.org/project/svg-schematic/>`_ using::
 
     pip3 install --user svg_schematic
 
