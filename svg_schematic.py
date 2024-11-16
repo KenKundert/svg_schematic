@@ -1760,7 +1760,7 @@ class Label(Tile): # {{{1
         h (num): the height of the tile (multiples of unit height)
         color (str): color of the marker
         nudge (num): offset used when positioning text (if needed)
-        C, N, NE, E, SE, S, SW, W, NW, p, n (xy location):
+        C, N, NE, E, SE, S, SW, W, NW (xy location):
             Use to specify the location of a feature of the label.
         off (xy location), xoff (real), yoff (real):
             Specify the offset from the specified location.
