@@ -7,8 +7,7 @@ from svg_schematic import (
 from inform import Error, error, os_error
 
 try:
-    with Schematic(
-        filename = "buck.svg", line_width=2, background='none'):
+    with Schematic(filename="buck.svg", line_width=2, background='none'):
 
         pvdd = Pin(kind='in', name='pvdd', w=3)
         avdd = Pin(C=pvdd.C, yoff=50, kind='in', name='avdd', w=3)

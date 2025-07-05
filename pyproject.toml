@@ -1,0 +1,33 @@
+[project]
+name = "svg_schematic"
+version = "1.2"
+description = "SVG schematic generator"
+readme = "README.rst"
+keywords = ["schematic", "SVG"]
+authors = [
+    {name = "Ken Kundert"},
+    {email = "svg_schematic@nurdletech.com"}
+]
+classifiers = [
+        'Development Status :: 5 - Production/Stable',
+        'Intended Audience :: Science/Research',
+        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
+        'Natural Language :: English',
+        'Operating System :: POSIX :: Linux',
+        'Programming Language :: Python :: 3',
+        'Topic :: Utilities',
+        'Topic :: Scientific/Engineering',
+]
+requires-python = ">=3.6"
+dependencies = [
+    'svgwrite',
+    'inform',
+]
+
+[project.urls]
+repository = "https://github.com/kenkundert/svg_schematic"
+documentation = "https://svg-schematic.readthedocs.io/en/latest/"
+
+[build-system]
+requires = ["flit_core >=2,<4"]
+build-backend = "flit_core.buildapi"

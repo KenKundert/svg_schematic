@@ -1132,7 +1132,7 @@ class Amp(Tile): # {{{1
         name (str): the amplifier name
         value (str): the amplifier value (currently unused)
         w (num), h (num) : the width and height.
-        C, N, NE, E, SE, S, SW, W, NW, pi, i, ni, po, n, no. (xy location):
+        C, N, NE, E, SE, S, SW, W, NW, pi, i, ni, po, o, no. (xy location):
             Use to specify the location of a feature of the amplifier.
         off (xy location), xoff (real), yoff (real):
             Specify the offset from the specified location.
