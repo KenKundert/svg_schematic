@@ -61,7 +61,7 @@ You can download and install the latest
 stable version of the code from `PyPI 
 <https://pypi.org/project/svg-schematic/>`_ using::
 
-    pip3 install --user svg_schematic
+    pip3 install svg_schematic
 
 You can find the latest development version of the source code on
 `Github <https://github.com/KenKundert/svg_schematic>`_.
