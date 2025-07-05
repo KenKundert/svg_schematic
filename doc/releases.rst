@@ -2,8 +2,8 @@ Releases
 --------
 
 **Latest development release**:
-    | Version: 1.2.0
-    | Released: 2022-06-03
+    | Version: 1.3
+    | Released: 2025-07-04
 
     - added Crossing symbols
     - added Converter symbols.
